@@ -14,5 +14,6 @@ Imports:
   jsonlite,
   httr,
   osrm,
-  sf
+  sf,
+  purrr
 RoxygenNote: 7.1.1
