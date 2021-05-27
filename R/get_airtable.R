@@ -13,7 +13,7 @@
 #' @import httr
 #' @import jsonlite
 #' @import dplyr
-get_airtable = function(key, base="https://api_airtable_com/v0/appD6byygamXxc3jx/", table, view="All", max_records = 500, print = FALSE){
+get_airtable = function(key, base = "appD6byygamXxc3jx", table, view = "All", max_records = 500, print = FALSE){
 
   # set local vars for pagination
   table = gsub(" ", "%20", table)
@@ -27,9 +27,10 @@ get_airtable = function(key, base="https://api_airtable_com/v0/appD6byygamXxc3jx
 
     #print(paste0("Page: ", k))
 
+    base_fmt = 'https://api.airtable.com/v0/%s/'
 
     # GET request for page X from Airtable
-    path = paste0(base, table, "?");
+    path = paste0(sprintf(base_fmt, base), table, "?");
     path;
     request = GET(url = path,
                   query = list(

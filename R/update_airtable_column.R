@@ -22,13 +22,13 @@ update_airtable_column <- function(dta,
                                    variable_name,
                                    type = c("character", "numeric", "multi_select")){
   # capture unquoted variable names
-  rid <- enexpr(record_id_col)
-  data_col <- enexpr(data_col)
+  # rid      <- rlang::enexpr(record_id_col)
+  # data_col <- rlang::enexpr(data_col)
 
   # clean up any spaces in the table name
   table_name <- gsub("\\s+", "%20", table_name, perl = TRUE)
 
-  # match type argument. Defaults to character
+  # match type argument. Defaults to string
   data_type <- match.arg(type)
 
   # create base URL
@@ -42,18 +42,14 @@ update_airtable_column <- function(dta,
   )
 
   # subset and clean up the data
-  dta <- dplyr::select(dta, airtable_id = rid, update_dta = data_col) %>%
+  dta <- dplyr::select(dta, airtable_id = {{ record_id_col }}, update_dta = {{ data_col }}) %>%
     dplyr::mutate(at_vars_command = sprintf(at_vars_command_fmt, variable_name, .data$update_dta))
   # browser()
   # return(dta)
   purrr::walk2(dta$airtable_id, dta$at_vars_command, function(airtable_id, at_vars_command){
 
-    command = paste0("curl -v -X PATCH ", base_url, airtable_id, " ",
-                     "-H \"Authorization: Bearer ", api_key,"\" ",
-                     "-H \"Content-Type: application/json\" ",
-                     "--data '{\"fields\": {",
-                     at_vars_command,
-                     "}}'")
+    command = paste0("curl -v -X PATCH ", base_url, airtable_id, " \ -H \"Authorization: Bearer ", api_key,"\" \ -H \"Content-Type: application/json\" --data '{\"fields\": {", at_vars_command, "}}'"
+    )
 
     system(command, intern = TRUE, ignore.stderr = TRUE)
   })

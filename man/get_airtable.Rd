@@ -6,7 +6,7 @@
 \usage{
 get_airtable(
   key,
-  base = "https://api_airtable_com/v0/appD6byygamXxc3jx/",
+  base = "appD6byygamXxc3jx",
   table,
   view = "All",
   max_records = 500,
