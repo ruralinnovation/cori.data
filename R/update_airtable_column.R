@@ -28,7 +28,7 @@ update_airtable_column <- function(dta,
   # clean up any spaces in the table name
   table_name <- gsub("\\s+", "%20", table_name, perl = TRUE)
 
-  # match type argument. Defaults to string
+  # match type argument. Defaults to character
   data_type <- match.arg(type)
 
   # create base URL
@@ -36,7 +36,7 @@ update_airtable_column <- function(dta,
 
   # define the command format based on the data type
   at_vars_command_fmt <- switch(data_type,
-                                string = '"%s": "%s"', # if string, everything captured in double quotes
+                                character = '"%s": "%s"', # if character, everything captured in double quotes
                                 numeric = '"%s": %s', # if numeric, only variable name captured in double quotes
                                 multi_select = '"%s": [%s]' # if multi select, variable captured in brackets
   )
