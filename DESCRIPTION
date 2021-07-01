@@ -15,5 +15,6 @@ Imports:
   httr,
   osrm,
   sf,
-  purrr
+  purrr,
+  config
 RoxygenNote: 7.1.1
