@@ -18,7 +18,7 @@ get_airtable = function(key, base = "appD6byygamXxc3jx", table, view = "All", ma
   # set local vars for pagination
   table = gsub(" ", "%20", table)
   pages = ceiling(max_records/100)-1
-  offset=0
+  offset = 0
 
   if (print)(print(paste0("# of Pages:  ", pages)))
 
@@ -32,23 +32,33 @@ get_airtable = function(key, base = "appD6byygamXxc3jx", table, view = "All", ma
     # GET request for page X from Airtable
     path = paste0(sprintf(base_fmt, base), table, "?");
     path;
-    request = GET(url = path,
-                  query = list(
-                    max_records = max_records,
-                    view = view,
-                    offset = offset,
-                    api_key = key
-                  )
+    request = httr::GET(url = path,
+                        query = list(
+                          max_records = max_records,
+                          view = view,
+                          offset = offset,
+                          api_key = key
+                        )
     )
 
     # CONVERT to data frame and get offset for next page
     response <- httr::content(request, as = "text", encoding = "UTF-8")
-    temp <- jsonlite::fromJSON(response, flatten = TRUE) %>% data.frame(stringsAsFactors = F)
+
+    temp <- jsonlite::fromJSON(response, flatten = TRUE) %>%
+      data.frame(stringsAsFactors = F)
+
     offset <- jsonlite::fromJSON(response)$offset
 
     # COMBINE pages into a single data frame
-    if(k==0){ airtable_all <- temp }
-    else{ airtable_all = bind_rows(airtable_all, temp) }
+    if(k == 0){
+
+      airtable_all <- temp
+
+    } else {
+
+      airtable_all = bind_rows(airtable_all, temp)
+
+    }
 
 
   }

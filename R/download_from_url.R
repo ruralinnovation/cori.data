@@ -10,7 +10,7 @@
 #'
 download_from_url <- function(url, file_name, output_dir = "."){
 
-  filepath = paste0(output_dir, file_name)
+  filepath = paste(output_dir, file_name, sep = "/")
 
   # Download
   if(missing(url)) {
