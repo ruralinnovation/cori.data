@@ -16,5 +16,6 @@ Imports:
   osrm,
   sf,
   purrr,
-  config
+  config,
+  rlang
 RoxygenNote: 7.1.1

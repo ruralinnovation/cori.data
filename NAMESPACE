@@ -2,7 +2,7 @@
 
 export(download_from_url)
 export(get_airtable)
-export(get_drive_time_polygons)
+export(get_drivetime_polygons)
 export(update_airtable_column)
 import(dplyr)
 import(httr)
@@ -10,3 +10,4 @@ import(jsonlite)
 import(osrm)
 import(sf)
 importFrom(purrr,walk2)
+importFrom(rlang,.data)
