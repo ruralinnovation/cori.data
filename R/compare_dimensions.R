@@ -18,7 +18,7 @@ compare_dimensions <- function(table_names, con){
 #' @param table_name The name of table on the database
 #' @param con A database connection
 #'
-#' @return
+#' @return A one row data frame with the table name, a row count, and a column count
 #' @export
 #'
 #' @importFrom DBI dbGetQuery
@@ -27,13 +27,13 @@ compare_dimensions <- function(table_names, con){
 #'
 get_dims <- function(table_name, con){
 
-  stopifnot(is.character(tbl))
+  stopifnot(is.character(table_name))
 
 
-  row_count <- DBI::dbGetQuery(con, glue::glue_sql("select count(*) as count from {`tbl`}", .con = con))
-  col_count <- ncol(DBI::dbGetQuery(con, glue::glue_sql("select * from {`tbl`} limit 0", .con = con)))
+  row_count <- DBI::dbGetQuery(con, glue::glue_sql("select count(*) as count from {`table_name`}", .con = con))
+  col_count <- ncol(DBI::dbGetQuery(con, glue::glue_sql("select * from {`table_name`} limit 0", .con = con)))
 
-  return(data.table::data.table(table = tbl, n_rows = row_count[['count']], n_cols = col_count))
+  return(data.table::data.table(table = table_name, n_rows = row_count[['count']], n_cols = col_count))
 
 }
 

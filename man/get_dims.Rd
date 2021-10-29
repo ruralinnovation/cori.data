@@ -12,7 +12,7 @@ get_dims(table_name, con)
 \item{con}{A database connection}
 }
 \value{
-
+A one row data frame with the table name, a row count, and a column count
 }
 \description{
 Get the dimensions of a table on the database
