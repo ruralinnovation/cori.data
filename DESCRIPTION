@@ -1,6 +1,6 @@
 Package: cori.data
 Type: Package
-Title: Functions for working with data in R and non-Postgres data sources
+Title: Functions for exploring and performing quality control checks on CORI/RISI data
 Version: 0.1.0
 Author: Matt Rogers
 Maintainer: Matt Rogers <matt.rogers@ruralinnovation.us>
@@ -11,11 +11,8 @@ Encoding: UTF-8
 LazyData: true
 Imports:
   dplyr,
-  jsonlite,
-  httr,
-  osrm,
-  sf,
-  purrr,
-  config,
-  rlang
+  DBI,
+  tidyr,
+  glue,
+  data.table
 RoxygenNote: 7.1.1
