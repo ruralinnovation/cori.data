@@ -12,7 +12,8 @@ LazyData: true
 Imports:
   dplyr,
   DBI,
-  tidyr,
   glue,
-  data.table
-RoxygenNote: 7.1.1
+  data.table,
+  purrr,
+  magrittr
+RoxygenNote: 7.1.2
