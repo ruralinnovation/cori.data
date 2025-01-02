@@ -16,4 +16,4 @@ Imports:
   data.table,
   purrr,
   magrittr
-RoxygenNote: 7.1.2
+RoxygenNote: 7.3.2
