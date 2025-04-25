@@ -37,3 +37,19 @@ vignettes/*.pdf
 
 # R Environment Variables
 .Renviron
+
+# By default, data files should not be added to version control,
+# but excpetions can be made when needed with `git add -f ...`
+data/
+*.csv
+*.gpkg
+*.shp
+*.RDS
+*.rds
+*.Rds
+
+# Extra
+.DS_Store
+.idea
+_targets
+node_modules
