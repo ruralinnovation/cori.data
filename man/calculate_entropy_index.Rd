@@ -16,18 +16,18 @@ calculate_entropy_index(
 \arguments{
 \item{df}{A data frame containing a base geoid, the specified grouping variables, and a total population variable}
 
-\item{base_geoid}{Lowest common geographic level. `agg_geoid` must inherit from `base_geoid` (e.g. tract -> county, county -> state, etc.)}
+\item{base_geoid}{Lowest common geographic level. \code{agg_geoid} must inherit from \code{base_geoid} (e.g. tract -> county, county -> state, etc.)}
 
 \item{agg_geoid}{Geographic level to aggregate to.}
 
-\item{geoid_crosswalk}{Crosswalk defining relationship between `base_geoid` and `agg_geoid`}
+\item{geoid_crosswalk}{Crosswalk defining relationship between \code{base_geoid} and \code{agg_geoid}}
 
-\item{group_vars}{A set of grouping variables that must total to the value contained in `total_pop_var`}
+\item{group_vars}{A set of grouping variables that must total to the value contained in \code{total_pop_var}}
 
 \item{total_pop_var}{The total population for the base geography}
 }
 \value{
-A data frame with four fields, `agg_geoid`,  `entropy_score`, `entropy_index`, `cnt_{base_geoid}_in_{agg_geoid}`
+A data frame with four fields, \code{agg_geoid},  \code{entropy_score}, \code{entropy_index}, \verb{cnt_\{base_geoid\}_in_\{agg_geoid\}}
 }
 \description{
 Calculate Theils_H segregation measure

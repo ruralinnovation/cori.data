@@ -3,6 +3,8 @@
 export(calculate_entropy_index)
 export(compare_dimensions)
 export(get_dims)
+export(tiger_line_counties)
+export(tiger_line_places)
 importFrom(DBI,dbGetQuery)
 importFrom(data.table,`:=`)
 importFrom(data.table,data.table)

@@ -1,2 +1,14 @@
-^.*\.Rproj$
+^cori\.data\.Rproj$
 ^\.Rproj\.user$
+^\.R*$
+^.*\.Rproj$
+^\.git$
+^\.github$
+^\.gitignore$
+^\.idea$
+^data$
+^docs$
+^pkgdown$
+^renv$
+^renv\.lock$
+^_pkgdown\.yml

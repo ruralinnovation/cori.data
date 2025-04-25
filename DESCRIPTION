@@ -10,10 +10,18 @@ License: file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
-  dplyr,
   DBI,
-  glue,
+  cori.db,
+  dplyr,
   data.table,
+  glue,
+  magrittr,
   purrr,
-  magrittr
+  sf,
+  stats,
+  utils,
+  zip
+Remotes:
+  ruralinnovation/cori.db
+Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
