@@ -145,13 +145,13 @@ map_locations_to_counties <- function (dta_loc_or_postal) {
   dta_loc_or_postal_sf <- missing_long_lat |>
     dplyr::filter(!is.na(long), !is.na(lat)) |>
     as.data.frame() |>
-    sf::as_sf(
+    sf::st_as_sf(
       coords = c("long", "lat"),
       crs = sf::st_crs(missing_long_lat$crs),
       remove = FALSE
     )|> 
     dplyr::mutate(
-      geometry = sf::sfc(
+      geometry = sf::st_sfc(
         geometry,
         crs = sf::st_crs("+proj=longlat +datum=WGS84")
       )
@@ -159,12 +159,12 @@ map_locations_to_counties <- function (dta_loc_or_postal) {
     dplyr::select(!crs)
   
   # Find points within polygons
-  final_geocoded_sf_w_co <- sf::join(
+  final_geocoded_sf_w_co <- sf::st_join(
     dta_loc_or_postal_sf |> 
       dplyr::mutate(geometry = sf::st_transform(geometry, sf::st_crs("+proj=longlat +datum=WGS84"))), 
     counties |> 
       dplyr::mutate(geometry = sf::st_transform(geometry, sf::st_crs("+proj=longlat +datum=WGS84"))), 
-    join = sf::within
+    join = sf::st_within
   ) |>
     dplyr::mutate(
       county_fips = COUNTYFP,
@@ -256,9 +256,9 @@ geocode_missing_records <- function (dta_id = "company_id", dta_all, out_tidygeo
   # Convert to sf data frame
   out_tidygeocoder_missing_sf <- missing_long_lat |>
     dplyr::filter(!is.na(long), !is.na(lat)) |>
-    sf::as_sf(
+    sf::st_as_sf(
       coords = c("long", "lat"),
-      crs = sf::crs(out_tidygeocoder)  # Use same CRS as original
+      crs = sf::st_crs(out_tidygeocoder)  # Use same CRS as original
     )
 
   # Merge with original tidygeocoder results
@@ -270,12 +270,12 @@ geocode_missing_records <- function (dta_id = "company_id", dta_all, out_tidygeo
   counties <- readRDS(file = paste0(here::here(), "/data/counties.rds"))
   
   # Find points within polygons
-  final_geocoded_sf_w_co <- sf::join(
+  final_geocoded_sf_w_co <- sf::st_join(
     final_geocoded_sf |> 
       dplyr::mutate(geometry = sf::st_transform(geometry, sf::st_crs("+proj=longlat +datum=WGS84"))), 
     counties |> 
       dplyr::mutate(geometry = sf::st_transform(geometry, sf::st_crs("+proj=longlat +datum=WGS84"))), 
-    join = sf::within
+    join = sf::st_within
   ) |>
     dplyr::mutate(
       state_fips = STATEFP,
