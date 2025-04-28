@@ -31,7 +31,7 @@ get_census_place_centroid <- function(location, places, states) {
           STATEFP == state_fips
         ) |>
         dplyr::select(INTPTLON, INTPTLAT) |>
-        slice(1)  # Take first match if multiple exist
+        dplyr::slice(1)  # Take first match if multiple exist
 
       print(list(
         long = as.numeric(place_centroid$INTPTLON), 
@@ -62,7 +62,7 @@ get_zipcode_centroid <- function(zipcode, zips) {
   zipcode_centroid <- zips |>
     dplyr::filter(STD_ZIP5 == zipcode) |>
     dplyr::select(LON, LAT) |>
-    slice(1)
+    dplyr::slice(1)
   
   if (nrow(zipcode_centroid) > 0) {
     return(list(
