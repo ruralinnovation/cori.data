@@ -30,7 +30,7 @@ input_to_wkt <- function(input) {
   return(wkt_input)
 }
 
-#' Adapted from tigirs: Helper function to download Census data (modified to read from local file paths)
+#' Adapted from tigrs: Helper function to download Census data (modified to read from local file paths)
 #'
 #' @param local_file_path local path to zipped shapefile in TIGER database (constructed in calling function).
 #' @param tigris_type Added as an attribute to return object (used internally).

@@ -2,7 +2,7 @@
 % Please edit documentation in R/tigris_helper.R
 \name{load_tiger}
 \alias{load_tiger}
-\title{Adapted from tigirs: Helper function to download Census data (modified to read from local file paths)}
+\title{Adapted from tigrs: Helper function to download Census data (modified to read from local file paths)}
 \usage{
 load_tiger(
   local_file_path,
@@ -24,7 +24,7 @@ load_tiger(
 sf or sp data frame
 }
 \description{
-Adapted from tigirs: Helper function to download Census data (modified to read from local file paths)
+Adapted from tigrs: Helper function to download Census data (modified to read from local file paths)
 }
 \examples{
 

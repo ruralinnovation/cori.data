@@ -1,3 +1,4 @@
+library(dplyr)
 
 # Function to get Census Place centroid
 get_census_place_centroid <- function(location, places, states) {
@@ -122,7 +123,7 @@ map_locations_to_counties <- function (dta_loc_or_postal) {
         list(NULL)
       }
     ) |>
-    ungroup()
+    dplyr::ungroup()
 
   missing_long_lat$long <- unlist(lapply(missing_long_lat$centroid, function(centroid) {
     # print(is.null(centroid))
@@ -240,7 +241,7 @@ geocode_missing_records <- function (dta_id = "company_id", dta_all, out_tidygeo
         list(NULL)
       }
     ) |>
-    ungroup()
+    dplyr::ungroup()
 
   missing_long_lat$long <- unlist(lapply(missing_long_lat$centroid, function(centroid) {
     # print(is.null(centroid))
