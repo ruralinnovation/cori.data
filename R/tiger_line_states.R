@@ -2,6 +2,8 @@ library(cori.db)
 library(dplyr)
 library(sf)
 
+source(paste0(here::here(), "/R/tigris_helper.R"))
+
 # setup data dir
 data_dir <- paste0(here::here(), "/data")
 if (! dir.exists(data_dir)) dir.create(data_dir)
@@ -21,8 +23,6 @@ if (! dir.exists(data_dir)) dir.create(data_dir)
 #' }
 #'
 tiger_line_states <- function (tiger_year = 2024) {
-
-    source(paste0(here::here(), "/R/tigris_helper.R"))
 
     # usethis::use_data_raw() # <= if we were committing local data to the package repo (version control)
 
