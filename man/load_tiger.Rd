@@ -26,3 +26,11 @@ sf or sp data frame
 \description{
 Adapted from tigirs: Helper function to download Census data (modified to read from local file paths)
 }
+\examples{
+
+\dontrun{
+  states <- lapply(local_state_files_tiger_year, load_tiger) |>
+    dplyr::bind_rows()
+}
+
+}

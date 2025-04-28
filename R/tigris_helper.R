@@ -39,6 +39,15 @@ input_to_wkt <- function(input) {
 #'
 #' @return sf or sp data frame
 #'
+#' @export
+#'
+#' @examples
+#'
+#' \dontrun{
+#'   states <- lapply(local_state_files_tiger_year, load_tiger) |>
+#'     dplyr::bind_rows()
+#' }
+#'
 load_tiger <- function(
   local_file_path,
   tigris_type=NULL,
@@ -75,9 +84,9 @@ load_tiger <- function(
     quiet = TRUE, stringsAsFactors = FALSE,
     wkt_filter = wkt_filter)
 
-  if (is.na(st_crs(obj)$proj4string)) {
+  if (is.na(sf::st_crs(obj)$proj4string)) {
 
-    st_crs(obj) <- "+proj=longlat +datum=NAD83 +no_defs"
+    sf::st_crs(obj) <- "+proj=longlat +datum=NAD83 +no_defs"
 
   }
 

@@ -2,7 +2,7 @@ library(cori.db)
 library(dplyr)
 library(sf)
 
-source(paste0(here::here(), "/R/tigris_helper.R"))
+# source(paste0(here::here(), "/R/tigris_helper.R"))
 
 # setup data dir
 data_dir <- paste0(here::here(), "/data")

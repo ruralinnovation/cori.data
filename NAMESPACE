@@ -3,6 +3,7 @@
 export(calculate_entropy_index)
 export(compare_dimensions)
 export(get_dims)
+export(load_tiger)
 export(map_locations_to_counties)
 export(tiger_line_counties)
 export(tiger_line_county_state_fips)
