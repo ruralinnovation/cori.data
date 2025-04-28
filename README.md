@@ -1,4 +1,4 @@
-## CORI/RISI data sets and data functions
+## CORI/RISI commonly used data sets and data functions
 
 ![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)
 

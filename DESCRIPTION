@@ -19,8 +19,7 @@ Imports:
   purrr,
   sf,
   stats,
-  utils,
-  zip
+  utils
 Remotes:
   ruralinnovation/cori.db
 Roxygen: list(markdown = TRUE)
