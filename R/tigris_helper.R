@@ -71,7 +71,7 @@ load_tiger <- function(
   shape <- gsub(".zip", "", tiger_file)
   shape <- gsub("_shp", "", shape) # for historic tracts
 
-  obj <- st_read(dsn = tmp, layer = shape,
+  obj <- sf::st_read(dsn = tmp, layer = shape,
     quiet = TRUE, stringsAsFactors = FALSE,
     wkt_filter = wkt_filter)
 
