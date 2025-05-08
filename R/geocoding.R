@@ -27,10 +27,10 @@ get_census_place_centroid <- function(location, places, states) {
       # This is a placeholder - you'd need to implement the actual lookup
       place_centroid <- places |>
         dplyr::filter(
-          stringr::str_detect(tolower(NAMELSAD), tolower(city)),
+          stringr::str_detect(tolower(`NAMELSAD`), tolower(city)),
           STATEFP == state_fips
         ) |>
-        dplyr::select(INTPTLON, INTPTLAT) |>
+        dplyr::select(`INTPTLON`, `INTPTLAT`) |>
         dplyr::slice(1)  # Take first match if multiple exist
 
       print(list(
@@ -113,9 +113,9 @@ map_locations_to_counties <- function (dta_loc_or_postal) {
   missing_long_lat <- dta_loc_or_postal |>
     dplyr::rowwise() |>
     dplyr::mutate(
-      centroid = if (!is.na(location)) { # <= expect 'location' attribute with "City, ST" format
+      centroid = if (!is.na(`location`)) { # <= expect 'location' attribute with "City, ST" format
         # Step 1: Try Census Place geocoding
-        cen_long_lat_geom <- get_census_place_centroid(location, places, states)
+        cen_long_lat_geom <- get_census_place_centroid(`location`, places, states)
         # if (is.null(cen_long_lat) && !is.na(postal_code) && postal_code != "") { # <= TODO: also map ZIP code to county, if location name fails
         #   # Step 2: If Census Place fails, try ZIP code geocoding
         #   cen_long_lat <- get_zipcode_centroid(postal_code, zip_code_centroids)
@@ -149,7 +149,7 @@ map_locations_to_counties <- function (dta_loc_or_postal) {
   
   # Convert to sf data frame (if necessary)
   dta_loc_or_postal_sf <- missing_long_lat |>
-    dplyr::filter(!is.na(long), !is.na(lat)) |>
+    dplyr::filter(!is.na(`long`), !is.na(`lat`)) |>
     as.data.frame() |>
     sf::st_as_sf(
       coords = c("long", "lat"),
@@ -173,10 +173,10 @@ map_locations_to_counties <- function (dta_loc_or_postal) {
     join = sf::st_within
   ) |>
     dplyr::mutate(
-      county_fips = COUNTYFP,
-      state_fips = STATEFP,
-      county_name = NAME,
-      state_abbr = (states |> dplyr::filter(STATEFP == state_fips))[1,]$STUSPS,
+      county_fips = `COUNTYFP`,
+      state_fips = `STATEFP`,
+      county_name = `NAME`,
+      state_abbr = (states |> dplyr::filter(`STATEFP` == state_fips))[1,]$STUSPS,
       geoid_co = GEOID
     ) |>
     dplyr::select(
@@ -193,7 +193,7 @@ map_locations_to_counties <- function (dta_loc_or_postal) {
 }
 
 # Function to geocode missing records
-geocode_missing_records <- function (dta_id = "company_id", dta_all, out_tidygeocoder, census_places_dataset, states, zip_code_centroids) {
+geocode_missing_records <- function (dta_id = "company_id", dta_all, out_tidygeocoder, places, states, zip_code_centroids) {
  
   # TODO: Just copied from pitchbook data repo, needs revision (see changes above) ...
 
@@ -201,17 +201,17 @@ geocode_missing_records <- function (dta_id = "company_id", dta_all, out_tidygeo
   missing_records <- (if (dta_id == "cisco_id") {
 
     dta_all |>
-      dplyr::filter(!(cisco_id %in% out_tidygeocoder$cisco_id))
+      dplyr::filter(!(`cisco_id` %in% out_tidygeocoder$cisco_id))
     
   } else if (dta_id == "company_id") {
 
     dta_all |>
-      dplyr::filter(!(company_id %in% out_tidygeocoder$company_id))
+      dplyr::filter(!(`company_id` %in% out_tidygeocoder$company_id))
     
   } else if (dta_id == "investor_id") {
 
     dta_all |>
-      dplyr::filter(!(investor_id %in% out_tidygeocoder$investor_id))
+      dplyr::filter(!(`investor_id` %in% out_tidygeocoder$investor_id))
     
   })
 
@@ -231,17 +231,17 @@ geocode_missing_records <- function (dta_id = "company_id", dta_all, out_tidygeo
   missing_long_lat <- out_tidygeocoder_missing |>
     dplyr::rowwise() |>
     dplyr::mutate(
-      centroid = if (!is.na(location)) { # <= changed 'hq_location' to 'location'
+      centroid = if (!is.na(`location`)) { # <= changed 'hq_location' to 'location'
         # Step 1: Try Census Place geocoding
-        cen_long_lat <- get_census_place_centroid(location, places, states)
-        if (is.null(cen_long_lat) && !is.na(postal_code) && postal_code != "") { # <= changed 'hq_post_code' to 'postal_code'
+        cen_long_lat <- get_census_place_centroid(`location`, places, states)
+        if (is.null(cen_long_lat) && !is.na(`postal_code`) && `postal_code` != "") { # <= changed 'hq_post_code' to 'postal_code'
           # Step 2: If Census Place fails, try ZIP code geocoding
-          cen_long_lat <- get_zipcode_centroid(postal_code)
+          cen_long_lat <- get_zipcode_centroid(`postal_code`)
         }
         list(cen_long_lat)
-      } else if (!is.na(postal_code) && postal_code != "") {
+      } else if (!is.na(`postal_code`) && `postal_code` != "") {
         # Step 2: If Census Place fails, try ZIP code geocoding
-        cen_long_lat <- get_zipcode_centroid(postal_code)
+        cen_long_lat <- get_zipcode_centroid(`postal_code`)
         list(cen_long_lat)
       } else {
         list(NULL)
@@ -261,7 +261,7 @@ geocode_missing_records <- function (dta_id = "company_id", dta_all, out_tidygeo
   
   # Convert to sf data frame
   out_tidygeocoder_missing_sf <- missing_long_lat |>
-    dplyr::filter(!is.na(long), !is.na(lat)) |>
+    dplyr::filter(!is.na(`long`), !is.na(`lat`)) |>
     sf::st_as_sf(
       coords = c("long", "lat"),
       crs = sf::st_crs(out_tidygeocoder)  # Use same CRS as original
@@ -284,10 +284,10 @@ geocode_missing_records <- function (dta_id = "company_id", dta_all, out_tidygeo
     join = sf::st_within
   ) |>
     dplyr::mutate(
-      state_fips = STATEFP,
-      county_fips = COUNTYFP,
-      county_name = NAME,
-      geoid_co = GEOID
+      state_fips = `STATEFP`,
+      county_fips = `COUNTYFP`,
+      county_name = `NAME`,
+      geoid_co = `GEOID`
     ) |>
     dplyr::select(
       # Drop most of the county attributes

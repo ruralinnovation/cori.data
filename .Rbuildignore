@@ -15,4 +15,5 @@
 ^data/\.*\\.geojson$$
 ^data/\.*\\.xlsx$$
 ^data/\.*\\.zip$$
+^data-raw$
 ^\.*\\.bak$$
