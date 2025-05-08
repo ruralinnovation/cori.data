@@ -1,7 +1,7 @@
 Package: cori.data
 Type: Package
 Title: Functions for exploring and performing quality control checks on CORI/RISI data
-Version: 0.1.0
+Version: 1.0.1
 Author: John Hall
 Maintainer: John Hall <john.hall@ruralinnovation.us>
 Description: Commonly used data sets and data functions.
