@@ -5,7 +5,7 @@ library(sf)
 #'
 #' @param tiger_year integer, year of data release
 #'
-#' @return return Census County & State FIPS codes as "data.frame" object
+#' @return return Census County & State FIPS codes as data.frame
 #'
 #' @export
 #'

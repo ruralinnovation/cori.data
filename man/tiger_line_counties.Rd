@@ -10,7 +10,7 @@ tiger_line_counties(tiger_year = 2024)
 \item{tiger_year}{integer, year of data release}
 }
 \value{
-return Census County boundaries as "sf" "data.frame" object
+return Census County boundaries as sf data.frame
 }
 \description{
 Function to load Census County boundaries from S3 (or from local disk, if cached as .RDS)

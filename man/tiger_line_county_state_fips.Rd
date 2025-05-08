@@ -10,7 +10,7 @@ tiger_line_county_state_fips(tiger_year = 2024)
 \item{tiger_year}{integer, year of data release}
 }
 \value{
-return Census County & State FIPS codes as "data.frame" object
+return Census County & State FIPS codes as data.frame
 }
 \description{
 Function to load data.frame that maps County FIPS codes to States

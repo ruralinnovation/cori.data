@@ -63,12 +63,18 @@ get_zipcode_centroid <- function(zipcode, zips) {
     dplyr::filter(STD_ZIP5 == zipcode) |>
     dplyr::select(LON, LAT) |>
     dplyr::slice(1)
+
+  print(list(
+    long = as.numeric(zipcode_centroid$LON), 
+    lat = as.numeric(zipcode_centroid$LAT),
+    crs = sf::st_crs(zipcode_centroid$geometry)
+  ))
   
   if (nrow(zipcode_centroid) > 0) {
     return(list(
-      long = zipcode_centroid$LON, 
-      lat = zipcode_centroid$LAT,
-      crs = sf::st_crs(place_centroid$geometry)
+      long = as.numeric(zipcode_centroid$LON), 
+      lat = as.numeric(zipcode_centroid$LAT),
+      crs = sf::st_crs(zipcode_centroid$geometry)
     ))
   }
   return(NULL)
@@ -80,7 +86,7 @@ get_zipcode_centroid <- function(zipcode, zips) {
 #' `location` attributes of the form "City(Town), ST" or a 
 #' `postal_code` atttribute with a 5-digit ZIP code value
 #'
-#' @return return "data.frame" object with county geoid and point geometry based on Census place or ZIP code centroid
+#' @return return data.frame with county geoid and point geometry based on Census place or ZIP code centroid
 #'
 #' @export
 #'
@@ -294,3 +300,31 @@ geocode_missing_records <- function (dta_id = "company_id", dta_all, out_tidygeo
   
   return(final_geocoded_sf_w_co)
 }
+
+#' A function that can turn an array of GeoJSON objects into an sf data.fame
+#'
+#' @param geo_json_list A list of GeoJSON objects (i.e. the "features" array property of a FeatureCollection) 
+#'
+#' @return sf data.frame
+#' 
+#' @importFrom dplyr bind_rows
+#' @importFrom sf st_geometry
+#' @importFrom sf st_sf
+#' 
+#' @export
+# Since geocoding results come back as GeoJSON objects, need to define function 
+geojson_array_to_sf <- function (geo_json_list) { # <- geo_json_list: array of list representation of GeoJSON
+  sf::st_sf(geo_json_list |>
+    lapply(function (x) {
+      geojson_properties <- as.data.frame(x[["properties"]])
+      # creates row of class "sf tbl_df tbl data.frame" with "geometry" column, but ...
+      # read_sf can *only* operate on n the "geometry" property of the GeoJSON feature
+      geojson_table <- sf::read_sf(jsonlite::toJSON(x[["geometry"]], auto_unbox = TRUE))
+      # enriches geojson_properties data.frame with "geometry" column
+      sf::st_geometry(geojson_properties) <- geojson_table$geometry
+      geojson_properties
+    }) |>
+    dplyr::bind_rows()
+  )
+}
+

@@ -4,15 +4,11 @@ library(sf)
 
 # source(paste0(here::here(), "/R/tigris_helper.R"))
 
-# setup data dir
-data_dir <- paste0(here::here(), "/data")
-if (! dir.exists(data_dir)) dir.create(data_dir)
-
 #' Function to load Census State boundaries from S3 (or from local disk, if cached as .RDS)
 #'
 #' @param tiger_year integer, year of data release
 #'
-#' @return return Census State boundaries as "sf" "data.frame" object
+#' @return return Census State boundaries as sf data.frame object
 #'
 #' @export
 #'
@@ -23,6 +19,10 @@ if (! dir.exists(data_dir)) dir.create(data_dir)
 #' }
 #'
 tiger_line_states <- function (tiger_year = 2024) {
+
+    # setup data dir
+    data_dir <- paste0(here::here(), "/data")
+    if (! dir.exists(data_dir)) dir.create(data_dir)
 
     # usethis::use_data_raw() # <= if we were committing local data to the package repo (version control)
 

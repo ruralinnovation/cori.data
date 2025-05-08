@@ -12,7 +12,7 @@ map_locations_to_counties(dta_loc_or_postal)
 \code{postal_code} atttribute with a 5-digit ZIP code value}
 }
 \value{
-return "data.frame" object with county geoid and point geometry based on Census place or ZIP code centroid
+return data.frame with county geoid and point geometry based on Census place or ZIP code centroid
 }
 \description{
 Function to get place or ZIP code centroids given a data.frame with either \code{location} or \code{postal_code}

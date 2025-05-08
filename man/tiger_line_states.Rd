@@ -10,7 +10,7 @@ tiger_line_states(tiger_year = 2024)
 \item{tiger_year}{integer, year of data release}
 }
 \value{
-return Census State boundaries as "sf" "data.frame" object
+return Census State boundaries as sf data.frame object
 }
 \description{
 Function to load Census State boundaries from S3 (or from local disk, if cached as .RDS)
