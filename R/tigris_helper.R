@@ -63,8 +63,6 @@ load_tiger <- function(
 
   # Process filter_by
   wkt_filter <- input_to_wkt(filter_by)
-
-  tmp <- tempdir()
   tiger_file <- basename(local_file_path)
   cache_dir <- dirname(local_file_path)
 
@@ -76,7 +74,13 @@ load_tiger <- function(
   file_loc <- file.path(cache_dir, tiger_file)
   shp_loc  <- file.path(cache_dir, sprintf("%s.shp", shape))
 
-  unzip(file_loc, exdir = tmp)
+  tmp <- gsub(".zip", "", file_loc)
+
+  unzip_command <- sprintf("unzip -u %s -d %s", file_loc, tmp)
+  print(unzip_command)
+
+  system(unzip_command)
+
   shape <- gsub(".zip", "", tiger_file)
   shape <- gsub("_shp", "", shape) # for historic tracts
 

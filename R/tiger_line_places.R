@@ -40,7 +40,7 @@ tiger_line_places <- function (tiger_year = 2024) {
         dir.create(paste0(data_dir, "/", data_prefix), recursive = TRUE, showWarnings = FALSE)
 
         data_files <- lapply(data_s3_files, function (s3_key_path) {
-            cori.db::get_s3_object(s3_bucket_name, s3_key_path, paste0(data_dir, "/", data_prefix, "/", basename(s3_key_path)))
+            cori.db::get_s3_object(s3_bucket_name, s3_key_path, data_dir)
         })
 
         local_place_files <- list.files(paste0(data_dir, "/", data_prefix), full.names = TRUE)
