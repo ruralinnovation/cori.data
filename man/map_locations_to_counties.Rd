@@ -26,6 +26,7 @@ Function to get place or ZIP code centroids given a data.frame with either \code
    name = c("Conduit Coders 5/6"),
    location = c("Ada, OK"),
    score = c(79))
+
  dta_centroid_and_geoid_co <- map_locations_to_counties(dta_loc_or_postal)
 }
 

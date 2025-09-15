@@ -55,8 +55,6 @@ get_census_place_centroid <- function(location, places, states) {
 # Function to get ZIP code centroid
 get_zipcode_centroid <- function(zipcode, zips) {
 
-  # TODO: Just copied from pitchbook data repo, needs revision...
-
   # Use a pre-loaded or dynamically fetched ZIP code centroids dataset
   # This is a placeholder - you'd need to implement the actual lookup
   zipcode_centroid <- zips |>
@@ -99,32 +97,33 @@ get_zipcode_centroid <- function(zipcode, zips) {
 #'    name = c("Conduit Coders 5/6"),
 #'    location = c("Ada, OK"),
 #'    score = c(79))
+#' 
 #'  dta_centroid_and_geoid_co <- map_locations_to_counties(dta_loc_or_postal)
 #' }
 #'
 map_locations_to_counties <- function (dta_loc_or_postal) {
 
-  places <- tiger_line_places()
-  counties <- tiger_line_counties()
-  states <- tiger_line_states()
-  # zip_code_centroids <- todo()
+  places <- cori.data::tiger_line_places(2024)
+  counties <- cori.data::tiger_line_counties(2024)
+  states <- cori.data::tiger_line_states(2024)
+  zips <- cori.data::zip_code_centroids()
 
   # Populate long/lat for missing records
   missing_long_lat <- dta_loc_or_postal |>
     dplyr::rowwise() |>
     dplyr::mutate(
-      centroid = if (!is.na(`location`)) { # <= expect 'location' attribute with "City, ST" format
-        # Step 1: Try Census Place geocoding
-        cen_long_lat_geom <- get_census_place_centroid(`location`, places, states)
-        # if (is.null(cen_long_lat) && !is.na(postal_code) && postal_code != "") { # <= TODO: also map ZIP code to county, if location name fails
-        #   # Step 2: If Census Place fails, try ZIP code geocoding
-        #   cen_long_lat <- get_zipcode_centroid(postal_code, zip_code_centroids)
-        # }
+      centroid = if (!is.na(postal_code) && postal_code != "") { # <= 5-digit US ZIP code
+        # Step 1: Try ZIP code geocoding
+        cen_long_lat_geom <- get_zipcode_centroid(postal_code, zips)
+        if (is.null(cen_long_lat_geom) && !is.na(`location`)) {
+          # Step 2: If ZIP code fails, try Census Place geocoding
+          cen_long_lat_geom <- get_census_place_centroid(`location`, places, states)
+        }
         list(cen_long_lat_geom)
-      # } else if (!is.na(postal_code) && postal_code != "") { # <= TODO: also map ZIP code to county
-      #   # Step 2: If Census Place fails, try ZIP code geocoding
-      #   cen_long_lat_geom <- get_zipcode_centroid(postal_code, zip_code_centroids)
-      #   list(cen_long_lat_geom)
+      } else if (!is.na(`location`)) { # <= expect 'location' attribute with "City, ST" format
+        # Step 2: Try Census Place geocoding
+        cen_long_lat_geom <- get_census_place_centroid(`location`, places, states)
+        list(cen_long_lat_geom)
       } else {
         list(NULL)
       }
@@ -176,7 +175,7 @@ map_locations_to_counties <- function (dta_loc_or_postal) {
       county_fips = `COUNTYFP`,
       state_fips = `STATEFP`,
       county_name = `NAME`,
-      state_abbr = (states |> dplyr::filter(`STATEFP` == state_fips))[1,]$STUSPS,
+      state_abbr = states$STUSPS[match(state_fips, states$STATEFP)],
       geoid_co = GEOID
     ) |>
     dplyr::select(

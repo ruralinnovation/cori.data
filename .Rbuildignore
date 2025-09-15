@@ -17,3 +17,11 @@
 ^data/\.*\\.zip$$
 ^data-raw$
 ^\.*\\.bak$$
+^counties_2024\.rds$
+^counties\.rds$
+^county_state_fips\.rds$
+^places\.rds$
+^states_2024\.rds$
+^states\.rds$
+^tiger$
+^zip_code_centroids\.rds$
