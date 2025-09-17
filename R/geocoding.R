@@ -21,7 +21,7 @@ get_census_place_centroid <- function(location, places, states) {
 
       state_fips <- (states |> dplyr::filter(STUSPS == state_abbr))[1,]$STATEFP
 
-      message(state_fips)
+      message(paste0("state_fips: ", state_fips))
     
       # Use a pre-loaded or dynamically fetched Census Places dataset
       # This is a placeholder - you'd need to implement the actual lookup
@@ -33,11 +33,11 @@ get_census_place_centroid <- function(location, places, states) {
         dplyr::select(`INTPTLON`, `INTPTLAT`) |>
         dplyr::slice(1)  # Take first match if multiple exist
 
-      print(list(
-        long = as.numeric(place_centroid$INTPTLON), 
-        lat = as.numeric(place_centroid$INTPTLAT),
-        crs = sf::st_crs(place_centroid$geometry)
-      ))
+      # print(list(
+      #   long = as.numeric(place_centroid$INTPTLON), 
+      #   lat = as.numeric(place_centroid$INTPTLAT),
+      #   crs = sf::st_crs(place_centroid$geometry)
+      # ))
       
       if (nrow(place_centroid) > 0) {
         return(list(
@@ -55,6 +55,8 @@ get_census_place_centroid <- function(location, places, states) {
 # Function to get ZIP code centroid
 get_zipcode_centroid <- function(zipcode, zips) {
 
+  message(paste0("zipcode: ", zipcode))
+
   # Use a pre-loaded or dynamically fetched ZIP code centroids dataset
   # This is a placeholder - you'd need to implement the actual lookup
   zipcode_centroid <- zips |>
@@ -62,11 +64,11 @@ get_zipcode_centroid <- function(zipcode, zips) {
     dplyr::select(LON, LAT) |>
     dplyr::slice(1)
 
-  print(list(
-    long = as.numeric(zipcode_centroid$LON), 
-    lat = as.numeric(zipcode_centroid$LAT),
-    crs = sf::st_crs(zipcode_centroid$geometry)
-  ))
+  # print(list(
+  #   long = as.numeric(zipcode_centroid$LON), 
+  #   lat = as.numeric(zipcode_centroid$LAT),
+  #   crs = sf::st_crs(zipcode_centroid$geometry)
+  # ))
   
   if (nrow(zipcode_centroid) > 0) {
     return(list(
@@ -107,6 +109,8 @@ map_locations_to_counties <- function (dta_loc_or_postal) {
   counties <- cori.data::tiger_line_counties(2024)
   states <- cori.data::tiger_line_states(2024)
   zips <- cori.data::zip_code_centroids()
+
+  message("Geocoding to (postal code) or (city/town, state)...")
 
   # Populate long/lat for missing records
   missing_long_lat <- dta_loc_or_postal |>
