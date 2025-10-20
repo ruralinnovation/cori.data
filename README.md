@@ -12,5 +12,6 @@ This is an internal meta package linking packages of useful data sets and functi
 
 Once you have all of the dependencies installed, to build and install this package from the local project directory, run:
 ```r
-pkgbuild::clean_dll(); pkgbuild::compile_dll(); devtools::document(); devtools::check(); devtools::install()
+pkgbuild::clean_dll(); pkgbuild::compile_dll(); devtools::document(); devtools::check()
+devtools::install()
 ```

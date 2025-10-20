@@ -20,7 +20,7 @@ https://catalog.data.gov/dataset/zip-code-population-weighted-centroids
 \examples{
 
 \dontrun{
- states <- zip_code_centroids(2024)
+ zips <- zip_code_centroids(2024)
 }
 
 }

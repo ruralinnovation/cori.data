@@ -14,7 +14,7 @@ library(sf)
 #' @examples
 #'
 #' \dontrun{
-#'  states <- zip_code_centroids(2024)
+#'  zips <- zip_code_centroids(2024)
 #' }
 #'
 zip_code_centroids <- function (hud_year = 2024) {

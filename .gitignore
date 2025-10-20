@@ -40,7 +40,8 @@ vignettes/*.pdf
 
 # By default, data files should not be added to version control,
 # but excpetions can be made when needed with `git add -f ...`
-data/
+/data
+/inst
 *.csv
 *.gpkg
 *.shp
