@@ -21,6 +21,8 @@ dir.create(paste0(data_dir, "/inst/ext_data/test"), showWarnings = FALSE)
 
 cori.db::get_s3_object(s3_bucket_name, paste0(data_prefix, "/tl_2024_us_state.zip"), "inst/ext_data/test/tl_2024_us_state.zip")
 
+cori.db::get_s3_object(s3_bucket_name, paste0(data_prefix, "/cb_2024_us_state_500k.zip"), "inst/ext_data/test/cb_2024_us_state_500k.zip")
+
 data_s3_files <- (
     cori.db::list_s3_objects(bucket_name = s3_bucket_name) |> dplyr::filter(grepl(data_prefix, key))
 )$key

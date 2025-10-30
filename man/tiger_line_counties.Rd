@@ -7,7 +7,7 @@
 tiger_line_counties(year = "cb_2024")
 }
 \arguments{
-\item{year}{character, year of data release}
+\item{year}{character, year of data release; prefix with "cb_" for cartographic boundaries}
 }
 \value{
 return Census County boundaries as sf data.frame
@@ -18,7 +18,7 @@ Function to load Census County boundaries from S3 (or from local disk, if cached
 \examples{
 
 \dontrun{
- counties <- tiger_line_counties("2024")
+ counties <- tiger_line_counties("2024") # Returns full tiger line 2024 county boundary geomtry
 }
 
 }
