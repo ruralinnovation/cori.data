@@ -1,9 +1,11 @@
 library(cori.db)
 library(dplyr)
 
-# setup data dir
+# Setup data dir
 data_dir <- paste0(here::here(), "/inst/ext_data/")
 if (! dir.exists(data_dir)) dir.create(data_dir)
+
+# Manually download geometry files to data_dir from [US Census](https://www.census.gov/geographies/mapping-files/time-series/geo/cartographic-boundary.html)
 
 ### WRITE ------------------------------------------------------------------------------------------------------------
 

@@ -6,6 +6,8 @@ library(sf)
 data_dir <- paste0(here::here(), "/inst/ext_data/source")
 if (! dir.exists(data_dir)) dir.create(data_dir)
 
+# Manually download geometry files to data_dir from [US Department of Housing and Urban Development](https://hudgis-hud.opendata.arcgis.com/datasets/zip-code-population-weighted-centroids-1/about)
+
 # TODO: Write code to source places files from s3://cori.data.zip
 local_zip_code_pop_weighted_centroid_files <- list.files("inst/ext_data/source/zip_codes", full.names = TRUE)
 message(paste(local_zip_code_pop_weighted_centroid_files, collapse = "\n"))

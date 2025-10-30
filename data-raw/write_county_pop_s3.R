@@ -8,6 +8,8 @@ if (! dir.exists(data_dir)) dir.create(data_dir)
 
 data_prefix <- "cenpop2020/county"
 
+# Manually download geometry files to data_dir from [US Census](https://www2.census.gov/geo/docs/reference/cenpop2020/)
+
 cenpop_2020_file <- paste0(data_dir, "/", data_prefix, "/CenPop2020_Mean_CO.txt")
 
 if (file.exists(cenpop_2020_file)) {
