@@ -6,7 +6,7 @@ library(sf)
 
 #' Function to load Census County boundaries from S3 (or from local disk, if cached as .RDS)
 #'
-#' @param tiger_year integer, year of data release
+#' @param year character, year of data release; prefix with "cb_" for cartographic boundaries
 #'
 #' @return return Census County boundaries as sf data.frame
 #'
@@ -15,10 +15,10 @@ library(sf)
 #' @examples
 #'
 #' \dontrun{
-#'  counties <- tiger_line_counties(2024)
+#'  counties <- tiger_line_counties("2024") # Returns full tiger line 2024 county boundary geomtry
 #' }
 #'
-tiger_line_counties <- function (tiger_year = 2024) {
+tiger_line_counties <- function (year = "cb_2024") {
 
     # setup data dir
     data_dir <- paste0(here::here(), "/data")
@@ -28,6 +28,16 @@ tiger_line_counties <- function (tiger_year = 2024) {
 
     data_prefix <- "tiger/line/counties"
     s3_bucket_name <- "cori.data.census"
+      
+    if (startsWith(year, "20")) {
+      tiger_year <- paste0("tl_")
+    } else if (startsWith(year, "tl_")) {
+      tiger_year <- year
+    } else if (startsWith(year, "cb_")) {
+      tiger_year <- year
+    } else {
+      stop("tiger_line_counties expects `year` argument as \"YYYY\", \"tl_YYYY\", or \"cb_YYYY\" (for cartographic boundaries)")
+    }
 
     if (!file.exists(paste0(data_dir, "/counties_", tiger_year, ".rds"))) {
 

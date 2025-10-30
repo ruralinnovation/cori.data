@@ -4,10 +4,10 @@
 \alias{tiger_line_counties}
 \title{Function to load Census County boundaries from S3 (or from local disk, if cached as .RDS)}
 \usage{
-tiger_line_counties(tiger_year = 2024)
+tiger_line_counties(year = "cb_2024")
 }
 \arguments{
-\item{tiger_year}{integer, year of data release}
+\item{year}{character, year of data release}
 }
 \value{
 return Census County boundaries as sf data.frame
@@ -18,7 +18,7 @@ Function to load Census County boundaries from S3 (or from local disk, if cached
 \examples{
 
 \dontrun{
- counties <- tiger_line_counties(2024)
+ counties <- tiger_line_counties("2024")
 }
 
 }
