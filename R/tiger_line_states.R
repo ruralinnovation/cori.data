@@ -29,11 +29,11 @@ tiger_line_states <- function (year = "cb_2024") {
     data_prefix <- "tiger/line/states"
     s3_bucket_name <- "cori.data.census"
       
-    if (startsWith(year, "20")) {
-      tiger_year <- paste0("tl_")
-    } else if (startsWith(year, "tl_")) {
+    if (startsWith(as.character(year), "20")) {
+      tiger_year <- paste0("tl_", as.character(year))
+    } else if (startsWith(as.character(year), "tl_")) {
       tiger_year <- year
-    } else if (startsWith(year, "cb_")) {
+    } else if (startsWith(as.character(year), "cb_")) {
       tiger_year <- year
     } else {
       stop("tiger_line_states expects `year` argument as \"YYYY\", \"tl_YYYY\", or \"cb_YYYY\" (for cartographic boundaries)")

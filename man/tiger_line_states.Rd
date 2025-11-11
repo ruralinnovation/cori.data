@@ -4,10 +4,10 @@
 \alias{tiger_line_states}
 \title{Function to load Census State boundaries from S3 (or from local disk, if cached as .RDS)}
 \usage{
-tiger_line_states(tiger_year = 2024)
+tiger_line_states(year = "cb_2024")
 }
 \arguments{
-\item{tiger_year}{integer, year of data release}
+\item{year}{character, year of data release; prefix with "cb_" for cartographic boundaries}
 }
 \value{
 return Census State boundaries as sf data.frame object
@@ -18,7 +18,7 @@ Function to load Census State boundaries from S3 (or from local disk, if cached 
 \examples{
 
 \dontrun{
- states <- tiger_line_states(2024)
+ states <- tiger_line_states("2024") # Returns full tiger line 2024 state boundary geomtry
 }
 
 }
