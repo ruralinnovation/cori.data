@@ -18,7 +18,7 @@ library(sf)
 #'  places <- tiger_line_places(2024)
 #' }
 #'
-tiger_line_places <- function (tiger_year = 2024) {
+tiger_line_places <- function (year = "cb_2024") {
 
     # setup data dir
     data_dir <- paste0(here::here(), "/data")
@@ -29,11 +29,23 @@ tiger_line_places <- function (tiger_year = 2024) {
     data_prefix <- "tiger/line/places"
     s3_bucket_name <- "cori.data.census"
 
+    # Parse year format to determine file type
+    if (startsWith(as.character(year), "20")) {
+      # For numeric years, use Tiger Line files (tl_) only, not cartographic (cb_)
+      tiger_year <- paste0("tl_", as.character(year))
+    } else if (startsWith(as.character(year), "tl_")) {
+      tiger_year <- year
+    } else if (startsWith(as.character(year), "cb_")) {
+      tiger_year <- year
+    } else {
+      stop("tiger_line_counties expects `year` argument as \"YYYY\", \"tl_YYYY\", or \"cb_YYYY\" (for cartographic boundaries)")
+    }
+
     if (!file.exists(paste0(data_dir, "/places_", tiger_year, ".rds"))) {
 
         data_s3_files <- (
-            cori.db::list_s3_objects(bucket_name = s3_bucket_name) |> 
-                dplyr::filter(grepl(data_prefix, `key`)) |> 
+            cori.db::list_s3_objects(bucket_name = s3_bucket_name) |>
+                dplyr::filter(grepl(data_prefix, `key`)) |>
                 dplyr::filter(grepl(tiger_year, `key`))
         )$key
 

@@ -4,7 +4,7 @@
 \alias{tiger_line_places}
 \title{Function to load Census Place boundaries from S3 (or from local disk, if cached as .RDS)}
 \usage{
-tiger_line_places(tiger_year = 2024)
+tiger_line_places(year = "cb_2024")
 }
 \arguments{
 \item{tiger_year}{integer, year of data release}
