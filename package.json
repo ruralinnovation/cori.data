@@ -1,0 +1,33 @@
+{
+  "name": "@cori.data",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Credential-vending Lambda + CDK infrastructure for cori.data::connect_to_s3",
+  "bin": {
+    "app": "bin/app.js"
+  },
+  "dependencies": {
+    "@aws-sdk/client-sts": "^3.717.0",
+    "aws-cdk-lib": "^2.173.0",
+    "constructs": "^10.4.2"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.147",
+    "@types/node": "^22.10.2",
+    "aws-cdk": "^2.1000.0",
+    "esbuild": "^0.28.1",
+    "ts-node": "^10.9.2",
+    "typescript": "~5.7.2"
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "synth": "cdk synth",
+    "diff": "cdk diff",
+    "bootstrap": "cdk bootstrap aws://312512371189/us-east-1",
+    "deploy": "cdk deploy --require-approval broadening",
+    "outputs": "aws cloudformation describe-stacks --stack-name CoriDataVendCredentials --region us-east-1 --query \"Stacks[0].Outputs[].{Output:OutputKey,Value:OutputValue}\" --output table",
+    "cname-target": "aws cloudformation describe-stacks --stack-name CoriDataVendCredentials --region us-east-1 --query \"Stacks[0].Outputs[?OutputKey=='CnameTarget'].OutputValue\" --output text",
+    "destroy": "cdk destroy"
+  }
+}

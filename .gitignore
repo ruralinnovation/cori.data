@@ -55,3 +55,14 @@ vignettes/*.pdf
 *.idea
 _targets
 node_modules
+
+# CDK / Lambda build artifacts (source lives in src/, manifest at root
+# package.json). cdk.context.json is intentionally NOT ignored -- CDK caches
+# context lookups (e.g. AZs) there and it should be committed for
+# reproducible synth.
+cdk.out/
+.cdk.staging/
+src/**/*.js
+src/**/*.d.ts
+*.tsbuildinfo
+npm-debug.log*

@@ -10,17 +10,7 @@ Encoding: UTF-8
 LazyData: true
 Imports:
   DBI,
-  cori.db,
-  dplyr,
-  data.table,
-  glue,
-  here,
-  jsonlite,
-  magrittr,
-  purrr,
-  sf,
-  stringr
-Remotes:
-  ruralinnovation/cori.db
+  duckdb,
+  httr
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3

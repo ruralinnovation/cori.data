@@ -2,6 +2,7 @@
 ^\.Rproj\.user$
 ^\.R*$
 ^.*\.Rproj$
+^\.claude$
 ^\.git$
 ^\.github$
 ^\.gitignore$
@@ -26,3 +27,10 @@
 ^tiger$
 ^zip_code_centroids\.rds$
 ^inst$
+^src$
+^package\.json$
+^package-lock\.json$
+^tsconfig\.json$
+^cdk\.json$
+^cdk\.out$
+^node_modules$
