@@ -7,7 +7,8 @@
 connect_to_s3(
   bucket,
   region = "us-east-1",
-  vending_url = default_vending_url()
+  vending_url = default_vending_url(),
+  require_local = FALSE
 )
 }
 \arguments{
@@ -20,6 +21,11 @@ Required when falling back to the vending endpoint.}
 used when no local AWS credentials are configured. Defaults to the
 \code{"cori.data.vending_url"} option, then the \code{CORI_DATA_VENDING_URL}
 environment variable, then the deployed CORI endpoint.}
+
+\item{require_local}{Logical. If \code{TRUE}, error immediately when no local
+AWS credentials are configured instead of falling back to (read-only)
+vended credentials. Use this for connections that will write to S3.
+Default: \code{FALSE}.}
 }
 \value{
 An open \code{duckdb_connection}. The caller owns the connection and
@@ -44,7 +50,9 @@ from \code{vending_url} and installed directly as a static secret.
 \code{bucket} is only used for the vending path, where the endpoint requires
 it; it is ignored when local credentials are present. Vended credentials
 are read-only (across the allowlisted \verb{cori.data.*} buckets), so writes
-through this connection require local credentials.
+through this connection require local credentials -- pass
+\code{require_local = TRUE} to fail fast with a clear message instead of
+getting an opaque S3 access-denied error mid-query.
 }
 \examples{
 \dontrun{
