@@ -22,7 +22,6 @@ This deliberately does not detect credentials sourced from an EC2 instance
 profile, an ECS task role, or an SSO session that only populated a cached
 token (\verb{~/.aws/sso/}). Callers in those environments fall through to the
 vending path even though they could authenticate another way — the
-conservative choice, since the vending path is the tracked and
-bucket-scoped one.
+conservative choice, since the vending path is the tracked, read-only one.
 }
 \keyword{internal}

@@ -10,8 +10,7 @@
 #' profile, an ECS task role, or an SSO session that only populated a cached
 #' token (`~/.aws/sso/`). Callers in those environments fall through to the
 #' vending path even though they could authenticate another way — the
-#' conservative choice, since the vending path is the tracked and
-#' bucket-scoped one.
+#' conservative choice, since the vending path is the tracked, read-only one.
 #'
 #' @return Logical. `TRUE` if credentials are present in either standard
 #'   location.
@@ -29,7 +28,7 @@ has_local_aws_credentials <- function() {
 }
 
 
-# Internal: fetch short-lived, bucket-scoped credentials from the vending
+# Internal: fetch short-lived, read-only credentials from the vending
 # endpoint. Validates the response rather than letting a non-200 body flow
 # into CREATE SECRET as NULLs, which would surface later as an opaque S3
 # auth failure instead of a clear error here.
@@ -37,10 +36,20 @@ has_local_aws_credentials <- function() {
   resp <- httr::GET(vending_url, query = list(bucket = bucket))
 
   if (httr::http_error(resp)) {
+    body <- httr::content(resp, "text", encoding = "UTF-8")
+
+    if (grepl("Bucket not permitted", body, fixed = TRUE)) {
+      stop(sprintf(
+        paste0("Bucket '%s' is not available via the credential-vending ",
+               "endpoint. Check the name, or use local AWS credentials if ",
+               "it's a private/project bucket."),
+        bucket
+      ), call. = FALSE)
+    }
+
     stop(sprintf(
       "Credential vending endpoint returned HTTP %s for bucket '%s': %s",
-      httr::status_code(resp), bucket,
-      httr::content(resp, "text", encoding = "UTF-8")
+      httr::status_code(resp), bucket, body
     ), call. = FALSE)
   }
 
@@ -74,17 +83,21 @@ has_local_aws_credentials <- function() {
 #' 1. If [has_local_aws_credentials()] finds credentials in the environment
 #'    or `~/.aws/credentials`, the connection uses the caller's own identity
 #'    via `PROVIDER CREDENTIAL_CHAIN` — no network round-trip.
-#' 2. Otherwise, short-lived credentials scoped to `bucket` are fetched from
-#'    `vending_url` and installed directly as a static secret.
+#' 2. Otherwise, short-lived read-only credentials for `bucket` are fetched
+#'    from `vending_url` and installed directly as a static secret.
 #'
-#' `bucket` is only used for the vending path, where it scopes the issued
-#' credentials; it is ignored when local credentials are present.
+#' `bucket` is only used for the vending path, where the endpoint requires
+#' it; it is ignored when local credentials are present. Vended credentials
+#' are read-only (across the allowlisted `cori.data.*` buckets), so writes
+#' through this connection require local credentials.
 #'
-#' @param bucket Character. S3 bucket to scope vended credentials to. Required
-#'   when falling back to the vending endpoint.
+#' @param bucket Character. S3 bucket to request vended credentials for.
+#'   Required when falling back to the vending endpoint.
 #' @param region Character. AWS region for the S3 secret. Default: `"us-east-1"`.
 #' @param vending_url Character. URL of the credential-vending endpoint. Only
-#'   required when no local AWS credentials are configured. Default: `NULL`.
+#'   used when no local AWS credentials are configured. Defaults to the
+#'   `"cori.data.vending_url"` option, then the `CORI_DATA_VENDING_URL`
+#'   environment variable, then the deployed CORI endpoint.
 #'
 #' @return An open `duckdb_connection`. The caller owns the connection and
 #'   must disconnect it, e.g. `on.exit(DBI::dbDisconnect(con, shutdown = TRUE))`.
@@ -97,7 +110,8 @@ has_local_aws_credentials <- function() {
 #' }
 #'
 #' @export
-connect_to_s3 <- function(bucket, region = "us-east-1", vending_url = NULL) {
+connect_to_s3 <- function(bucket, region = "us-east-1",
+                          vending_url = default_vending_url()) {
   con <- DBI::dbConnect(duckdb::duckdb())
 
   DBI::dbExecute(con, "INSTALL httpfs; LOAD httpfs;")
@@ -117,7 +131,7 @@ connect_to_s3 <- function(bucket, region = "us-east-1", vending_url = NULL) {
     );", region))
 
   } else {
-    # No local credentials -- fetch short-lived, bucket-scoped temporary
+    # No local credentials -- fetch short-lived, read-only temporary
     # credentials from the vending endpoint instead. Fail loudly here if the
     # caller cannot reach it, rather than deep inside a later S3 read.
     if (missing(bucket) || !is.character(bucket) || !nzchar(bucket)) {
@@ -125,7 +139,7 @@ connect_to_s3 <- function(bucket, region = "us-east-1", vending_url = NULL) {
       stop("No local AWS credentials found; 'bucket' is required to request ",
            "vended credentials.", call. = FALSE)
     }
-    if (is.null(vending_url) || !nzchar(vending_url)) {
+    if (is.null(vending_url) || !is.character(vending_url) || !nzchar(vending_url)) {
       DBI::dbDisconnect(con, shutdown = TRUE)
       stop("No local AWS credentials found and no 'vending_url' supplied. ",
            "Configure AWS credentials, or pass the credential-vending ",

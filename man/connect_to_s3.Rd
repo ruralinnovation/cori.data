@@ -4,16 +4,22 @@
 \alias{connect_to_s3}
 \title{Open a DuckDB connection configured for S3 access}
 \usage{
-connect_to_s3(bucket, region = "us-east-1", vending_url = NULL)
+connect_to_s3(
+  bucket,
+  region = "us-east-1",
+  vending_url = default_vending_url()
+)
 }
 \arguments{
-\item{bucket}{Character. S3 bucket to scope vended credentials to. Required
-when falling back to the vending endpoint.}
+\item{bucket}{Character. S3 bucket to request vended credentials for.
+Required when falling back to the vending endpoint.}
 
 \item{region}{Character. AWS region for the S3 secret. Default: \code{"us-east-1"}.}
 
 \item{vending_url}{Character. URL of the credential-vending endpoint. Only
-required when no local AWS credentials are configured. Default: \code{NULL}.}
+used when no local AWS credentials are configured. Defaults to the
+\code{"cori.data.vending_url"} option, then the \code{CORI_DATA_VENDING_URL}
+environment variable, then the deployed CORI endpoint.}
 }
 \value{
 An open \code{duckdb_connection}. The caller owns the connection and
@@ -31,12 +37,14 @@ Credentials are resolved in two ways, in order:
 \item If \code{\link[=has_local_aws_credentials]{has_local_aws_credentials()}} finds credentials in the environment
 or \verb{~/.aws/credentials}, the connection uses the caller's own identity
 via \verb{PROVIDER CREDENTIAL_CHAIN} — no network round-trip.
-\item Otherwise, short-lived credentials scoped to \code{bucket} are fetched from
-\code{vending_url} and installed directly as a static secret.
+\item Otherwise, short-lived read-only credentials for \code{bucket} are fetched
+from \code{vending_url} and installed directly as a static secret.
 }
 
-\code{bucket} is only used for the vending path, where it scopes the issued
-credentials; it is ignored when local credentials are present.
+\code{bucket} is only used for the vending path, where the endpoint requires
+it; it is ignored when local credentials are present. Vended credentials
+are read-only (across the allowlisted \verb{cori.data.*} buckets), so writes
+through this connection require local credentials.
 }
 \examples{
 \dontrun{
