@@ -16,7 +16,23 @@ Imports:
   httr,
   paws.storage,
   utils
+Remotes:
+  ruralinnovation/cori.data.bds,
+  ruralinnovation/cori.data.bfs,
+  ruralinnovation/cori.data.bps,
+  ruralinnovation/cori.data.fcc,
+  ruralinnovation/cori.data.hu,
+  ruralinnovation/cori.data.pep,
+  ruralinnovation/cori.data.qcew
 Suggests:
+  cori.data.bds,
+  cori.data.bfs,
+  cori.data.bps,
+  cori.data.fcc,
+  cori.data.hu,
+  cori.data.pep,
+  cori.data.qcew,
+  remotes,
   sf,
   testthat (>= 3.0.0),
   withr
