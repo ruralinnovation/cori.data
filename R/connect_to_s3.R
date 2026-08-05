@@ -104,6 +104,10 @@ has_local_aws_credentials <- function() {
 #'   AWS credentials are configured instead of falling back to (read-only)
 #'   vended credentials. Use this for connections that will write to S3.
 #'   Default: `FALSE`.
+#' @param dbdir Character. Path to a persistent DuckDB database file. Default
+#'   `":memory:"` opens an in-memory instance, matching prior behavior. Pass
+#'   a file path for callers that need the catalog/temp state to persist
+#'   across a script run.
 #'
 #' @return An open `duckdb_connection`. The caller owns the connection and
 #'   must disconnect it, e.g. `on.exit(DBI::dbDisconnect(con, shutdown = TRUE))`.
@@ -118,8 +122,9 @@ has_local_aws_credentials <- function() {
 #' @export
 connect_to_s3 <- function(bucket, region = "us-east-1",
                           vending_url = default_vending_url(),
-                          require_local = FALSE) {
-  con <- DBI::dbConnect(duckdb::duckdb())
+                          require_local = FALSE,
+                          dbdir = ":memory:") {
+  con <- DBI::dbConnect(duckdb::duckdb(), dbdir = dbdir)
 
   DBI::dbExecute(con, "INSTALL httpfs; LOAD httpfs;")
   DBI::dbExecute(con, "INSTALL aws;   LOAD aws;")

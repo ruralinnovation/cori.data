@@ -8,7 +8,8 @@ connect_to_s3(
   bucket,
   region = "us-east-1",
   vending_url = default_vending_url(),
-  require_local = FALSE
+  require_local = FALSE,
+  dbdir = ":memory:"
 )
 }
 \arguments{
@@ -26,6 +27,11 @@ environment variable, then the deployed CORI endpoint.}
 AWS credentials are configured instead of falling back to (read-only)
 vended credentials. Use this for connections that will write to S3.
 Default: \code{FALSE}.}
+
+\item{dbdir}{Character. Path to a persistent DuckDB database file. Default
+\code{":memory:"} opens an in-memory instance, matching prior behavior. Pass
+a file path for callers that need the catalog/temp state to persist
+across a script run.}
 }
 \value{
 An open \code{duckdb_connection}. The caller owns the connection and

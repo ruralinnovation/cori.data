@@ -20,14 +20,15 @@
     "typescript": "~5.7.2"
   },
   "scripts": {
+    "bootstrap": "cdk bootstrap aws://312512371189/us-east-1",
     "build": "tsc",
-    "typecheck": "tsc --noEmit",
+    "cname-target": "aws cloudformation describe-stacks --stack-name CoriDataVendCredentials --region us-east-1 --query \"Stacks[0].Outputs[?OutputKey=='CnameTarget'].OutputValue\" --output text",
     "synth": "cdk synth",
     "diff": "cdk diff",
-    "bootstrap": "cdk bootstrap aws://312512371189/us-east-1",
     "deploy": "cdk deploy --require-approval broadening",
     "outputs": "aws cloudformation describe-stacks --stack-name CoriDataVendCredentials --region us-east-1 --query \"Stacks[0].Outputs[].{Output:OutputKey,Value:OutputValue}\" --output table",
-    "cname-target": "aws cloudformation describe-stacks --stack-name CoriDataVendCredentials --region us-east-1 --query \"Stacks[0].Outputs[?OutputKey=='CnameTarget'].OutputValue\" --output text",
-    "destroy": "cdk destroy"
+    "destroy": "cdk destroy",
+    "test:env": "env -u AWS_ACCESS_KEY_ID -u AWS_SECRET_ACCESS_KEY -u AWS_SESSION_TOKEN     AWS_SHARED_CREDENTIALS_FILE=/dev/null AWS_CONFIG_FILE=/dev/null && HOME=/tmp/fake_home  R",
+    "typecheck": "tsc --noEmit"
   }
 }
