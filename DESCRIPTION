@@ -27,6 +27,7 @@ Imports:
   ruraldefinitions,
   utils
 Remotes:
+  ruralinnovation/cori.charts,
   ruralinnovation/cori.data.bds,
   ruralinnovation/cori.data.bfs,
   ruralinnovation/cori.data.bps,
@@ -37,6 +38,7 @@ Remotes:
   ruralinnovation/cori.data.s3,
   ruralinnovation/ruraldefinitions
 Suggests:
+  cori.charts,
   remotes,
   sf,
   testthat (>= 3.0.0),
