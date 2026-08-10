@@ -1,6 +1,6 @@
 Package: cori.data
 Type: Package
-Title: Functions for exploring and performing quality control checks on CORI/RISI data
+Title: CORI functions for exploring rural data
 Version: 1.1.0
 Author: John Hall
 Maintainer: John Hall <john.hall@ruralinnovation.us>
@@ -8,13 +8,23 @@ Description: Commonly used data sets and data functions.
 License: file LICENSE
 Encoding: UTF-8
 LazyData: true
+Depends:
+  cori.data.s3
 Imports:
   cli,
+  cori.data.bds,
+  cori.data.bfs,
+  cori.data.bps,
+  cori.data.fcc,
+  cori.data.hu,
+  cori.data.pep,
+  cori.data.qcew,
   crayon,
   DBI,
   duckdb,
   httr,
   paws.storage,
+  ruraldefinitions,
   utils
 Remotes:
   ruralinnovation/cori.data.bds,
@@ -23,15 +33,10 @@ Remotes:
   ruralinnovation/cori.data.fcc,
   ruralinnovation/cori.data.hu,
   ruralinnovation/cori.data.pep,
-  ruralinnovation/cori.data.qcew
+  ruralinnovation/cori.data.qcew,
+  ruralinnovation/cori.data.s3,
+  ruralinnovation/ruraldefinitions
 Suggests:
-  cori.data.bds,
-  cori.data.bfs,
-  cori.data.bps,
-  cori.data.fcc,
-  cori.data.hu,
-  cori.data.pep,
-  cori.data.qcew,
   remotes,
   sf,
   testthat (>= 3.0.0),

@@ -9,4 +9,4 @@
 library(testthat)
 library(cori.data)
 
-test_check("cori.data")
+test_check("cori.data.s3")
