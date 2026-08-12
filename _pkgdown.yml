@@ -1,0 +1,79 @@
+url: https://ruralinnovation.github.io/cori.data
+
+template:
+  bootstrap: 5
+
+reference:
+- title: Business Dynamics Statistics (BDS)
+  desc: Establishment births, deaths, and employment from Census BDS (1978-present)
+  contents:
+  - cori.data.bds::get_business_dynamics
+  - cori.data.bds::get_business_dynamics_by_sector
+  - cori.data.bds::get_business_dynamics_by_age
+  - cori.data.bds::get_business_dynamics_by_size
+  - cori.data.bds::get_employment_dynamics
+  - cori.data.bds::get_employment_dynamics_by_sector
+  - cori.data.bds::get_employment_dynamics_by_age
+  - cori.data.bds::get_employment_dynamics_by_size
+  - cori.data.bds::get_bds_codebook
+  - cori.data.bds::pull_bds_raw
+
+- title: Business Formation Statistics (BFS)
+  desc: Business applications from Census BFS (2004-present)
+  contents:
+  - cori.data.bfs::get_business_applications
+  - cori.data.bfs::get_bfs_codebook
+
+- title: Building Permits Survey (BPS)
+  desc: New residential construction permits from Census BPS (2000-present)
+  contents:
+  - cori.data.bps::get_building_permits
+  - cori.data.bps::get_bps_codebook
+
+- title: FCC Broadband Data
+  desc: National Broadband Map and Form 477 data
+  contents:
+  - cori.data.fcc::get_nbm_county
+  - cori.data.fcc::get_nbm_available
+  - cori.data.fcc::get_nbm_release
+  - cori.data.fcc::get_fcc_dictionary
+
+- title: Housing Unit Estimates (HU)
+  desc: Housing stock estimates from Census PEP (2000-present)
+  contents:
+  - cori.data.hu::get_housing_units
+  - cori.data.hu::get_hu_codebook
+
+- title: Population Estimates (PEP)
+  desc: Population and components of change from Census PEP (2000-present)
+  contents:
+  - cori.data.pep::get_population
+  - cori.data.pep::get_population_change
+  - cori.data.pep::get_pep_codebook
+
+- title: Employment and Wages (QCEW)
+  desc: Employment, wages, and concentration from BLS QCEW (1990-present)
+  contents:
+  - cori.data.qcew::get_employment
+  - cori.data.qcew::get_wage_salary
+  - cori.data.qcew::get_sector_employment
+  - cori.data.qcew::get_sector_wages
+  - cori.data.qcew::get_employment_concentration
+  - cori.data.qcew::get_qcew_codebook
+
+- title: Rural Definitions
+  desc: County-level rural classification schemes
+  contents:
+  - ruraldefinitions::get_definition
+
+- title: S3 Data Access
+  desc: Low-level S3 operations for reading/writing data
+  contents:
+  - cori.data.s3::connect_to_s3
+  - cori.data.s3::has_local_aws_credentials
+  - cori.data.s3::set_aws_credentials
+  - cori.data.s3::get_s3_object
+  - cori.data.s3::read_s3_object
+  - cori.data.s3::write_s3_object
+  - cori.data.s3::list_s3_objects
+  - cori.data.s3::sync_s3_to_local

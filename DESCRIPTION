@@ -2,16 +2,25 @@ Package: cori.data
 Type: Package
 Title: CORI functions for exploring rural data
 Version: 1.1.0
-Author: John Hall
+Authors@R: c(
+    person(
+      "John", "Hall",
+      email = "john.hall@ruralinnovation.us",
+      role = "aut"
+    ),
+    person(
+      "Drew", "Rosebush",
+      email = "drew.rosebush@ruralinnovation.us",
+      role = c("aut", "cre")
+    )
+  )
 Maintainer: John Hall <john.hall@ruralinnovation.us>
 Description: Commonly used data sets and data functions.
 License: file LICENSE
 Encoding: UTF-8
 LazyData: true
+Config/testthat/edition: 3
 Depends:
-  cori.data.s3
-Imports:
-  cli,
   cori.data.bds,
   cori.data.bfs,
   cori.data.bps,
@@ -19,12 +28,15 @@ Imports:
   cori.data.hu,
   cori.data.pep,
   cori.data.qcew,
+  cori.data.s3,
+  ruraldefinitions
+Imports:
+  cli,
   crayon,
   DBI,
   duckdb,
   httr,
   paws.storage,
-  ruraldefinitions,
   utils
 Remotes:
   ruralinnovation/cori.data.bds,
@@ -37,10 +49,12 @@ Remotes:
   ruralinnovation/cori.data.s3,
   ruralinnovation/ruraldefinitions
 Suggests:
+  knitr,
   remotes,
+  rmarkdown,
   sf,
   testthat (>= 3.0.0),
   withr
-Config/testthat/edition: 3
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
+VignetteBuilder: knitr

@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/articles/special-files.html
 
 library(testthat)
-library(cori.data)
+library(cori.data.s3)
 
-test_check("cori.data.s3")
+test_check("cori.data")
