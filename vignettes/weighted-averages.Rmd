@@ -180,3 +180,11 @@ Whenever a function returns `agg_var`, use `weighted.mean(value, agg_var)`
 instead of `mean(value)` any time you're aggregating across multiple geographies.
 The difference matters most in rural analysis, where high variance in county
 size means naive averages can mislead significantly.
+
+## Data sources
+
+> U.S. Bureau of Labor Statistics. *Quarterly Census of Employment and Wages*.
+> <https://www.bls.gov/cew/>
+>
+> U.S. Census Bureau. *Metropolitan and Micropolitan Statistical Areas (OMB delineations)*.
+> <https://www.census.gov/programs-surveys/metro-micro.html>

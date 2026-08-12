@@ -36,14 +36,165 @@ cori.data::install_data_packages()
 
 | Package | What it measures | Geography | Years |
 |---|---|---|---|
-| [cori.data.qcew](https://github.com/ruralinnovation/cori.data.qcew) | Employment & wages (BLS QCEW) | county, state | 1990–present |
-| [cori.data.bds](https://github.com/ruralinnovation/cori.data.bds) | Business dynamics (Census BDS) | county, state, nation | 1978–present |
-| [cori.data.pep](https://github.com/ruralinnovation/cori.data.pep) | Population (Census PEP) | county, state, nation | 2000–present |
-| [cori.data.bfs](https://github.com/ruralinnovation/cori.data.bfs) | Business applications (Census BFS) | county, state, nation | 2004–present |
-| [cori.data.bps](https://github.com/ruralinnovation/cori.data.bps) | Building permits (Census BPS) | county, metro | 1980–present |
-| [cori.data.hu](https://github.com/ruralinnovation/cori.data.hu) | Housing units (Census HU) | county, state, nation | 2000–present |
-| [cori.data.fcc](https://github.com/ruralinnovation/cori.data.fcc) | Broadband coverage (FCC NBM) | county | 2023–present |
-| [ruraldefinitions](https://github.com/ruralinnovation/ruraldefinitions) | Rural classifications | county | multiple vintages |
+| [cori.data.qcew](https://github.com/ruralinnovation/cori.data.qcew) | Employment & wages ([BLS QCEW](https://www.bls.gov/cew/)) | county, state | 1990–present |
+| [cori.data.bds](https://github.com/ruralinnovation/cori.data.bds) | Business dynamics ([Census BDS](https://www.census.gov/programs-surveys/bds.html)) | county, state, nation | 1978–present |
+| [cori.data.pep](https://github.com/ruralinnovation/cori.data.pep) | Population ([Census PEP](https://www.census.gov/programs-surveys/popest.html)) | county, state, nation | 2000–present |
+| [cori.data.bfs](https://github.com/ruralinnovation/cori.data.bfs) | Business applications ([Census BFS](https://www.census.gov/programs-surveys/bfs.html)) | county, state, nation | 2004–present |
+| [cori.data.bps](https://github.com/ruralinnovation/cori.data.bps) | Building permits ([Census BPS](https://www.census.gov/construction/bps/)) | county, metro | 1980–present |
+| [cori.data.hu](https://github.com/ruralinnovation/cori.data.hu) | Housing units ([Census HU](https://www.census.gov/programs-surveys/popest.html)) | county, state, nation | 2000–present |
+| [cori.data.fcc](https://github.com/ruralinnovation/cori.data.fcc) | Broadband coverage ([FCC NBM](https://broadbandmap.fcc.gov/)) | county | 2023–present |
+| [ruraldefinitions](https://github.com/ruralinnovation/ruraldefinitions) | Rural classifications ([OMB](https://www.census.gov/programs-surveys/metro-micro.html), [USDA ERS](https://www.ers.usda.gov/topics/rural-economy-population/rural-classifications/), [NCHS](https://www.cdc.gov/nchs/data_access/urban_rural.htm)) | county | multiple vintages |
+
+---
+
+## Data sources
+
+### BLS Quarterly Census of Employment and Wages (QCEW)
+
+The Quarterly Census of Employment and Wages (QCEW) program, administered by
+the U.S. Bureau of Labor Statistics, publishes quarterly data on employment
+levels and wages for workers covered by state unemployment insurance (UI) laws,
+capturing approximately 95% of all U.S. jobs. Data are organized by industry
+using North American Industry Classification System (NAICS) codes and are
+available at the county, state, and national level from 1990 onward. Because
+QCEW counts are derived from employer tax filings rather than surveys, they
+represent a near-complete census of covered employment rather than an estimate.
+The QCEW is the primary source for understanding labor market structure, wage
+levels, and industry composition across geographies.
+
+> U.S. Bureau of Labor Statistics. *Quarterly Census of Employment and Wages*.
+> <https://www.bls.gov/cew/>
+
+---
+
+### Census Bureau Business Dynamics Statistics (BDS)
+
+The Business Dynamics Statistics (BDS) program, produced by the U.S. Census
+Bureau, provides annual measures of establishment entry and exit, job creation
+and destruction, and firm age and size distributions across the private sector.
+Data are derived from the Longitudinal Business Database (LBD), which tracks
+all U.S. employer establishments over time, and cover the full private-sector
+universe from 1978 onward. The BDS is the primary public dataset for studying
+the role of new and young businesses in job growth and for tracking trends in
+entrepreneurship by firm size, age, and geography.
+
+> U.S. Census Bureau. *Business Dynamics Statistics*.
+> <https://www.census.gov/programs-surveys/bds.html>
+
+---
+
+### Census Bureau Population Estimates Program (PEP)
+
+The Population Estimates Program (PEP), administered by the U.S. Census Bureau,
+produces annual estimates of the resident population for counties, states, and
+the nation between decennial census years. Estimates are constructed using the
+most recent decennial census as a base and incorporate administrative records on
+births, deaths, and domestic and international migration from federal sources.
+County-level estimates are available from 2000 onward and are updated annually
+with vintage-controlled series that supersede prior estimates. The PEP is the
+standard source for intercensal population data and is used extensively in
+per-capita calculations, federal funding formulas, and demographic research.
+
+> U.S. Census Bureau. *Population Estimates Program*.
+> <https://www.census.gov/programs-surveys/popest.html>
+
+---
+
+### Census Bureau Business Formation Statistics (BFS)
+
+The Business Formation Statistics (BFS) program, produced by the U.S. Census
+Bureau, provides weekly and quarterly data on new business applications derived
+from IRS employer identification number (EIN) filings. Applications are
+classified by their projected likelihood of becoming employer businesses,
+distinguishing speculative formations from those likely to hire workers. State-
+and county-level data are available from 2004 onward, providing a high-frequency
+leading indicator of entrepreneurial activity that predates annual business
+surveys by months. The BFS is particularly useful for tracking the pace of
+business formation in response to economic shocks and local policy changes.
+
+> U.S. Census Bureau. *Business Formation Statistics*.
+> <https://www.census.gov/programs-surveys/bfs.html>
+
+---
+
+### Census Bureau Building Permits Survey (BPS)
+
+The Building Permits Survey (BPS), conducted by the U.S. Census Bureau,
+collects monthly data on new privately-owned residential construction units
+authorized by building permits from permit-issuing jurisdictions across the
+country. The survey covers approximately 20,000 permit-issuing places and
+provides county- and metropolitan-area-level indicators of housing supply
+activity from 1980 onward. Because permits are required before construction
+begins, the BPS provides one of the earliest available signals of new housing
+investment and is widely used in housing market research and local planning.
+
+> U.S. Census Bureau. *New Residential Construction: Building Permits Survey*.
+> <https://www.census.gov/construction/bps/>
+
+---
+
+### Census Bureau Housing Unit Estimates (HU)
+
+The Housing Unit Estimates program, produced as part of the U.S. Census
+Bureau's Population Estimates Program, provides annual estimates of the total
+number of housing units for counties, states, and the nation. Estimates use the
+most recent decennial census housing inventory as a base and incorporate building
+permit issuances, demolitions, and administrative conversions to track changes in
+the housing stock. County-level estimates are available from 2000 onward and are
+updated annually alongside population estimates. These data are used in federal
+allocation formulas, housing policy analysis, and as denominators for vacancy
+and occupancy rate calculations.
+
+> U.S. Census Bureau. *Housing Unit Estimates (Population Estimates Program)*.
+> <https://www.census.gov/programs-surveys/popest.html>
+
+---
+
+### FCC National Broadband Map (NBM)
+
+The National Broadband Map (NBM), administered by the Federal Communications
+Commission, provides location-level data on broadband internet availability
+across the United States collected from internet service providers under the
+Broadband Data Collection (BDC) program. The BDC was established by the
+Broadband DATA Act and expanded under the Infrastructure Investment and Jobs Act
+of 2021, replacing the prior Form 477 census-block reporting with more precise
+location-level availability data. Data are released on a bi-annual schedule
+(December and June reference dates) and include coverage by technology type and
+advertised upload and download speeds. The NBM is the primary federal source
+for identifying unserved and underserved areas and for tracking progress toward
+national broadband deployment goals.
+
+> Federal Communications Commission. *National Broadband Map*.
+> <https://broadbandmap.fcc.gov/>
+
+---
+
+### Rural Classifications
+
+The `ruraldefinitions` package provides county-level rural/nonrural
+classifications drawn from four federal methodologies. The CORI standard uses
+Office of Management and Budget (OMB) Core Based Statistical Area (CBSA)
+delineations, which classify counties outside of metropolitan statistical areas
+as rural. The USDA Economic Research Service Rural-Urban Continuum Codes (RUCC)
+extend this by distinguishing metropolitan counties by population size and
+nonmetropolitan counties by degree of urbanization and adjacency to metro areas.
+The CDC National Center for Health Statistics (NCHS) urban-rural classification
+and the USDA Urban Influence Codes (UIC) offer additional gradations suited to
+health research and economic policy contexts, respectively. Each system reflects
+different criteria and assumptions, and the choice of classification can
+materially affect research conclusions about rural areas.
+
+> U.S. Census Bureau. *Metropolitan and Micropolitan Statistical Areas (OMB delineations)*.
+> <https://www.census.gov/programs-surveys/metro-micro.html>
+>
+> USDA Economic Research Service. *Rural-Urban Continuum Codes*.
+> <https://www.ers.usda.gov/data-products/rural-urban-continuum-codes/>
+>
+> National Center for Health Statistics. *Urban-Rural Classification Scheme for Counties*.
+> <https://www.cdc.gov/nchs/data_access/urban_rural.htm>
+>
+> USDA Economic Research Service. *Urban Influence Codes*.
+> <https://www.ers.usda.gov/data-products/urban-influence-codes/>
 
 ---
 

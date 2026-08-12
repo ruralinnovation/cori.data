@@ -188,3 +188,14 @@ contractors, and some farm workers are not included. This means the
 employment rate derived here is not directly comparable to the BLS official
 unemployment rate, which uses a different survey methodology. It is most
 useful for comparing trends and relative differences across geographies.
+
+## Data sources
+
+> U.S. Bureau of Labor Statistics. *Quarterly Census of Employment and Wages*.
+> <https://www.bls.gov/cew/>
+>
+> U.S. Census Bureau. *Population Estimates Program*.
+> <https://www.census.gov/programs-surveys/popest.html>
+>
+> U.S. Census Bureau. *Metropolitan and Micropolitan Statistical Areas (OMB delineations)*.
+> <https://www.census.gov/programs-surveys/metro-micro.html>

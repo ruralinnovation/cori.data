@@ -121,3 +121,26 @@ get_definition("uic",  2024)  # USDA Urban Influence Codes
   and how to use it correctly
 - **[Broadband](broadband.html)** — FCC broadband data and its relationship
   to economic outcomes
+
+## Data sources
+
+> U.S. Bureau of Labor Statistics. *Quarterly Census of Employment and Wages*.
+> <https://www.bls.gov/cew/>
+>
+> U.S. Census Bureau. *Population Estimates Program*.
+> <https://www.census.gov/programs-surveys/popest.html>
+>
+> U.S. Census Bureau. *Business Dynamics Statistics*.
+> <https://www.census.gov/programs-surveys/bds.html>
+>
+> U.S. Census Bureau. *Metropolitan and Micropolitan Statistical Areas (OMB delineations)*.
+> <https://www.census.gov/programs-surveys/metro-micro.html>
+>
+> USDA Economic Research Service. *Rural-Urban Continuum Codes*.
+> <https://www.ers.usda.gov/data-products/rural-urban-continuum-codes/>
+>
+> National Center for Health Statistics. *Urban-Rural Classification Scheme for Counties*.
+> <https://www.cdc.gov/nchs/data_access/urban_rural.htm>
+>
+> USDA Economic Research Service. *Urban Influence Codes*.
+> <https://www.ers.usda.gov/data-products/urban-influence-codes/>

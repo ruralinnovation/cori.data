@@ -195,3 +195,23 @@ get_business_dynamics(geography = "nation", years = 2000:2023) |>
     caption = "Source: Census Bureau Business Dynamics Statistics"
   )
 ```
+
+## Data sources
+
+> U.S. Census Bureau. *Business Dynamics Statistics*.
+> <https://www.census.gov/programs-surveys/bds.html>
+>
+> U.S. Census Bureau. *Business Formation Statistics*.
+> <https://www.census.gov/programs-surveys/bfs.html>
+>
+> U.S. Census Bureau. *New Residential Construction: Building Permits Survey*.
+> <https://www.census.gov/construction/bps/>
+>
+> U.S. Bureau of Labor Statistics. *Quarterly Census of Employment and Wages*.
+> <https://www.bls.gov/cew/>
+>
+> U.S. Census Bureau. *Population Estimates Program*.
+> <https://www.census.gov/programs-surveys/popest.html>
+>
+> U.S. Census Bureau. *Metropolitan and Micropolitan Statistical Areas (OMB delineations)*.
+> <https://www.census.gov/programs-surveys/metro-micro.html>

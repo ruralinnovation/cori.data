@@ -206,3 +206,17 @@ as a floor estimate — the actual connected share is likely lower.
 
 For deeper analysis of broadband and economic outcomes in rural communities,
 see [CORI's broadband research](https://ruralinnovation.us/our-work/research/).
+
+## Data sources
+
+> Federal Communications Commission. *National Broadband Map*.
+> <https://broadbandmap.fcc.gov/>
+>
+> U.S. Bureau of Labor Statistics. *Quarterly Census of Employment and Wages*.
+> <https://www.bls.gov/cew/>
+>
+> U.S. Census Bureau. *Population Estimates Program*.
+> <https://www.census.gov/programs-surveys/popest.html>
+>
+> U.S. Census Bureau. *Metropolitan and Micropolitan Statistical Areas (OMB delineations)*.
+> <https://www.census.gov/programs-surveys/metro-micro.html>

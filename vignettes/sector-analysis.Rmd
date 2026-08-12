@@ -220,3 +220,15 @@ wage_summary <- sector_wages |>
     .groups = "drop"
   )
 ```
+
+## Data sources
+
+> U.S. Bureau of Labor Statistics. *Quarterly Census of Employment and Wages*.
+> <https://www.bls.gov/cew/>
+>
+> U.S. Census Bureau. *Metropolitan and Micropolitan Statistical Areas (OMB delineations)*.
+> <https://www.census.gov/programs-surveys/metro-micro.html>
+
+The CORI super-sector classification is loosely derived from Eckert (2018).
+The BLS supersector definitions follow standard NAICS-based industry groupings
+published by the Bureau of Labor Statistics.
