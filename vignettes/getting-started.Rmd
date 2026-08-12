@@ -100,13 +100,14 @@ classifications across several methodologies:
 library(ruraldefinitions)
 
 # CBSA-based (the CORI standard)
-rural <- get_definition("cbsa", 2023)
+rural <- cbsa_2023
 # Returns: geoid | name | year | rural_def | is_rural ("Rural" / "Nonrural")
 
 # Other available definitions
-get_definition("rucc", 2023)  # USDA Rural-Urban Continuum Codes
-get_definition("nchs", 2023)  # NCHS Urban-Rural Classification Scheme
-get_definition("uic",  2024)  # USDA Urban Influence Codes
+
+rucc_2023 # USDA Rural-Urban Continuum Codes
+nchs_2023 # NCHS Urban-Rural Classification Scheme
+uic_2024  # USDA Urban Influence Codes
 ```
 
 ## Where to go next
