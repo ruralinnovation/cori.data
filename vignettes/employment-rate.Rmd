@@ -20,9 +20,6 @@ knitr::opts_chunk$set(
 
 ```{r libraries}
 library(cori.data)
-library(cori.data.qcew)
-library(cori.data.pep)
-library(ruraldefinitions)
 library(cori.charts)
 library(dplyr)
 library(tidyr)
@@ -58,7 +55,7 @@ pop16 <- get_population(
 )
 
 # Rural classification — CBSA-based, 2023 vintage
-rural <- get_definition("cbsa", 2023) |>
+rural <- cbsa_2023 |>
   select(geoid, is_rural)
 ```
 
@@ -107,7 +104,7 @@ caption  <- str_wrap(
 fig_line <- trend |>
   ggplot(aes(x = year, y = avg_emp_rate, color = is_rural)) +
   geom_line(linewidth = 1.5) +
-  scale_color_cori(palette = "ctg2ruralnonrural") +
+  scale_color_manual(values = c("Rural" = "#00825B", "Nonrural" = "#211448")) +
   scale_x_continuous(breaks = seq(2010, 2023, by = 2)) +
   scale_y_continuous(
     labels = label_percent(accuracy = 1),
@@ -127,22 +124,24 @@ fig_line <- trend |>
   )
 
 fig_line
-save_plot(fig_line, here::here("export/employment_rate_line.png"))
 ```
 
 ## County map: where are employment rates lowest?
 
 ```{r map, fig.alt = "Choropleth map of county-level employment rates across the United States, 2023"}
-counties_sf <- tiger_line_counties() |>
+counties_sf <- counties(year = 2024) |>
   shift_geometry() |>
-  select(geoid = GEOID)
+  select(geoid = GEOID) |> 
+  filter( as.numeric(substr(geoid, 1, 2)) < 60 ) ## filter for US states
 
-states_sf <- tiger_line_states() |>
-  shift_geometry()
+states_sf <- states(year = 2024) |>
+  shift_geometry() |> 
+  filter( as.numeric(GEOID) < 60 )
 
 map_data <- emp_rate |>
   filter(year == 2023) |>
-  select(geoid, emp_rate)
+  select(geoid, emp_rate) |>
+  mutate(quintile = cut_number(emp_rate, n = 5))
 
 counties_map <- counties_sf |>
   left_join(map_data, by = "geoid")
@@ -156,28 +155,28 @@ fig_map <- ggplot() +
   ) +
   geom_sf(
     data  = counties_map,
-    aes(fill = emp_rate),
+    aes(fill = quintile),
     color = NA
   ) +
-  scale_fill_cori(
-    palette  = "ctg3gn",
-    discrete = FALSE,
-    labels   = label_percent(accuracy = 1),
-    na.value = "#d0d2ce"
+  scale_fill_manual(
+    values   = colorRampPalette(c("#d4ede6", "#00825B"))(5),
+    na.value = "#d0d2ce",
+    labels   = c("1st (lowest)", "2nd", "3rd", "4th", "5th (highest)"),
+    na.translate = FALSE
   ) +
   theme_cori_map() +
   labs(
     title    = "Employment rates vary widely across rural counties",
     subtitle = "Covered employment as share of population 16+, 2023",
     caption  = str_wrap(
-      "Source: BLS QCEW; Census PEP. Rural classification: CBSA 2023.",
+      "Sources: BLS QCEW; Census Bureau Population Estimates Program; U.S. Census Bureau TIGER/Line Shapefiles via the tigris R package. Rural classification: CBSA 2023.",
       width = 110
     ),
-    fill = "Employment\nrate"
+    fill = "Employment\nrate quintile"
   )
 
 fig_map
-save_plot(fig_map, here::here("export/employment_rate_map.png"))
+
 ```
 
 ## What this analysis reveals
