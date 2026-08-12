@@ -180,6 +180,22 @@ fig_map
 save_plot(fig_map, here::here("export/employment_rate_map.png"))
 ```
 
+## What this analysis reveals
+
+When you run this across U.S. counties, a persistent gap emerges: rural counties
+have carried lower covered employment rates than nonrural counties since the
+Great Recession, and the gap has not fully closed even during the tightest labor
+markets in recent memory. The pattern isn't uniform — rural counties anchored
+by large employers or adjacent to metro areas can rival nonrural peers — but the
+central tendency is clear and durable.
+
+The cross-package approach here gives a cleaner picture of labor market health
+than either dataset alone. Raw employment counts can't tell you whether a
+county is punching above or below its demographic weight; the employment rate
+can. And because both the numerator (QCEW) and denominator (PEP) follow
+consistent geographic and vintage conventions, the join is clean across all
+counties and years.
+
 ## A note on coverage
 
 QCEW employment counts **covered** workers — those employed by businesses
@@ -191,11 +207,16 @@ useful for comparing trends and relative differences across geographies.
 
 ## Data sources
 
-> U.S. Bureau of Labor Statistics. *Quarterly Census of Employment and Wages*.
-> <https://www.bls.gov/cew/>
+> The Center on Rural Innovation's curation of U.S. Bureau of Labor Statistics,
+> *Quarterly Census of Employment and Wages*. <https://www.bls.gov/cew/>
 >
-> U.S. Census Bureau. *Population Estimates Program*.
-> <https://www.census.gov/programs-surveys/popest.html>
+> The Center on Rural Innovation's curation of U.S. Census Bureau,
+> *Population Estimates Program*. <https://www.census.gov/programs-surveys/popest.html>
 >
-> U.S. Census Bureau. *Metropolitan and Micropolitan Statistical Areas (OMB delineations)*.
+> The Center on Rural Innovation's curation of U.S. Census Bureau,
+> *Metropolitan and Micropolitan Statistical Areas (OMB delineations)*.
 > <https://www.census.gov/programs-surveys/metro-micro.html>
+>
+> This product uses the Census Bureau Data API but is not endorsed or certified
+> by the Census Bureau. BLS.gov cannot vouch for the data or analyses derived
+> from these data after the data have been retrieved from BLS.gov.

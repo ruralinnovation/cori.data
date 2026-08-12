@@ -221,13 +221,42 @@ wage_summary <- sector_wages |>
   )
 ```
 
+## What sector analysis reveals
+
+Rural economies are disproportionately concentrated in tradable goods sectors —
+natural resources, manufacturing, construction, and trade — relative to nonrural
+counties. These industries bring outside dollars into local economies and have
+long anchored middle-income employment in places without large metro labor
+markets. Their presence signals genuine competitive advantage: something the
+local area does well enough that the wider market wants it.
+
+The share of rural employment in tradable services — professional services,
+finance, information — has historically been lower than in nonrural counties,
+but this gap has been narrowing. Remote work and the geographic dispersal of
+knowledge-economy jobs that accelerated after 2020 show up in this data:
+counties that had little professional services employment a decade ago have seen
+measurable gains. Which rural counties are capturing that growth, and in which
+industries, is one of the more tractable questions this data can help answer.
+
+Wages tell a complementary story. The rural wage penalty is real but uneven
+across sectors — some rural tradable goods employers pay competitively with
+their nonrural peers, while the gap in tradable services remains wider. Sector
+composition is one of the most informative single lenses for understanding why
+rural economic outcomes vary so much from county to county, and where the
+opportunities for growth are emerging.
+
 ## Data sources
 
-> U.S. Bureau of Labor Statistics. *Quarterly Census of Employment and Wages*.
-> <https://www.bls.gov/cew/>
+> The Center on Rural Innovation's curation of U.S. Bureau of Labor Statistics,
+> *Quarterly Census of Employment and Wages*. <https://www.bls.gov/cew/>
 >
-> U.S. Census Bureau. *Metropolitan and Micropolitan Statistical Areas (OMB delineations)*.
+> The Center on Rural Innovation's curation of U.S. Census Bureau,
+> *Metropolitan and Micropolitan Statistical Areas (OMB delineations)*.
 > <https://www.census.gov/programs-surveys/metro-micro.html>
+>
+> This product uses the Census Bureau Data API but is not endorsed or certified
+> by the Census Bureau. BLS.gov cannot vouch for the data or analyses derived
+> from these data after the data have been retrieved from BLS.gov.
 
 The CORI super-sector classification is loosely derived from Eckert (2018).
 The BLS supersector definitions follow standard NAICS-based industry groupings

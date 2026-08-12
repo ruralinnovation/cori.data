@@ -124,23 +124,28 @@ get_definition("uic",  2024)  # USDA Urban Influence Codes
 
 ## Data sources
 
-> U.S. Bureau of Labor Statistics. *Quarterly Census of Employment and Wages*.
-> <https://www.bls.gov/cew/>
+> The Center on Rural Innovation's curation of U.S. Bureau of Labor Statistics,
+> *Quarterly Census of Employment and Wages*. <https://www.bls.gov/cew/>
 >
-> U.S. Census Bureau. *Population Estimates Program*.
-> <https://www.census.gov/programs-surveys/popest.html>
+> The Center on Rural Innovation's curation of U.S. Census Bureau,
+> *Population Estimates Program*. <https://www.census.gov/programs-surveys/popest.html>
 >
-> U.S. Census Bureau. *Business Dynamics Statistics*.
-> <https://www.census.gov/programs-surveys/bds.html>
+> The Center on Rural Innovation's curation of U.S. Census Bureau,
+> *Business Dynamics Statistics*. <https://www.census.gov/programs-surveys/bds.html>
 >
-> U.S. Census Bureau. *Metropolitan and Micropolitan Statistical Areas (OMB delineations)*.
+> The Center on Rural Innovation's curation of U.S. Census Bureau,
+> *Metropolitan and Micropolitan Statistical Areas (OMB delineations)*.
 > <https://www.census.gov/programs-surveys/metro-micro.html>
 >
-> USDA Economic Research Service. *Rural-Urban Continuum Codes*.
-> <https://www.ers.usda.gov/data-products/rural-urban-continuum-codes/>
+> The Center on Rural Innovation's curation of USDA Economic Research Service,
+> *Rural-Urban Continuum Codes*. <https://www.ers.usda.gov/data-products/rural-urban-continuum-codes/>
 >
-> National Center for Health Statistics. *Urban-Rural Classification Scheme for Counties*.
-> <https://www.cdc.gov/nchs/data_access/urban_rural.htm>
+> The Center on Rural Innovation's curation of National Center for Health Statistics,
+> *Urban-Rural Classification Scheme for Counties*. <https://www.cdc.gov/nchs/data_access/urban_rural.htm>
 >
-> USDA Economic Research Service. *Urban Influence Codes*.
-> <https://www.ers.usda.gov/data-products/urban-influence-codes/>
+> The Center on Rural Innovation's curation of USDA Economic Research Service,
+> *Urban Influence Codes*. <https://www.ers.usda.gov/data-products/urban-influence-codes/>
+>
+> This product uses the Census Bureau Data API but is not endorsed or certified
+> by the Census Bureau. BLS.gov cannot vouch for the data or analyses derived
+> from these data after the data have been retrieved from BLS.gov.

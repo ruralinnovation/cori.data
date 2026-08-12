@@ -207,16 +207,40 @@ as a floor estimate — the actual connected share is likely lower.
 For deeper analysis of broadband and economic outcomes in rural communities,
 see [CORI's broadband research](https://ruralinnovation.us/our-work/research/).
 
+## What broadband analysis reveals
+
+Broadband coverage is uneven within rural geographies, not just between rural
+and nonrural. Counties that are both classified as rural can differ dramatically
+in their connectivity — reflecting topography, population density, the presence
+of anchor institutions, and the pace of infrastructure investment driven by
+federal programs like BEAD. That variation is analytically useful: it lets you
+study broadband as a factor in economic outcomes rather than treating all rural
+counties as equally underconnected.
+
+Counties that have seen meaningful improvements in coverage across consecutive
+NBM releases are worth watching. The bi-annual data structure — December and
+June reference dates — makes it possible to track the deployment wave in near
+real time and connect it to labor market and business formation trends as they
+unfold. Rural broadband is one of the faster-moving stories in this ecosystem,
+and the data is now granular enough to follow it at the county level.
+
 ## Data sources
 
-> Federal Communications Commission. *National Broadband Map*.
-> <https://broadbandmap.fcc.gov/>
+> The Center on Rural Innovation's curation of Federal Communications Commission,
+> *National Broadband Map — Broadband Data Collection*. <https://broadbandmap.fcc.gov/>
 >
-> U.S. Bureau of Labor Statistics. *Quarterly Census of Employment and Wages*.
-> <https://www.bls.gov/cew/>
+> The Center on Rural Innovation's curation of U.S. Bureau of Labor Statistics,
+> *Quarterly Census of Employment and Wages*. <https://www.bls.gov/cew/>
 >
-> U.S. Census Bureau. *Population Estimates Program*.
-> <https://www.census.gov/programs-surveys/popest.html>
+> The Center on Rural Innovation's curation of U.S. Census Bureau,
+> *Population Estimates Program*. <https://www.census.gov/programs-surveys/popest.html>
 >
-> U.S. Census Bureau. *Metropolitan and Micropolitan Statistical Areas (OMB delineations)*.
+> The Center on Rural Innovation's curation of U.S. Census Bureau,
+> *Metropolitan and Micropolitan Statistical Areas (OMB delineations)*.
 > <https://www.census.gov/programs-surveys/metro-micro.html>
+>
+> Broadband availability data from the FCC BDC are in the public domain
+> (17 U.S.C. § 105). This product uses the Census Bureau Data API but is not
+> endorsed or certified by the Census Bureau. BLS.gov cannot vouch for the data
+> or analyses derived from these data after the data have been retrieved from
+> BLS.gov.

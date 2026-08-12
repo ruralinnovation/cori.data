@@ -62,8 +62,11 @@ represent a near-complete census of covered employment rather than an estimate.
 The QCEW is the primary source for understanding labor market structure, wage
 levels, and industry composition across geographies.
 
-> U.S. Bureau of Labor Statistics. *Quarterly Census of Employment and Wages*.
-> <https://www.bls.gov/cew/>
+> The Center on Rural Innovation's curation of U.S. Bureau of Labor Statistics,
+> *Quarterly Census of Employment and Wages*. <https://www.bls.gov/cew/>
+>
+> BLS.gov cannot vouch for the data or analyses derived from these data after
+> the data have been retrieved from BLS.gov.
 
 ---
 
@@ -78,8 +81,11 @@ universe from 1978 onward. The BDS is the primary public dataset for studying
 the role of new and young businesses in job growth and for tracking trends in
 entrepreneurship by firm size, age, and geography.
 
-> U.S. Census Bureau. *Business Dynamics Statistics*.
-> <https://www.census.gov/programs-surveys/bds.html>
+> The Center on Rural Innovation's curation of U.S. Census Bureau,
+> *Business Dynamics Statistics*. <https://www.census.gov/programs-surveys/bds.html>
+>
+> This product uses the Census Bureau Data API but is not endorsed or certified
+> by the Census Bureau.
 
 ---
 
@@ -95,8 +101,11 @@ with vintage-controlled series that supersede prior estimates. The PEP is the
 standard source for intercensal population data and is used extensively in
 per-capita calculations, federal funding formulas, and demographic research.
 
-> U.S. Census Bureau. *Population Estimates Program*.
-> <https://www.census.gov/programs-surveys/popest.html>
+> The Center on Rural Innovation's curation of U.S. Census Bureau,
+> *Population Estimates Program*. <https://www.census.gov/programs-surveys/popest.html>
+>
+> This product uses the Census Bureau Data API but is not endorsed or certified
+> by the Census Bureau.
 
 ---
 
@@ -112,8 +121,11 @@ leading indicator of entrepreneurial activity that predates annual business
 surveys by months. The BFS is particularly useful for tracking the pace of
 business formation in response to economic shocks and local policy changes.
 
-> U.S. Census Bureau. *Business Formation Statistics*.
-> <https://www.census.gov/programs-surveys/bfs.html>
+> The Center on Rural Innovation's curation of U.S. Census Bureau,
+> *Business Formation Statistics*. <https://www.census.gov/programs-surveys/bfs.html>
+>
+> This product uses the Census Bureau Data API but is not endorsed or certified
+> by the Census Bureau.
 
 ---
 
@@ -128,8 +140,11 @@ activity from 1980 onward. Because permits are required before construction
 begins, the BPS provides one of the earliest available signals of new housing
 investment and is widely used in housing market research and local planning.
 
-> U.S. Census Bureau. *New Residential Construction: Building Permits Survey*.
-> <https://www.census.gov/construction/bps/>
+> The Center on Rural Innovation's curation of U.S. Census Bureau,
+> *New Residential Construction: Building Permits Survey*. <https://www.census.gov/construction/bps/>
+>
+> This product uses the Census Bureau Data API but is not endorsed or certified
+> by the Census Bureau.
 
 ---
 
@@ -145,8 +160,11 @@ updated annually alongside population estimates. These data are used in federal
 allocation formulas, housing policy analysis, and as denominators for vacancy
 and occupancy rate calculations.
 
-> U.S. Census Bureau. *Housing Unit Estimates (Population Estimates Program)*.
-> <https://www.census.gov/programs-surveys/popest.html>
+> The Center on Rural Innovation's curation of U.S. Census Bureau,
+> *Housing Unit Estimates (Population Estimates Program)*. <https://www.census.gov/programs-surveys/popest.html>
+>
+> This product uses the Census Bureau Data API but is not endorsed or certified
+> by the Census Bureau.
 
 ---
 
@@ -164,8 +182,11 @@ advertised upload and download speeds. The NBM is the primary federal source
 for identifying unserved and underserved areas and for tracking progress toward
 national broadband deployment goals.
 
-> Federal Communications Commission. *National Broadband Map*.
-> <https://broadbandmap.fcc.gov/>
+> The Center on Rural Innovation's curation of Federal Communications Commission,
+> *National Broadband Map — Broadband Data Collection*. <https://broadbandmap.fcc.gov/>
+>
+> Broadband availability data from the FCC BDC are in the public domain
+> (17 U.S.C. § 105).
 
 ---
 
@@ -184,17 +205,21 @@ health research and economic policy contexts, respectively. Each system reflects
 different criteria and assumptions, and the choice of classification can
 materially affect research conclusions about rural areas.
 
-> U.S. Census Bureau. *Metropolitan and Micropolitan Statistical Areas (OMB delineations)*.
+> The Center on Rural Innovation's curation of U.S. Census Bureau,
+> *Metropolitan and Micropolitan Statistical Areas (OMB delineations)*.
 > <https://www.census.gov/programs-surveys/metro-micro.html>
 >
-> USDA Economic Research Service. *Rural-Urban Continuum Codes*.
-> <https://www.ers.usda.gov/data-products/rural-urban-continuum-codes/>
+> The Center on Rural Innovation's curation of USDA Economic Research Service,
+> *Rural-Urban Continuum Codes*. <https://www.ers.usda.gov/data-products/rural-urban-continuum-codes/>
 >
-> National Center for Health Statistics. *Urban-Rural Classification Scheme for Counties*.
-> <https://www.cdc.gov/nchs/data_access/urban_rural.htm>
+> The Center on Rural Innovation's curation of National Center for Health Statistics,
+> *Urban-Rural Classification Scheme for Counties*. <https://www.cdc.gov/nchs/data_access/urban_rural.htm>
 >
-> USDA Economic Research Service. *Urban Influence Codes*.
-> <https://www.ers.usda.gov/data-products/urban-influence-codes/>
+> The Center on Rural Innovation's curation of USDA Economic Research Service,
+> *Urban Influence Codes*. <https://www.ers.usda.gov/data-products/urban-influence-codes/>
+>
+> This product uses the Census Bureau Data API but is not endorsed or certified
+> by the Census Bureau.
 
 ---
 
@@ -320,3 +345,29 @@ repositories above.
 All packages follow the same design principles: tidy output, consistent
 parameters, plain-English variable names, and no infrastructure knowledge
 required. If you're building something that fits that model, we'd love to talk.
+
+---
+
+## Terms of use
+
+Data in this ecosystem are curated from U.S. federal agency sources and
+provided "as is" without warranty of any kind. The Center on Rural Innovation
+processes and packages these data to improve accessibility for rural research
+but cannot guarantee their accuracy, completeness, or timeliness, and cannot
+vouch for analyses derived from these data after retrieval.
+
+The following notices are required by the terms of service of the underlying
+data providers:
+
+- **Census Bureau:** This product uses the Census Bureau Data API but is not
+  endorsed or certified by the Census Bureau.
+- **BLS:** BLS.gov cannot vouch for the data or analyses derived from these
+  data after the data have been retrieved from BLS.gov.
+- **FCC:** Broadband availability data from the FCC Broadband Data Collection
+  are in the public domain (17 U.S.C. § 105).
+
+Full terms of service for each provider:
+
+- [Census Bureau API Terms of Service](https://www.census.gov/data/developers/about/terms-of-service.html)
+- [BLS Terms of Service](https://www.bls.gov/developers/termsOfService.htm)
+- [FCC National Broadband Map — License and Attribution](https://broadbandmap.fcc.gov/about)

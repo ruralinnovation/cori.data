@@ -32,6 +32,23 @@ load_fonts()
 update_cori_geom_defaults()
 ```
 
+Counties are not equal in size. Loving County, Texas has a few hundred
+residents; Los Angeles County has ten million. When you average a rate across
+counties — wages, employment share, sector composition — treating each county
+as one observation lets the hundreds of tiny counties dominate the result, even
+though they collectively represent a small fraction of the actual workforce.
+
+This distortion is especially consequential in rural analysis. The rural
+landscape is dominated by small counties, and a handful of them with large
+employers — a mine, a power plant, a major hospital system — can pull a naive
+average far from the typical rural worker's experience. The same problem applies
+when rolling counties up into regions: summing wages is meaningless; you need
+to weight by how many workers each wage represents.
+
+The CORI data ecosystem addresses this with `agg_var` — an employment weight
+returned alongside certain variables that makes the correct aggregation a single
+function call.
+
 ## What is `agg_var`?
 
 Some functions return a fifth column — `agg_var` — alongside the standard
@@ -183,8 +200,13 @@ size means naive averages can mislead significantly.
 
 ## Data sources
 
-> U.S. Bureau of Labor Statistics. *Quarterly Census of Employment and Wages*.
-> <https://www.bls.gov/cew/>
+> The Center on Rural Innovation's curation of U.S. Bureau of Labor Statistics,
+> *Quarterly Census of Employment and Wages*. <https://www.bls.gov/cew/>
 >
-> U.S. Census Bureau. *Metropolitan and Micropolitan Statistical Areas (OMB delineations)*.
+> The Center on Rural Innovation's curation of U.S. Census Bureau,
+> *Metropolitan and Micropolitan Statistical Areas (OMB delineations)*.
 > <https://www.census.gov/programs-surveys/metro-micro.html>
+>
+> This product uses the Census Bureau Data API but is not endorsed or certified
+> by the Census Bureau. BLS.gov cannot vouch for the data or analyses derived
+> from these data after the data have been retrieved from BLS.gov.

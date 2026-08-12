@@ -26,9 +26,17 @@ library(tidyr)
 library(stringr)
 ```
 
-Every function in the CORI data ecosystem returns **tidy (long) format** data.
-This is a deliberate design choice: tidy data pairs naturally with `dplyr`,
-`ggplot2`, and the broader R data science ecosystem.
+The most powerful analyses in this ecosystem come from combining packages —
+employment with population, business formation with building permits, broadband
+with wages. What makes that combination frictionless is a shared data contract:
+every function in every package returns the same structure, with the same column
+names, at the same geographic identifiers.
+
+That structure is **tidy (long) format**. Once you know how to work with it,
+joining any two packages takes three lines of code, filtering to a geography or
+variable is a single `filter()`, and `ggplot2` accepts the output directly
+without reshaping. The patterns in this vignette apply across the entire
+ecosystem — learn them once and they work everywhere.
 
 The format is always the same:
 
@@ -198,20 +206,25 @@ get_business_dynamics(geography = "nation", years = 2000:2023) |>
 
 ## Data sources
 
-> U.S. Census Bureau. *Business Dynamics Statistics*.
-> <https://www.census.gov/programs-surveys/bds.html>
+> The Center on Rural Innovation's curation of U.S. Census Bureau,
+> *Business Dynamics Statistics*. <https://www.census.gov/programs-surveys/bds.html>
 >
-> U.S. Census Bureau. *Business Formation Statistics*.
-> <https://www.census.gov/programs-surveys/bfs.html>
+> The Center on Rural Innovation's curation of U.S. Census Bureau,
+> *Business Formation Statistics*. <https://www.census.gov/programs-surveys/bfs.html>
 >
-> U.S. Census Bureau. *New Residential Construction: Building Permits Survey*.
-> <https://www.census.gov/construction/bps/>
+> The Center on Rural Innovation's curation of U.S. Census Bureau,
+> *New Residential Construction: Building Permits Survey*. <https://www.census.gov/construction/bps/>
 >
-> U.S. Bureau of Labor Statistics. *Quarterly Census of Employment and Wages*.
-> <https://www.bls.gov/cew/>
+> The Center on Rural Innovation's curation of U.S. Bureau of Labor Statistics,
+> *Quarterly Census of Employment and Wages*. <https://www.bls.gov/cew/>
 >
-> U.S. Census Bureau. *Population Estimates Program*.
-> <https://www.census.gov/programs-surveys/popest.html>
+> The Center on Rural Innovation's curation of U.S. Census Bureau,
+> *Population Estimates Program*. <https://www.census.gov/programs-surveys/popest.html>
 >
-> U.S. Census Bureau. *Metropolitan and Micropolitan Statistical Areas (OMB delineations)*.
+> The Center on Rural Innovation's curation of U.S. Census Bureau,
+> *Metropolitan and Micropolitan Statistical Areas (OMB delineations)*.
 > <https://www.census.gov/programs-surveys/metro-micro.html>
+>
+> This product uses the Census Bureau Data API but is not endorsed or certified
+> by the Census Bureau. BLS.gov cannot vouch for the data or analyses derived
+> from these data after the data have been retrieved from BLS.gov.
