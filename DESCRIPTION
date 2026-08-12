@@ -52,6 +52,7 @@ Suggests:
   knitr,
   remotes,
   rmarkdown,
+  rsvg,
   sf,
   testthat (>= 3.0.0),
   withr
