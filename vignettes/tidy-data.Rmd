@@ -100,12 +100,11 @@ joining across packages is a simple `left_join()`:
 
 ```{r join-two}
 # Business applications + building permits — are they moving together?
-apps <- get_business_applications(geography = "county", years = 2015:2023) |>
-  filter(variable == "applications") |>
+apps <- get_business_applications(geography = "county", years = 2015:2023) |> 
   select(geoid, year, applications = value)
 
 permits <- get_building_permits(geography = "county", years = 2015:2023) |>
-  filter(variable == "permits") |>
+  filter(variable == "building_permits") |>
   select(geoid, year, permits = value)
 
 combined <- inner_join(apps, permits, by = c("geoid", "year"))
@@ -162,11 +161,12 @@ or state-level summaries is straightforward:
 ```{r summarize}
 library(ruraldefinitions)
 
-rural <- get_definition("cbsa", 2023) |> select(geoid, is_rural)
+rural <- cbsa_2023 |> select(geoid, is_rural)
 
 emp_summary <- get_employment(geography = "county", years = 2018:2023) |>
   filter(variable == "employment") |>
   left_join(rural, by = "geoid") |>
+  filter(!is.na(is_rural)) |> 
   group_by(year, is_rural) |>
   summarize(
     total_employment = sum(value, na.rm = TRUE),
@@ -181,7 +181,8 @@ Tidy data maps directly to `ggplot2` aesthetics with no reshaping:
 
 ```{r ggplot}
 library(ggplot2)
-library(cori.charts)
+# remotes::install_github('ruralinnovation/cori.charts')
+library(cori.charts) ### CORI themed graphic package
 load_fonts()
 
 # Rate trends for two variables — one call, two lines
@@ -196,11 +197,11 @@ get_business_dynamics(geography = "nation", years = 2000:2023) |>
   scale_y_continuous(labels = scales::label_percent(accuracy = 0.1, scale = 1)) +
   theme_cori() +
   labs(
-    title  = "National establishment entry and exit rates, 2000\u20132023",
+    title  = "National establishment entry and exit rates, 2000-2023",
     x      = NULL,
     y      = NULL,
     color  = NULL,
-    caption = "Source: Census Bureau Business Dynamics Statistics"
+    caption = "Source: CORI analysis of Census Bureau Business Dynamics Statistics"
   )
 ```
 
