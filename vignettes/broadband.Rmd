@@ -69,19 +69,13 @@ analysis, loop across county FIPS codes using `lapply()`:
 
 ```{r broadband-data}
 # Get all West Virginia county FIPS codes
-wv_counties <- tiger_line_counties() |>
+wv_counties <- counties(year = 2024) |>
   filter(substr(GEOID, 1, 2) == "54") |>
   pull(GEOID)
 
 # Pull broadband coverage for each county
-broadband_wv <- lapply(wv_counties, function(g) {
-  tryCatch(
-    get_nbm_county(geoid_co = g, release = "latest"),
-    error = function(e) {
-      message(sprintf("Skipping %s: %s", g, conditionMessage(e)))
-      NULL
-    }
-  )
+broadband_wv <- lapply(wv_counties, function(cnty) {
+  get_nbm_county(geoid_co = cnty, release = "latest")
 }) |>
   bind_rows() |>
   mutate(
@@ -93,11 +87,11 @@ broadband_wv <- lapply(wv_counties, function(g) {
 ## Map: broadband coverage in West Virginia
 
 ```{r broadband-map, fig.alt = "Choropleth map of 100/20 Mbps broadband coverage across West Virginia counties"}
-wv_counties_sf <- tiger_line_counties() |>
+wv_counties_sf <- counties( year = 2024) |>
   filter(substr(GEOID, 1, 2) == "54") |>
   left_join(broadband_wv, by = c("GEOID" = "geoid"))
 
-wv_state_sf <- tiger_line_states() |>
+wv_state_sf <- states(year = 2024) |>
   filter(GEOID == "54")
 
 fig_map <- ggplot() +
@@ -131,7 +125,7 @@ fig_map <- ggplot() +
   )
 
 fig_map
-save_plot(fig_map, here::here("export/broadband_wv_map.png"))
+
 ```
 
 ## Connecting broadband to employment
@@ -142,15 +136,15 @@ a first look:
 
 ```{r broadband-employment}
 # Employment rate in WV counties
-emp <- get_employment(geoids = wv_counties, years = 2023) |>
+emp <- get_employment(geoids = wv_counties, years = 2025) |>
   filter(variable == "employment") |>
   select(geoid, employment = value)
 
-pop16 <- get_population(geoids = wv_counties, years = 2023) |>
+pop16 <- get_population(geoids = wv_counties, years = 2025) |>
   filter(variable == "population_16plus") |>
   select(geoid, pop_16plus = value)
 
-rural <- get_definition("cbsa", 2023) |> select(geoid, is_rural)
+rural <- cbsa_2023 |> select(geoid, is_rural)
 
 wv_combined <- broadband_wv |>
   left_join(emp,   by = "geoid") |>
@@ -161,39 +155,49 @@ wv_combined <- broadband_wv |>
 ```
 
 ```{r broadband-scatter, fig.alt = "Scatter plot of broadband coverage vs employment rate for West Virginia counties, sized by total locations and colored by rural status"}
-fig_scatter <- wv_combined |>
-  ggplot(aes(
-    x     = pct_100_20,
-    y     = emp_rate,
-    color = is_rural,
-    size  = cnt_total_locations
-  )) +
-  geom_point(alpha = 0.7) +
-  geom_smooth(method = "lm", se = FALSE, linewidth = 1, aes(group = 1),
-              color = cori_colors["CORI Gray"]) +
-  scale_color_cori(palette = "ctg2ruralnonrural") +
-  scale_x_continuous(labels = label_percent(accuracy = 1)) +
-  scale_y_continuous(labels = label_percent(accuracy = 1)) +
-  scale_size_continuous(
-    range  = c(1, 8),
-    labels = label_comma(),
-    name   = "Total locations"
-  ) +
-  theme_cori() +
-  labs(
-    title    = "Broadband coverage and employment rate, West Virginia counties",
-    subtitle = "2023 data. Each dot is a county.",
-    caption  = str_wrap(
-      "Sources: FCC National Broadband Map; BLS QCEW; Census PEP. Rural classification: CBSA 2023.",
-      width = 110
-    ),
-    color = NULL,
-    x     = "Share of locations with 100/20 Mbps coverage",
-    y     = "Covered employment rate (16+)"
-  )
+ fig_scatter <- wv_combined |>                                                                                                                                                                
+    ggplot(aes(
+      x     = pct_100_20,                                                                            
+      y     = emp_rate,                                                                             
+      color = is_rural,
+      size  = cnt_total_locations
+    )) +                                                                               
+    geom_point(alpha = 0.7) +
+    geom_smooth(
+      method = "lm", se = FALSE, linewidth = 1, aes(group = 1),                                                                               
+      color = cori_colors["CORI Gray"]) +                                                       
+    scale_color_cori(
+      palette = "ctg2ruralnonrural",
+      guide   = guide_legend(order = 1)
+    ) +
+    scale_x_continuous(
+      labels = label_percent(accuracy = 1), 
+      limits = c(0.25, 1.01)
+      ) +
+    scale_y_continuous(labels = label_percent(accuracy = 1)) +
+    scale_size_continuous(
+      range  = c(1, 8),
+      labels = label_comma(),
+      name   = "Broadband location size",
+      guide  = guide_legend(order = 2)
+    ) +
+    theme_cori() +
+    theme(
+      legend.box = "vertical",
+      axis.ticks.x = element_line()
+      ) +
+    labs(
+      title    = "West Virginia Broadband coverage and labor force participation \nrate",
+      subtitle = "Dots sized by number of broadband serviceable locations",
+      caption  =                                                                                                                                                                     
+        "Sources: 2025 FCC National Broadband Map; 2025 BLS QCEW; 2025 Census PEP. \nRural classification: CBSA 2023.",
+      color = NULL,
+      x     = "Share of locations with 100/20 Mbps coverage",
+      y     = "Labor force participation rate"                                                                                                                                                                                                                                
+    )
 
 fig_scatter
-save_plot(fig_scatter, here::here("export/broadband_employment_scatter.png"))
+
 ```
 
 ## A note on interpretation

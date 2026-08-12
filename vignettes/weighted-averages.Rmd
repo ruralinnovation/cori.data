@@ -78,7 +78,7 @@ collectively represent a tiny fraction of the actual rural workforce.
 ```{r naive-mean}
 wages <- get_wage_salary(geography = "county", years = 2023) |>
   left_join(
-    get_definition("cbsa", 2023) |> select(geoid, is_rural),
+    cbsa_2023 |> select(geoid, is_rural),
     by = "geoid"
   ) |>
   filter(!is.na(is_rural))
@@ -124,7 +124,7 @@ wage_comparison <- wages |>
     values_to = "avg_wage"
   )
 
-title    <- "Employment-weighting changes the picture on rural wages"
+title    <- "Employment-weighting changes the picture on wages"
 subtitle <- "Average annual pay per worker, 2023"
 caption  <- str_wrap(
   "Source: BLS Quarterly Census of Employment and Wages via cori.data.qcew. Rural classification: CBSA 2023.",
@@ -159,7 +159,7 @@ fig_bar <- wage_comparison |>
   )
 
 fig_bar
-save_plot(fig_bar, here::here("export/wage_weighted_comparison.png"))
+# save_plot(fig_bar, here::here("export/wage_weighted_comparison.png"))
 ```
 
 ## Aggregating across geographies
@@ -168,9 +168,9 @@ save_plot(fig_bar, here::here("export/wage_weighted_comparison.png"))
 into regions. Summing wages is meaningless — you need to weight by employment:
 
 ```{r aggregate-regions}
-library(ruraldefinitions)
 
-rural <- get_definition("cbsa", 2023) |> select(geoid, is_rural)
+rural <- cbsa_2023 |> 
+  select(geoid, is_rural)
 
 # Correct: employment-weighted regional average
 sector_wages <- get_sector_wages(
