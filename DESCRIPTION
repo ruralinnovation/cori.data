@@ -4,13 +4,13 @@ Title: CORI functions for exploring rural data
 Version: 1.1.0
 Authors@R: c(
     person(
-      "John", "Hall",
-      email = "john.hall@ruralinnovation.us",
+      "Drew", "Rosebush",
+      email = "drew.rosebush@ruralinnovation.us",
       role = "aut"
     ),
     person(
-      "Drew", "Rosebush",
-      email = "drew.rosebush@ruralinnovation.us",
+      "John", "Hall",
+      email = "john.hall@ruralinnovation.us",
       role = c("aut", "cre")
     )
   )
