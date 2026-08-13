@@ -8,16 +8,25 @@ policy practitioners direct access to the socioeconomic data we use
 every day — employment, wages, population, business dynamics, housing,
 broadband, and more.
 
-`cori.data` is the S3/cloud-access foundation for the `cori.data.*`
-family: it provides the credential management, DuckDB S3 connection
-helper, and S3 object functions that every companion package builds on.
-**Reads require no local AWS setup** — the package falls back to
-temporary, read-only credentials from the CORI credential-vending
-endpoint automatically.
+`cori.data` is the **meta-package** for the `cori.data.*` family.
+Installing it pulls in every companion package; loading it attaches them
+all, so you get immediate access to
+[`get_employment()`](https://rdrr.io/pkg/cori.data.qcew/man/get_employment.html),
+[`get_population()`](https://rdrr.io/pkg/cori.data.pep/man/get_population.html),
+[`get_definition()`](https://ruralinnovation.github.io/ruraldefinitions/reference/get_definition.html),
+and dozens more without separate
+[`library()`](https://rdrr.io/r/base/library.html) calls.
+[`cori.data.s3`](https://github.com/ruralinnovation/cori.data.s3) is the
+S3/cloud-access layer for the `cori.data.*` family: it provides the
+credential management, DuckDB S3 connection helper, and S3 object
+functions that every companion package builds on. **Reads require no
+local AWS setup** — the package falls back to temporary, read-only
+credentials from the CORI credential-vending endpoint automatically.
 
 We’re actively expanding these offerings and would love your
-collaboration. Pull requests, issue reports, and feature requests are
-all welcome.
+collaboration.
+
+Pull requests, issue reports, and feature requests are all welcome.
 
 ------------------------------------------------------------------------
 
