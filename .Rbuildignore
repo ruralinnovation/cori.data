@@ -26,7 +26,6 @@
 ^states\.rds$
 ^tiger$
 ^zip_code_centroids\.rds$
-^inst$
 ^src$
 ^package\.json$
 ^package-lock\.json$
