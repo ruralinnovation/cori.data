@@ -50,11 +50,16 @@ Remotes:
   ruralinnovation/ruraldefinitions
 Suggests:
   knitr,
+  magick,
+  ragg,
   remotes,
   rmarkdown,
   rsvg,
   sf,
+  svglite,
+  systemfonts,
   testthat (>= 3.0.0),
+  textshaping,
   withr
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
