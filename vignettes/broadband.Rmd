@@ -3,8 +3,11 @@ title: "Broadband as Economic Infrastructure"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Broadband as Economic Infrastructure}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
 ```{r setup, include = FALSE}
@@ -35,32 +38,32 @@ load_fonts()
 update_cori_geom_defaults()
 ```
 
-Broadband access is increasingly inseparable from economic participation.
-Remote work, e-commerce, telemedicine, and digital services all depend on
-reliable, high-speed internet — and rural areas have historically faced the
-greatest gaps in coverage.
+Broadband access is increasingly inseparable from economic
+participation. Remote work, e-commerce, tele-medicine, and digital
+services all depend on reliable, high-speed internet — and rural areas
+have historically faced the greatest gaps in coverage.
 
-The `cori.data.fcc` package provides access to the FCC's National Broadband
-Map (NBM), which tracks broadband serviceable locations at the address level.
-This vignette shows how to pull county-level broadband data and connect it
-to economic outcomes.
+The `cori.data.fcc` package provides access to the FCC's National
+Broadband Map (NBM), which tracks broadband serviceable locations at the
+address level. This vignette shows how to pull county-level broadband
+data and connect it to economic outcomes.
 
 ## How FCC NBM data works
 
-The NBM measures whether locations can **receive** broadband service at a
-given speed threshold — it does not measure actual adoption or usage. Key
-metrics available at the county level:
+The NBM measures whether locations can **receive** broadband service at
+a given speed threshold — it does not measure actual adoption or usage.
+Key metrics available at the county level:
 
 | Variable | Description |
-|---|---|
+|----|----|
 | `cnt_total_locations` | Total serviceable locations |
 | `cnt_fiber_locations` | Locations with fiber infrastructure |
 | `cnt_100_20` | Locations with 100/20 Mbps coverage |
 | `cnt_25_3` | Locations with 25/3 Mbps coverage (legacy FCC threshold) |
 
-Data is published in releases: `"D23"` (December 2023), `"J24"` (June 2024),
-`"D24"` (December 2024), `"J25"` (June 2025). Use `release = "latest"` for
-the most current data.
+Data is published in releases: `"D23"` (December 2023), `"J24"` (June
+2024), `"D24"` (December 2024), `"J25"` (June 2025). Use
+`release = "latest"` for the most current data.
 
 ## Pulling broadband data
 
@@ -74,10 +77,11 @@ wv_counties <- counties(year = 2024) |>
   pull(GEOID)
 
 # Pull broadband coverage for each county
-broadband_wv <- lapply(wv_counties, function(cnty) {
-  get_nbm_county(geoid_co = cnty, release = "latest")
-}) |>
-  bind_rows() |>
+broadband_wv  <- purrr::map_dfr(
+  wv_counties,
+  get_nbm_county,
+  release = "latest"
+) |>
   mutate(
     pct_100_20 = cnt_100_20 / cnt_total_locations,
     pct_fiber  = cnt_fiber_locations / cnt_total_locations
@@ -114,13 +118,14 @@ fig_map <- ggplot() +
     na.value = "#d0d2ce"
   ) +
   theme_cori_map() +
+  theme(
+    legend.position = "top",
+    legend.key.width = unit(2, "cm")
+  ) +
   labs(
-    title    = "Broadband access remains uneven across West Virginia",
-    subtitle = "Share of serviceable locations with 100/20 Mbps coverage, latest FCC NBM release",
-    caption  = str_wrap(
-      "Source: FCC National Broadband Map via cori.data.fcc. Coverage reflects serviceable locations, not adoption.",
-      width = 110
-    ),
+    title    = "Broadband access remains uneven across\nWest Virginia",
+    subtitle = "Share of serviceable locations with 100/20 Mbps coverage\nusing latest FCC NBM release",
+    caption  = "Source: FCC National Broadband Map via cori.data.fcc.\nCoverage reflects serviceable locations, not adoption.",
     fill = "100/20 Mbps\ncoverage"
   )
 
@@ -131,8 +136,8 @@ fig_map
 ## Connecting broadband to employment
 
 Does broadband coverage correlate with stronger employment outcomes?
-Joining FCC data with QCEW employment and rural classification gives
-a first look:
+Joining FCC data with QCEW employment and rural classification gives a
+first look:
 
 ```{r broadband-employment}
 # Employment rate in WV counties
@@ -155,17 +160,17 @@ wv_combined <- broadband_wv |>
 ```
 
 ```{r broadband-scatter, fig.alt = "Scatter plot of broadband coverage vs employment rate for West Virginia counties, sized by total locations and colored by rural status"}
- fig_scatter <- wv_combined |>                                                                                                                                                                
+ fig_scatter <- wv_combined |>                                                     
     ggplot(aes(
-      x     = pct_100_20,                                                                            
-      y     = emp_rate,                                                                             
+      x     = pct_100_20,                                                                     
+      y     = emp_rate,                                                                       
       color = is_rural,
       size  = cnt_total_locations
     )) +                                                                               
     geom_point(alpha = 0.7) +
     geom_smooth(
-      method = "lm", se = FALSE, linewidth = 1, aes(group = 1),                                                                               
-      color = cori_colors["CORI Gray"]) +                                                       
+      method = "lm", se = FALSE, linewidth = 1, aes(group = 1),
+      color = cori_colors["CORI Gray"]) +                                                     
     scale_color_cori(
       palette = "ctg2ruralnonrural",
       guide   = guide_legend(order = 1)
@@ -189,8 +194,7 @@ wv_combined <- broadband_wv |>
     labs(
       title    = "West Virginia Broadband coverage and labor force participation \nrate",
       subtitle = "Dots sized by number of broadband serviceable locations",
-      caption  =                                                                                                                                                                     
-        "Sources: 2025 FCC National Broadband Map; 2025 BLS QCEW; 2025 Census PEP. \nRural classification: CBSA 2023.",
+      caption  = "Sources: 2025 FCC National Broadband Map; 2025 BLS QCEW; 2025 Census PEP.\nRural classification: CBSA 2023.",
       color = NULL,
       x     = "Share of locations with 100/20 Mbps coverage",
       y     = "Labor force participation rate"                                                                                                                                                                                                                                
@@ -202,49 +206,56 @@ fig_scatter
 
 ## A note on interpretation
 
-The FCC NBM measures **availability**, not **adoption**. A location counted
-as covered may not have a subscribing household. In rural areas, cost and
-digital literacy barriers can mean that even where coverage exists,
-actual connectivity lags behind what the map suggests. Use availability data
-as a floor estimate — the actual connected share is likely lower.
+The FCC NBM measures **availability**, not **adoption**. A location
+counted as covered may not have a subscribing household. In rural areas,
+cost and digital literacy barriers can mean that even where coverage
+exists, actual connectivity lags behind what the map suggests. Use
+availability data as a floor estimate — the actual connected share is
+likely lower.
 
-For deeper analysis of broadband and economic outcomes in rural communities,
-see [CORI's broadband research](https://ruralinnovation.us/our-work/research/).
+For deeper analysis of broadband and economic outcomes in rural
+communities, see [CORI's broadband
+research](https://ruralinnovation.us/our-work/research/).
 
 ## What broadband analysis reveals
 
-Broadband coverage is uneven within rural geographies, not just between rural
-and nonrural. Counties that are both classified as rural can differ dramatically
-in their connectivity — reflecting topography, population density, the presence
-of anchor institutions, and the pace of infrastructure investment driven by
-federal programs like BEAD. That variation is analytically useful: it lets you
-study broadband as a factor in economic outcomes rather than treating all rural
-counties as equally underconnected.
+Broadband coverage is uneven within rural geographies, not just between
+rural and nonrural. Counties that are classified as rural often differ
+dramatically in their connectivity — reflecting differences in
+topography, population density, the presence of anchor institutions, and
+the pace of infrastructure investment driven by federal programs like
+BEAD. That variation is analytically useful: it lets you study broadband
+as a factor in economic outcomes rather than treating all rural counties
+as equally underconnected.
 
-Counties that have seen meaningful improvements in coverage across consecutive
-NBM releases are worth watching. The bi-annual data structure — December and
-June reference dates — makes it possible to track the deployment wave in near
-real time and connect it to labor market and business formation trends as they
-unfold. Rural broadband is one of the faster-moving stories in this ecosystem,
-and the data is now granular enough to follow it at the county level.
+Counties that have seen meaningful improvements in coverage across
+consecutive NBM releases are worth watching. The bi-annual data
+structure — December and June reference dates — makes it possible to
+track the deployment wave in near real time and connect it to labor
+market and business formation trends as they unfold. Rural broadband is
+one of the faster-moving stories in this ecosystem, and the data is now
+granular enough to follow it at the county level.
 
 ## Data sources
 
-> The Center on Rural Innovation's curation of Federal Communications Commission,
-> *National Broadband Map — Broadband Data Collection*. <https://broadbandmap.fcc.gov/>
+> The Center on Rural Innovation's curation of Federal Communications
+> Commission, *National Broadband Map — Broadband Data Collection*.
+> <https://broadbandmap.fcc.gov/>
 >
-> The Center on Rural Innovation's curation of U.S. Bureau of Labor Statistics,
-> *Quarterly Census of Employment and Wages*. <https://www.bls.gov/cew/>
+> The Center on Rural Innovation's curation of U.S. Bureau of Labor
+> Statistics, *Quarterly Census of Employment and Wages*.
+> <https://www.bls.gov/cew/>
 >
 > The Center on Rural Innovation's curation of U.S. Census Bureau,
-> *Population Estimates Program*. <https://www.census.gov/programs-surveys/popest.html>
+> *Population Estimates Program*.
+> <https://www.census.gov/programs-surveys/popest.html>
 >
 > The Center on Rural Innovation's curation of U.S. Census Bureau,
 > *Metropolitan and Micropolitan Statistical Areas (OMB delineations)*.
 > <https://www.census.gov/programs-surveys/metro-micro.html>
 >
 > Broadband availability data from the FCC BDC are in the public domain
-> (17 U.S.C. § 105). This product uses the Census Bureau Data API but is not
-> endorsed or certified by the Census Bureau. BLS.gov cannot vouch for the data
-> or analyses derived from these data after the data have been retrieved from
-> BLS.gov.
+> (17 U.S.C. § 105). This product uses the Census Bureau Data API but is
+> not endorsed or certified by the Census Bureau. BLS.gov cannot vouch
+> for the data or analyses derived from these data after the data have
+> been retrieved from BLS.gov.

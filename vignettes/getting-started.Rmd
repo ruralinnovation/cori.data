@@ -3,8 +3,11 @@ title: "Getting Started with CORI Rural Data"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Getting Started with CORI Rural Data}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
 ```{r setup, include = FALSE}
@@ -15,20 +18,21 @@ knitr::opts_chunk$set(
 )
 ```
 
-Rural America contains multitudes. It is a place of deep economic resilience
-and persistent structural challenge — where the loss of a single employer can
-reshape a community for a generation, and where a new business opening can
-signal something much larger than its balance sheet.
+Rural America contains multitudes. It is a place of deep economic
+resilience and persistent structural challenge — where the loss of a
+single employer can reshape a community for a generation, and where a
+new business opening can signal something much larger than its balance
+sheet would suggest.
 
-The CORI data ecosystem gives researchers, analysts, and practitioners direct
-access to the socioeconomic data that describes these dynamics. This vignette
-introduces the ecosystem and the consistent interface that runs across every
-package.
+The CORI data ecosystem gives researchers, analysts, and practitioners
+direct access to the socioeconomic data that describes these dynamics.
+This vignette introduces the ecosystem and the consistent interface that
+runs across every package.
 
 ## The packages
 
 | Package | What it measures | Geography | Years |
-|---|---|---|---|
+|------------------|------------------|------------------|------------------|
 | `cori.data.qcew` | Employment & wages (BLS QCEW) | county, state | 1990–present |
 | `cori.data.bds` | Business dynamics (Census BDS) | county, state, nation | 1978–present |
 | `cori.data.pep` | Population (Census PEP) | county, state, nation | 2000–present |
@@ -40,8 +44,8 @@ package.
 
 ## A consistent interface
 
-Every package uses the same four parameters. Once you learn the pattern once,
-you know it everywhere.
+Every package uses the same four parameters. Once you learn the pattern
+once, you know it everywhere.
 
 ```{r interface}
 library(cori.data.qcew)
@@ -66,7 +70,7 @@ All functions return **tidy (long) format** data: one row per
 `geoid × year × variable`. The `variable` column names the measure;
 `value` holds the number.
 
-```
+```         
 geoid   year  variable      value
 33009   2023  employment    28450
 33009   2022  employment    27810
@@ -112,41 +116,48 @@ uic_2024  # USDA Urban Influence Codes
 
 ## Where to go next
 
-- **[Employment Rate](employment-rate.html)** — combine QCEW + PEP to build a
-  cross-package employment rate with line chart and county map
-- **[Working with Tidy Data](tidy-data.html)** — filtering, pivoting wide,
-  and joining datasets across packages
-- **[Sector Analysis](sector-analysis.html)** — CORI super-sectors and
-  what they reveal about rural economic composition
-- **[Weighted Averages](weighted-averages.html)** — why `agg_var` matters
-  and how to use it correctly
-- **[Broadband](broadband.html)** — FCC broadband data and its relationship
-  to economic outcomes
+-   [**Employment Rate**](employment-rate.html) — combine QCEW + PEP to
+    build a cross-package employment rate with line chart and county map
+-   [**Working with Tidy Data**](tidy-data.html) — filtering, pivoting
+    wide, and joining datasets across packages
+-   [**Sector Analysis**](sector-analysis.html) — CORI super-sectors and
+    what they reveal about rural economic composition
+-   [**Weighted Averages**](weighted-averages.html) — why `agg_var`
+    matters and how to use it correctly
+-   [**Broadband**](broadband.html) — FCC broadband data and its
+    relationship to economic outcomes
 
 ## Data sources
 
-> The Center on Rural Innovation's curation of U.S. Bureau of Labor Statistics,
-> *Quarterly Census of Employment and Wages*. <https://www.bls.gov/cew/>
+> The Center on Rural Innovation's curation of U.S. Bureau of Labor
+> Statistics, *Quarterly Census of Employment and Wages*.
+> <https://www.bls.gov/cew/>
 >
 > The Center on Rural Innovation's curation of U.S. Census Bureau,
-> *Population Estimates Program*. <https://www.census.gov/programs-surveys/popest.html>
+> *Population Estimates Program*.
+> <https://www.census.gov/programs-surveys/popest.html>
 >
 > The Center on Rural Innovation's curation of U.S. Census Bureau,
-> *Business Dynamics Statistics*. <https://www.census.gov/programs-surveys/bds.html>
+> *Business Dynamics Statistics*.
+> <https://www.census.gov/programs-surveys/bds.html>
 >
 > The Center on Rural Innovation's curation of U.S. Census Bureau,
 > *Metropolitan and Micropolitan Statistical Areas (OMB delineations)*.
 > <https://www.census.gov/programs-surveys/metro-micro.html>
 >
-> The Center on Rural Innovation's curation of USDA Economic Research Service,
-> *Rural-Urban Continuum Codes*. <https://www.ers.usda.gov/data-products/rural-urban-continuum-codes/>
+> The Center on Rural Innovation's curation of USDA Economic Research
+> Service, *Rural-Urban Continuum Codes*.
+> <https://www.ers.usda.gov/data-products/rural-urban-continuum-codes/>
 >
-> The Center on Rural Innovation's curation of National Center for Health Statistics,
-> *Urban-Rural Classification Scheme for Counties*. <https://www.cdc.gov/nchs/data_access/urban_rural.htm>
+> The Center on Rural Innovation's curation of National Center for
+> Health Statistics, *Urban-Rural Classification Scheme for Counties*.
+> <https://www.cdc.gov/nchs/data_access/urban_rural.htm>
 >
-> The Center on Rural Innovation's curation of USDA Economic Research Service,
-> *Urban Influence Codes*. <https://www.ers.usda.gov/data-products/urban-influence-codes/>
+> The Center on Rural Innovation's curation of USDA Economic Research
+> Service, *Urban Influence Codes*.
+> <https://www.ers.usda.gov/data-products/urban-influence-codes/>
 >
-> This product uses the Census Bureau Data API but is not endorsed or certified
-> by the Census Bureau. BLS.gov cannot vouch for the data or analyses derived
-> from these data after the data have been retrieved from BLS.gov.
+> This product uses the Census Bureau Data API but is not endorsed or
+> certified by the Census Bureau. BLS.gov cannot vouch for the data or
+> analyses derived from these data after the data have been retrieved
+> from BLS.gov.

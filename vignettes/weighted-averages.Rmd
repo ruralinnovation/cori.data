@@ -3,8 +3,11 @@ title: "Weighted Averages and agg_var"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Weighted Averages and agg_var}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
 ```{r setup, include = FALSE}
@@ -33,33 +36,36 @@ update_cori_geom_defaults()
 ```
 
 Counties are not equal in size. Loving County, Texas has a few hundred
-residents; Los Angeles County has ten million. When you average a rate across
-counties — wages, employment share, sector composition — treating each county
-as one observation lets the hundreds of tiny counties dominate the result, even
-though they collectively represent a small fraction of the actual workforce.
+residents; Los Angeles County, California has ten million. When you
+average a rate across counties — wages, employment share, sector
+composition — treating each county as one observation lets the hundreds
+of tiny counties dominate the result, even though they collectively
+represent a small fraction of the actual workforce.
 
 This distortion is especially consequential in rural analysis. The rural
-landscape is dominated by small counties, and a handful of them with large
-employers — a mine, a power plant, a major hospital system — can pull a naive
-average far from the typical rural worker's experience. The same problem applies
-when rolling counties up into regions: summing wages is meaningless; you need
-to weight by how many workers each wage represents.
+landscape is dominated by small counties, and a handful of them with
+large employers — a mine, a power plant, a major hospital system — can
+pull a naive average far from the typical rural worker's experience. The
+same problem applies when aggregating counties to regions: summing wages
+is meaningless; you need to weight by how many workers each wage
+represents.
 
-The CORI data ecosystem addresses this with `agg_var` — an employment weight
-returned alongside certain variables that makes the correct aggregation a single
-function call.
+The CORI data ecosystem addresses this with `agg_var` — an employment
+weight returned alongside certain variables that makes the correct
+aggregation a single function call.
 
 ## What is `agg_var`?
 
-Some functions return a fifth column — `agg_var` — alongside the standard
-`geoid | year | variable | value`. This is the **employment weight**: the
-denominator used to properly aggregate rates and shares across geographies.
+Some functions return a fifth column — `agg_var` — alongside the
+standard `geoid | year | variable | value`. This is the **employment
+weight**: the denominator used to properly aggregate rates and shares
+across geographies.
 
-| Function | Variable | `agg_var` |
-|---|---|---|
-| `get_wage_salary()` | `avg_pay` | Total employment |
-| `get_sector_employment()` | `emp_share` | Total employment |
-| `get_sector_wages()` | `avg_pay` | Sector employment |
+| Function                  | Variable    | `agg_var`         |
+|---------------------------|-------------|-------------------|
+| `get_wage_salary()`       | `avg_pay`   | Total employment  |
+| `get_sector_employment()` | `emp_share` | Total employment  |
+| `get_sector_wages()`      | `avg_pay`   | Sector employment |
 
 Functions that return raw counts (`get_employment()`,
 `get_employment_concentration()`) do not include `agg_var` — counts can
@@ -67,13 +73,14 @@ simply be summed.
 
 ## The problem with simple averages
 
-Here is the core issue. Suppose we want the average annual wage across all
-rural counties in 2023.
+Suppose we want the average annual wage across all rural counties in
+2023.
 
-A simple `mean()` treats every county equally — a county with 200 workers
-gets exactly the same weight as one with 200,000. In practice, the result
-is dominated by hundreds of small, low-employment rural counties that
-collectively represent a tiny fraction of the actual rural workforce.
+A simple `mean()` treats every county equally — a county with 200
+workers gets exactly the same weight as one with 200,000. In practice,
+the result is dominated by hundreds of small, low-employment rural
+counties that collectively represent a tiny fraction of the actual rural
+workforce.
 
 ```{r naive-mean}
 wages <- get_wage_salary(geography = "county", years = 2023) |>
@@ -164,8 +171,9 @@ fig_bar
 
 ## Aggregating across geographies
 
-`agg_var` also enables correct aggregation when you want to roll up counties
-into regions. Summing wages is meaningless — you need to weight by employment:
+`agg_var` also enables correct aggregation when you want to aggregate
+counties to regions. Summing wages is meaningless — you need to weight
+by employment:
 
 ```{r aggregate-regions}
 
@@ -193,20 +201,23 @@ regional_wages <- sector_wages |>
 
 ## Rule of thumb
 
-Whenever a function returns `agg_var`, use `weighted.mean(value, agg_var)`
-instead of `mean(value)` any time you're aggregating across multiple geographies.
-The difference matters most in rural analysis, where high variance in county
-size means naive averages can mislead significantly.
+Whenever a function returns `agg_var`, use
+`weighted.mean(value, agg_var)` instead of `mean(value)` any time you're
+aggregating across multiple geographies. The difference matters most in
+rural analysis, where high variance in county size means naive averages
+can mislead analysis results significantly.
 
 ## Data sources
 
-> The Center on Rural Innovation's curation of U.S. Bureau of Labor Statistics,
-> *Quarterly Census of Employment and Wages*. <https://www.bls.gov/cew/>
+> The Center on Rural Innovation's curation of U.S. Bureau of Labor
+> Statistics, *Quarterly Census of Employment and Wages*.
+> <https://www.bls.gov/cew/>
 >
 > The Center on Rural Innovation's curation of U.S. Census Bureau,
 > *Metropolitan and Micropolitan Statistical Areas (OMB delineations)*.
 > <https://www.census.gov/programs-surveys/metro-micro.html>
 >
-> This product uses the Census Bureau Data API but is not endorsed or certified
-> by the Census Bureau. BLS.gov cannot vouch for the data or analyses derived
-> from these data after the data have been retrieved from BLS.gov.
+> This product uses the Census Bureau Data API but is not endorsed or
+> certified by the Census Bureau. BLS.gov cannot vouch for the data or
+> analyses derived from these data after the data have been retrieved
+> from BLS.gov.
