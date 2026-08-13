@@ -30,7 +30,7 @@ Install `cori.data` and all companion data packages in one call:
 # install.packages("devtools")
 devtools::install_github("ruralinnovation/cori.data")
 
-# Install all cori.data.* companion packages
+# Install (or update) all cori.data.* companion packages
 cori.data::install_data_packages()
 ```
 
