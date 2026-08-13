@@ -61,6 +61,7 @@ Imports:
   paws.storage,
   utils
 Remotes:
+  ruralinnovation/cori.charts,
   ruralinnovation/cori.data.bds,
   ruralinnovation/cori.data.bfs,
   ruralinnovation/cori.data.bps,
@@ -71,6 +72,7 @@ Remotes:
   ruralinnovation/cori.data.s3,
   ruralinnovation/ruraldefinitions
 Suggests:
+  cori.charts,
   knitr,
   magick,
   ragg,
