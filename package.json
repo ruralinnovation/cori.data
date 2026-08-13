@@ -1,6 +1,6 @@
 {
   "name": "@cori.data",
-  "version": "0.1.0",
+  "version": "2.0.0",
   "private": true,
   "description": "Credential-vending Lambda + CDK infrastructure for cori.data::connect_to_s3",
   "bin": {
