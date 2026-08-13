@@ -8,11 +8,10 @@ Authors@R: c(
       email = "drew.rosebush@ruralinnovation.us",
       role = "aut"
     ),
-    
     person(
       "Lindsey", "Elliott",
       email = "lindsey.elliott@ruralinnovation.us",
-      role = "ctb"
+      role = c("ctb")
     ),
     person(
       "John", "Hall",
