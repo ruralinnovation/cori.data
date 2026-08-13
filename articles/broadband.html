@@ -84,7 +84,7 @@
 <span><span class="fu"><a href="https://ruralinnovation.github.io/cori.charts/reference/fonts.html" class="external-link">load_fonts</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://ruralinnovation.github.io/cori.charts/reference/update_cori_geom_defaults.html" class="external-link">update_cori_geom_defaults</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>Broadband access is increasingly inseparable from economic
-participation. Remote work, e-commerce, telemedicine, and digital
+participation. Remote work, e-commerce, tele-medicine, and digital
 services all depend on reliable, high-speed internet — and rural areas
 have historically faced the greatest gaps in coverage.</p>
 <p>The <code>cori.data.fcc</code> package provides access to the FCC’s
@@ -143,10 +143,11 @@ state or regional analysis, loop across county FIPS codes using
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">GEOID</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Pull broadband coverage for each county</span></span>
-<span><span class="va">broadband_wv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">wv_counties</span>, <span class="kw">function</span><span class="op">(</span><span class="va">cnty</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://ruralinnovation.github.io/cori.data.fcc/reference/get_nbm_county.html">get_nbm_county</a></span><span class="op">(</span>geoid_co <span class="op">=</span> <span class="va">cnty</span>, release <span class="op">=</span> <span class="st">"latest"</span><span class="op">)</span></span>
-<span><span class="op">}</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span><span class="va">broadband_wv</span>  <span class="op">&lt;-</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map_dfr.html" class="external-link">map_dfr</a></span><span class="op">(</span></span>
+<span>  <span class="va">wv_counties</span>,</span>
+<span>  <span class="va">get_nbm_county</span>,</span>
+<span>  release <span class="op">=</span> <span class="st">"latest"</span></span>
+<span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
 <span>    pct_100_20 <span class="op">=</span> <span class="va">cnt_100_20</span> <span class="op">/</span> <span class="va">cnt_total_locations</span>,</span>
 <span>    pct_fiber  <span class="op">=</span> <span class="va">cnt_fiber_locations</span> <span class="op">/</span> <span class="va">cnt_total_locations</span></span>
@@ -183,13 +184,14 @@ state or regional analysis, loop across county FIPS codes using
 <span>    na.value <span class="op">=</span> <span class="st">"#d0d2ce"</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ruralinnovation.github.io/cori.charts/reference/theme_cori_map.html" class="external-link">theme_cori_map</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span></span>
+<span>    legend.position <span class="op">=</span> <span class="st">"top"</span>,</span>
+<span>    legend.key.width <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">2</span>, <span class="st">"cm"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
-<span>    title    <span class="op">=</span> <span class="st">"Broadband access remains uneven across West Virginia"</span>,</span>
-<span>    subtitle <span class="op">=</span> <span class="st">"Share of serviceable locations with 100/20 Mbps coverage, latest FCC NBM release"</span>,</span>
-<span>    caption  <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_wrap.html" class="external-link">str_wrap</a></span><span class="op">(</span></span>
-<span>      <span class="st">"Source: FCC National Broadband Map via cori.data.fcc. Coverage reflects serviceable locations, not adoption."</span>,</span>
-<span>      width <span class="op">=</span> <span class="fl">110</span></span>
-<span>    <span class="op">)</span>,</span>
+<span>    title    <span class="op">=</span> <span class="st">"Broadband access remains uneven across\nWest Virginia"</span>,</span>
+<span>    subtitle <span class="op">=</span> <span class="st">"Share of serviceable locations with 100/20 Mbps coverage\nusing latest FCC NBM release"</span>,</span>
+<span>    caption  <span class="op">=</span> <span class="st">"Source: FCC National Broadband Map via cori.data.fcc.\nCoverage reflects serviceable locations, not adoption."</span>,</span>
 <span>    fill <span class="op">=</span> <span class="st">"100/20 Mbps\ncoverage"</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
@@ -203,7 +205,7 @@ Joining FCC data with QCEW employment and rural classification gives a
 first look:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Employment rate in WV counties</span></span>
-<span><span class="va">emp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/cori.data.qcew/man/get_employment.html" class="external-link">get_employment</a></span><span class="op">(</span>geoids <span class="op">=</span> <span class="va">wv_counties</span>, years <span class="op">=</span> <span class="fl">2025</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span><span class="va">emp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ruralinnovation.github.io/cori.data.qcew/reference/get_employment.html">get_employment</a></span><span class="op">(</span>geoids <span class="op">=</span> <span class="va">wv_counties</span>, years <span class="op">=</span> <span class="fl">2025</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">variable</span> <span class="op">==</span> <span class="st">"employment"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">geoid</span>, employment <span class="op">=</span> <span class="va">value</span><span class="op">)</span></span>
 <span></span>
@@ -220,17 +222,17 @@ first look:</p>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>emp_rate <span class="op">=</span> <span class="va">employment</span> <span class="op">/</span> <span class="va">pop_16plus</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">emp_rate</span><span class="op">)</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">pct_100_20</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span> <span class="va">fig_scatter</span> <span class="op">&lt;-</span> <span class="va">wv_combined</span> <span class="op">|&gt;</span>                                                                                                                                                                </span>
+<code class="sourceCode R"><span> <span class="va">fig_scatter</span> <span class="op">&lt;-</span> <span class="va">wv_combined</span> <span class="op">|&gt;</span>                                                     </span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span></span>
-<span>      x     <span class="op">=</span> <span class="va">pct_100_20</span>,                                                                            </span>
-<span>      y     <span class="op">=</span> <span class="va">emp_rate</span>,                                                                             </span>
+<span>      x     <span class="op">=</span> <span class="va">pct_100_20</span>,                                                                     </span>
+<span>      y     <span class="op">=</span> <span class="va">emp_rate</span>,                                                                       </span>
 <span>      color <span class="op">=</span> <span class="va">is_rural</span>,</span>
 <span>      size  <span class="op">=</span> <span class="va">cnt_total_locations</span></span>
 <span>    <span class="op">)</span><span class="op">)</span> <span class="op">+</span>                                                                               </span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html" class="external-link">geom_smooth</a></span><span class="op">(</span></span>
-<span>      method <span class="op">=</span> <span class="st">"lm"</span>, se <span class="op">=</span> <span class="cn">FALSE</span>, linewidth <span class="op">=</span> <span class="fl">1</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>group <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,                                                                               </span>
-<span>      color <span class="op">=</span> <span class="va">cori_colors</span><span class="op">[</span><span class="st">"CORI Gray"</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span>                                                       </span>
+<span>      method <span class="op">=</span> <span class="st">"lm"</span>, se <span class="op">=</span> <span class="cn">FALSE</span>, linewidth <span class="op">=</span> <span class="fl">1</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>group <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
+<span>      color <span class="op">=</span> <span class="va">cori_colors</span><span class="op">[</span><span class="st">"CORI Gray"</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span>                                                     </span>
 <span>    <span class="fu"><a href="https://ruralinnovation.github.io/cori.charts/reference/scales.html" class="external-link">scale_color_cori</a></span><span class="op">(</span></span>
 <span>      palette <span class="op">=</span> <span class="st">"ctg2ruralnonrural"</span>,</span>
 <span>      guide   <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_legend.html" class="external-link">guide_legend</a></span><span class="op">(</span>order <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
@@ -254,8 +256,7 @@ first look:</p>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
 <span>      title    <span class="op">=</span> <span class="st">"West Virginia Broadband coverage and labor force participation \nrate"</span>,</span>
 <span>      subtitle <span class="op">=</span> <span class="st">"Dots sized by number of broadband serviceable locations"</span>,</span>
-<span>      caption  <span class="op">=</span>                                                                                                                                                                     </span>
-<span>        <span class="st">"Sources: 2025 FCC National Broadband Map; 2025 BLS QCEW; 2025 Census PEP. \nRural classification: CBSA 2023."</span>,</span>
+<span>      caption  <span class="op">=</span> <span class="st">"Sources: 2025 FCC National Broadband Map; 2025 BLS QCEW; 2025 Census PEP.\nRural classification: CBSA 2023."</span>,</span>
 <span>      color <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>      x     <span class="op">=</span> <span class="st">"Share of locations with 100/20 Mbps coverage"</span>,</span>
 <span>      y     <span class="op">=</span> <span class="st">"Labor force participation rate"</span>                                                                                                                                                                                                                                </span>
@@ -280,13 +281,13 @@ research</a>.</p>
 <h2 id="what-broadband-analysis-reveals">What broadband analysis reveals<a class="anchor" aria-label="anchor" href="#what-broadband-analysis-reveals"></a>
 </h2>
 <p>Broadband coverage is uneven within rural geographies, not just
-between rural and nonrural. Counties that are both classified as rural
-can differ dramatically in their connectivity — reflecting topography,
-population density, the presence of anchor institutions, and the pace of
-infrastructure investment driven by federal programs like BEAD. That
-variation is analytically useful: it lets you study broadband as a
-factor in economic outcomes rather than treating all rural counties as
-equally underconnected.</p>
+between rural and nonrural. Counties that are classified as rural often
+differ dramatically in their connectivity — reflecting differences in
+topography, population density, the presence of anchor institutions, and
+the pace of infrastructure investment driven by federal programs like
+BEAD. That variation is analytically useful: it lets you study broadband
+as a factor in economic outcomes rather than treating all rural counties
+as equally underconnected.</p>
 <p>Counties that have seen meaningful improvements in coverage across
 consecutive NBM releases are worth watching. The bi-annual data
 structure — December and June reference dates — makes it possible to

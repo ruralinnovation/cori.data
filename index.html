@@ -62,7 +62,7 @@
 <p>Rural data, made accessible.</p>
 </blockquote>
 <p>At CORI, we believe that understanding rural America starts with good data. This ecosystem of R packages gives researchers, analysts, and policy practitioners direct access to the socioeconomic data we use every day — employment, wages, population, business dynamics, housing, broadband, and more.</p>
-<p><code>cori.data</code> is the <strong>meta-package</strong> for the <code>cori.data.*</code> family. Installing it pulls in every companion package; loading it attaches them all, so you get immediate access to <code><a href="https://rdrr.io/pkg/cori.data.qcew/man/get_employment.html" class="external-link">get_employment()</a></code>, <code><a href="https://rdrr.io/pkg/cori.data.pep/man/get_population.html" class="external-link">get_population()</a></code>, <code><a href="https://ruralinnovation.github.io/ruraldefinitions/reference/get_definition.html" class="external-link">get_definition()</a></code>, and dozens more without separate <code><a href="https://rdrr.io/r/base/library.html" class="external-link">library()</a></code> calls. <a href="https://github.com/ruralinnovation/cori.data.s3" class="external-link"><code>cori.data.s3</code></a> is the S3/cloud-access layer for the <code>cori.data.*</code> family: it provides the credential management, DuckDB S3 connection helper, and S3 object functions that every companion package builds on. <strong>Reads require no local AWS setup</strong> — the package falls back to temporary, read-only credentials from the CORI credential-vending endpoint automatically.</p>
+<p><code>cori.data</code> is the <strong>meta-package</strong> for the <code>cori.data.*</code> family. Installing it pulls in every companion package; loading it attaches them all, so you get immediate access to <code><a href="https://ruralinnovation.github.io/cori.data.qcew/reference/get_employment.html">get_employment()</a></code>, <code><a href="https://rdrr.io/pkg/cori.data.pep/man/get_population.html" class="external-link">get_population()</a></code>, <code><a href="https://ruralinnovation.github.io/ruraldefinitions/reference/get_definition.html" class="external-link">get_definition()</a></code>, and dozens more without separate <code><a href="https://rdrr.io/r/base/library.html" class="external-link">library()</a></code> calls. <a href="https://github.com/ruralinnovation/cori.data.s3" class="external-link"><code>cori.data.s3</code></a> is the S3/cloud-access layer for the <code>cori.data.*</code> family: it provides the credential management, DuckDB S3 connection helper, and S3 object functions that every companion package builds on. <strong>Reads require no local AWS setup</strong> — the package falls back to temporary, read-only credentials from the CORI credential-vending endpoint automatically.</p>
 <p>We’re actively expanding these offerings and would love your collaboration.</p>
 <p>Pull requests, issue reports, and feature requests are all welcome.</p>
 <hr>
@@ -244,7 +244,7 @@
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ruralinnovation.github.io/cori.data.bds">cori.data.bds</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Employment by county, last 5 years</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/cori.data.qcew/man/get_employment.html" class="external-link">get_employment</a></span><span class="op">(</span>geography <span class="op">=</span> <span class="st">"county"</span>, years <span class="op">=</span> <span class="fl">2019</span><span class="op">:</span><span class="fl">2023</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ruralinnovation.github.io/cori.data.qcew/reference/get_employment.html">get_employment</a></span><span class="op">(</span>geography <span class="op">=</span> <span class="st">"county"</span>, years <span class="op">=</span> <span class="fl">2019</span><span class="op">:</span><span class="fl">2023</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Population by county, last 5 years</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/cori.data.pep/man/get_population.html" class="external-link">get_population</a></span><span class="op">(</span>geography <span class="op">=</span> <span class="st">"county"</span>, years <span class="op">=</span> <span class="fl">2019</span><span class="op">:</span><span class="fl">2023</span><span class="op">)</span></span>
@@ -252,8 +252,8 @@
 <span><span class="co"># Business dynamics by county, last 5 years</span></span>
 <span><span class="fu"><a href="https://ruralinnovation.github.io/cori.data.bds/reference/get_business_dynamics.html">get_business_dynamics</a></span><span class="op">(</span>geography <span class="op">=</span> <span class="st">"county"</span>, years <span class="op">=</span> <span class="fl">2019</span><span class="op">:</span><span class="fl">2023</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Filter to specific places with FIPS codes</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/cori.data.qcew/man/get_employment.html" class="external-link">get_employment</a></span><span class="op">(</span>geoids <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"33009"</span>, <span class="st">"54011"</span>, <span class="st">"30001"</span><span class="op">)</span>, years <span class="op">=</span> <span class="fl">2019</span><span class="op">:</span><span class="fl">2023</span><span class="op">)</span></span></code></pre></div>
+<span><span class="co"># Alternatively, you can filter to specific places with FIPS codes</span></span>
+<span><span class="fu"><a href="https://ruralinnovation.github.io/cori.data.qcew/reference/get_employment.html">get_employment</a></span><span class="op">(</span>geoids <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"33009"</span>, <span class="st">"54011"</span>, <span class="st">"30001"</span><span class="op">)</span>, years <span class="op">=</span> <span class="fl">2019</span><span class="op">:</span><span class="fl">2023</span><span class="op">)</span></span></code></pre></div>
 <p>All functions return <strong>tidy (long) format</strong> data — one row per <code>geoid × year × variable</code>, ready for <code>dplyr</code>, <code>ggplot2</code>, and <code>tidyr</code>.</p>
 <hr>
 </div>
@@ -285,7 +285,7 @@
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Employment rate = covered employment / working-age population (16+)</span></span>
-<span><span class="va">emp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/cori.data.qcew/man/get_employment.html" class="external-link">get_employment</a></span><span class="op">(</span>geography <span class="op">=</span> <span class="st">"county"</span>, years <span class="op">=</span> <span class="fl">2010</span><span class="op">:</span><span class="fl">2023</span><span class="op">)</span></span>
+<span><span class="va">emp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ruralinnovation.github.io/cori.data.qcew/reference/get_employment.html">get_employment</a></span><span class="op">(</span>geography <span class="op">=</span> <span class="st">"county"</span>, years <span class="op">=</span> <span class="fl">2010</span><span class="op">:</span><span class="fl">2023</span><span class="op">)</span></span>
 <span><span class="va">pop</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/cori.data.pep/man/get_population.html" class="external-link">get_population</a></span><span class="op">(</span>geography <span class="op">=</span> <span class="st">"county"</span>, years <span class="op">=</span> <span class="fl">2010</span><span class="op">:</span><span class="fl">2023</span>,</span>
 <span>                      variables <span class="op">=</span> <span class="st">"population_16plus"</span><span class="op">)</span></span>
 <span></span>
@@ -300,33 +300,20 @@
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>emp_rate <span class="op">=</span> <span class="va">employment</span> <span class="op">/</span> <span class="va">pop_16plus</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Add rural classification and summarize</span></span>
-<span><span class="fu"><a href="https://ruralinnovation.github.io/ruraldefinitions/reference/get_definition.html" class="external-link">get_definition</a></span><span class="op">(</span><span class="st">"cbsa"</span>, <span class="fl">2023</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">geoid</span>, <span class="va">is_rural</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">emp_rate</span>, by <span class="op">=</span> <span class="st">"geoid"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span><span class="va">emp_summary</span> <span class="op">&lt;-</span> <span class="va">emp_rate</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span></span>
+<span>    <span class="va">cbsa_2023</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">geoid</span>, <span class="va">is_rural</span><span class="op">)</span>,</span>
+<span>    by <span class="op">=</span> <span class="st">"geoid"</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span></span>
+<span>    <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">is_rural</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">year</span>, <span class="va">is_rural</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span>avg_emp_rate <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/weighted.mean.html" class="external-link">weighted.mean</a></span><span class="op">(</span><span class="va">emp_rate</span>, <span class="va">employment</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>For a full walkthrough — including charts and maps — see the <strong><a href="vignettes/getting-started.Rmd">Getting Started vignette</a></strong>.</p>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span></span>
+<span>    avg_emp_rate <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/weighted.mean.html" class="external-link">weighted.mean</a></span><span class="op">(</span><span class="va">emp_rate</span>, <span class="va">employment</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>    .groups <span class="op">=</span> <span class="st">"drop"</span><span class="op">)</span></span></code></pre></div>
+<p>For a full walkthrough — including charts and maps — see the <a href="vignettes/getting-started.Rmd"><strong>Getting Started vignette</strong></a>.</p>
 <hr>
-</div>
-<div class="section level2">
-<h2 id="infrastructure-for-developers">Infrastructure (for developers)<a class="anchor" aria-label="anchor" href="#infrastructure-for-developers"></a>
-</h2>
-<div class="section level3">
-<h3 id="connecting-to-s3-via-duckdb">Connecting to S3 via DuckDB<a class="anchor" aria-label="anchor" href="#connecting-to-s3-via-duckdb"></a>
-</h3>
-<p><code><a href="https://rdrr.io/pkg/cori.data.s3/man/connect_to_s3.html" class="external-link">connect_to_s3()</a></code> opens a DuckDB connection configured for S3 access, using the same local-then-vended credential resolution as the S3 functions. <code><a href="https://rdrr.io/pkg/cori.data.s3/man/has_local_aws_credentials.html" class="external-link">has_local_aws_credentials()</a></code> checks whether local credentials are configured.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">con</span> <span class="op">&lt;-</span> <span class="fu">cori.data</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/cori.data.s3/man/connect_to_s3.html" class="external-link">connect_to_s3</a></span><span class="op">(</span><span class="st">"cori.data.bds"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/on.exit.html" class="external-link">on.exit</a></span><span class="op">(</span><span class="fu">DBI</span><span class="fu">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbDisconnect.html" class="external-link">dbDisconnect</a></span><span class="op">(</span><span class="va">con</span>, shutdown <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu">DBI</span><span class="fu">::</span><span class="fu"><a href="https://dbi.r-dbi.org/reference/dbGetQuery.html" class="external-link">dbGetQuery</a></span><span class="op">(</span><span class="va">con</span>, <span class="st">"SELECT * FROM read_parquet('s3://cori.data.bds/**/*.parquet')"</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level3">
-<h3 id="s3-object-functions">S3 object functions<a class="anchor" aria-label="anchor" href="#s3-object-functions"></a>
-</h3>
-<p>The AWS S3 functions (<code><a href="https://rdrr.io/pkg/cori.data.s3/man/get_s3_object.html" class="external-link">get_s3_object()</a></code>, <code><a href="https://rdrr.io/pkg/cori.data.s3/man/list_s3_objects.html" class="external-link">list_s3_objects()</a></code>, <code><a href="https://rdrr.io/pkg/cori.data.s3/man/list_s3_buckets.html" class="external-link">list_s3_buckets()</a></code>, <code><a href="https://rdrr.io/pkg/cori.data.s3/man/put_s3_object.html" class="external-link">put_s3_object()</a></code>, <code><a href="https://rdrr.io/pkg/cori.data.s3/man/put_s3_objects_recursive.html" class="external-link">put_s3_objects_recursive()</a></code>, <code><a href="https://rdrr.io/pkg/cori.data.s3/man/read_s3_object.html" class="external-link">read_s3_object()</a></code>, <code><a href="https://rdrr.io/pkg/cori.data.s3/man/write_s3_object.html" class="external-link">write_s3_object()</a></code>, <code><a href="https://rdrr.io/pkg/cori.data.s3/man/set_aws_credentials.html" class="external-link">set_aws_credentials()</a></code>) provide direct S3 access for package maintainers.</p>
-<p>Reads use local AWS credentials when available, and otherwise fall back to temporary read-only credentials — no local AWS setup required. Writes always require local credentials.</p>
-<hr>
-</div>
 </div>
 <div class="section level2">
 <h2 id="contributing">Contributing<a class="anchor" aria-label="anchor" href="#contributing"></a>

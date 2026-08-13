@@ -76,7 +76,7 @@ The reverse — going from wide back to tidy — uses
 ``` r
 
 # If you receive data in wide format, bring it back to tidy
-bd_long <- bd_wide |>
+bd_tidy <- bd_wide |>
   pivot_longer(
     cols      = -c(geoid, year),
     names_to  = "variable",

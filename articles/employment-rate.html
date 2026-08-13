@@ -94,7 +94,7 @@ combining data from two packages.</p>
 </h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Covered employment from BLS QCEW — total workers, private + government</span></span>
-<span><span class="va">emp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/cori.data.qcew/man/get_employment.html" class="external-link">get_employment</a></span><span class="op">(</span>geography <span class="op">=</span> <span class="st">"county"</span>, years <span class="op">=</span> <span class="fl">2010</span><span class="op">:</span><span class="fl">2023</span><span class="op">)</span></span>
+<span><span class="va">emp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ruralinnovation.github.io/cori.data.qcew/reference/get_employment.html">get_employment</a></span><span class="op">(</span>geography <span class="op">=</span> <span class="st">"county"</span>, years <span class="op">=</span> <span class="fl">2010</span><span class="op">:</span><span class="fl">2023</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Working-age population (16+) from Census PEP</span></span>
 <span><span class="va">pop16</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/cori.data.pep/man/get_population.html" class="external-link">get_population</a></span><span class="op">(</span></span>
@@ -145,7 +145,7 @@ why this matters.</p>
 <span><span class="va">subtitle</span> <span class="op">&lt;-</span> <span class="st">"Employment-weighted average covered employment rate, 2010\u20132023"</span></span>
 <span><span class="va">caption</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_wrap.html" class="external-link">str_wrap</a></span><span class="op">(</span></span>
 <span>  <span class="st">"Source: BLS Quarterly Census of Employment and Wages; U.S. Census Bureau Population Estimates Program. Rural classification: CBSA 2023. Note: covered employment excludes self-employed workers."</span>,</span>
-<span>  width <span class="op">=</span> <span class="fl">110</span></span>
+<span>  width <span class="op">=</span> <span class="fl">100</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">fig_line</span> <span class="op">&lt;-</span> <span class="va">trend</span> <span class="op">|&gt;</span></span>
@@ -203,7 +203,8 @@ why this matters.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span></span>
 <span>    data  <span class="op">=</span> <span class="va">counties_map</span>,</span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">quintile</span><span class="op">)</span>,</span>
-<span>    color <span class="op">=</span> <span class="cn">NA</span></span>
+<span>    color <span class="op">=</span> <span class="st">"#effffc"</span>,</span>
+<span>    linewidth <span class="op">=</span> <span class="fl">0.02</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span></span>
 <span>    values   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html" class="external-link">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#d4ede6"</span>, <span class="st">"#00825B"</span><span class="op">)</span><span class="op">)</span><span class="op">(</span><span class="fl">5</span><span class="op">)</span>,</span>
@@ -217,7 +218,7 @@ why this matters.</p>
 <span>    subtitle <span class="op">=</span> <span class="st">"Covered employment as share of population 16+, 2023"</span>,</span>
 <span>    caption  <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_wrap.html" class="external-link">str_wrap</a></span><span class="op">(</span></span>
 <span>      <span class="st">"Sources: BLS QCEW; Census Bureau Population Estimates Program; U.S. Census Bureau TIGER/Line Shapefiles via the tigris R package. Rural classification: CBSA 2023."</span>,</span>
-<span>      width <span class="op">=</span> <span class="fl">110</span></span>
+<span>      width <span class="op">=</span> <span class="fl">90</span></span>
 <span>    <span class="op">)</span>,</span>
 <span>    fill <span class="op">=</span> <span class="st">"Employment\nrate quintile"</span></span>
 <span>  <span class="op">)</span></span>
@@ -230,11 +231,11 @@ why this matters.</p>
 <p>When you run this across U.S. counties, a persistent gap emerges:
 rural counties have carried lower covered employment rates than nonrural
 counties since the Great Recession, and the gap has not fully closed
-even during the tightest labor markets in recent memory. The pattern
-isn’t uniform — rural counties anchored by large employers or adjacent
-to metro areas can rival nonrural peers — but the central tendency is
-clear and durable.</p>
-<p>The cross-package approach here gives a cleaner picture of labor
+even during the tightest labor markets in recent memory. However, this
+pattern isn’t uniform — rural counties anchored by large employers or
+adjacent to metro areas can rival nonrural peers — but the central
+tendency is clear and durable.</p>
+<p>The cross-package approach used here gives a cleaner picture of labor
 market health than either dataset alone. Raw employment counts can’t
 tell you whether a county is punching above or below its demographic
 weight; the employment rate can. And because both the numerator (QCEW)

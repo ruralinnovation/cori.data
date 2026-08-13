@@ -19,7 +19,7 @@ update_cori_geom_defaults()
 ```
 
 Broadband access is increasingly inseparable from economic
-participation. Remote work, e-commerce, telemedicine, and digital
+participation. Remote work, e-commerce, tele-medicine, and digital
 services all depend on reliable, high-speed internet — and rural areas
 have historically faced the greatest gaps in coverage.
 
@@ -60,10 +60,11 @@ wv_counties <- counties(year = 2024) |>
   pull(GEOID)
 
 # Pull broadband coverage for each county
-broadband_wv <- lapply(wv_counties, function(cnty) {
-  get_nbm_county(geoid_co = cnty, release = "latest")
-}) |>
-  bind_rows() |>
+broadband_wv  <- purrr::map_dfr(
+  wv_counties,
+  get_nbm_county,
+  release = "latest"
+) |>
   mutate(
     pct_100_20 = cnt_100_20 / cnt_total_locations,
     pct_fiber  = cnt_fiber_locations / cnt_total_locations
@@ -101,13 +102,14 @@ fig_map <- ggplot() +
     na.value = "#d0d2ce"
   ) +
   theme_cori_map() +
+  theme(
+    legend.position = "top",
+    legend.key.width = unit(2, "cm")
+  ) +
   labs(
-    title    = "Broadband access remains uneven across West Virginia",
-    subtitle = "Share of serviceable locations with 100/20 Mbps coverage, latest FCC NBM release",
-    caption  = str_wrap(
-      "Source: FCC National Broadband Map via cori.data.fcc. Coverage reflects serviceable locations, not adoption.",
-      width = 110
-    ),
+    title    = "Broadband access remains uneven across\nWest Virginia",
+    subtitle = "Share of serviceable locations with 100/20 Mbps coverage\nusing latest FCC NBM release",
+    caption  = "Source: FCC National Broadband Map via cori.data.fcc.\nCoverage reflects serviceable locations, not adoption.",
     fill = "100/20 Mbps\ncoverage"
   )
 
@@ -143,17 +145,17 @@ wv_combined <- broadband_wv |>
 
 ``` r
 
- fig_scatter <- wv_combined |>                                                                                                                                                                
+ fig_scatter <- wv_combined |>                                                     
     ggplot(aes(
-      x     = pct_100_20,                                                                            
-      y     = emp_rate,                                                                             
+      x     = pct_100_20,                                                                     
+      y     = emp_rate,                                                                       
       color = is_rural,
       size  = cnt_total_locations
     )) +                                                                               
     geom_point(alpha = 0.7) +
     geom_smooth(
-      method = "lm", se = FALSE, linewidth = 1, aes(group = 1),                                                                               
-      color = cori_colors["CORI Gray"]) +                                                       
+      method = "lm", se = FALSE, linewidth = 1, aes(group = 1),
+      color = cori_colors["CORI Gray"]) +                                                     
     scale_color_cori(
       palette = "ctg2ruralnonrural",
       guide   = guide_legend(order = 1)
@@ -177,8 +179,7 @@ wv_combined <- broadband_wv |>
     labs(
       title    = "West Virginia Broadband coverage and labor force participation \nrate",
       subtitle = "Dots sized by number of broadband serviceable locations",
-      caption  =                                                                                                                                                                     
-        "Sources: 2025 FCC National Broadband Map; 2025 BLS QCEW; 2025 Census PEP. \nRural classification: CBSA 2023.",
+      caption  = "Sources: 2025 FCC National Broadband Map; 2025 BLS QCEW; 2025 Census PEP.\nRural classification: CBSA 2023.",
       color = NULL,
       x     = "Share of locations with 100/20 Mbps coverage",
       y     = "Labor force participation rate"                                                                                                                                                                                                                                
@@ -203,13 +204,13 @@ research](https://ruralinnovation.us/our-work/research/).
 ## What broadband analysis reveals
 
 Broadband coverage is uneven within rural geographies, not just between
-rural and nonrural. Counties that are both classified as rural can
-differ dramatically in their connectivity — reflecting topography,
-population density, the presence of anchor institutions, and the pace of
-infrastructure investment driven by federal programs like BEAD. That
-variation is analytically useful: it lets you study broadband as a
-factor in economic outcomes rather than treating all rural counties as
-equally underconnected.
+rural and nonrural. Counties that are classified as rural often differ
+dramatically in their connectivity — reflecting differences in
+topography, population density, the presence of anchor institutions, and
+the pace of infrastructure investment driven by federal programs like
+BEAD. That variation is analytically useful: it lets you study broadband
+as a factor in economic outcomes rather than treating all rural counties
+as equally underconnected.
 
 Counties that have seen meaningful improvements in coverage across
 consecutive NBM releases are worth watching. The bi-annual data

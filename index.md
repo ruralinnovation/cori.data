@@ -11,7 +11,7 @@ broadband, and more.
 `cori.data` is the **meta-package** for the `cori.data.*` family.
 Installing it pulls in every companion package; loading it attaches them
 all, so you get immediate access to
-[`get_employment()`](https://rdrr.io/pkg/cori.data.qcew/man/get_employment.html),
+[`get_employment()`](https://ruralinnovation.github.io/cori.data.qcew/reference/get_employment.html),
 [`get_population()`](https://rdrr.io/pkg/cori.data.pep/man/get_population.html),
 [`get_definition()`](https://ruralinnovation.github.io/ruraldefinitions/reference/get_definition.html),
 and dozens more without separate
@@ -276,7 +276,7 @@ get_population(geography = "county", years = 2019:2023)
 # Business dynamics by county, last 5 years
 get_business_dynamics(geography = "county", years = 2019:2023)
 
-# Filter to specific places with FIPS codes
+# Alternatively, you can filter to specific places with FIPS codes
 get_employment(geoids = c("33009", "54011", "30001"), years = 2019:2023)
 ```
 
@@ -334,52 +334,23 @@ emp_rate <- emp |>
   mutate(emp_rate = employment / pop_16plus)
 
 # Add rural classification and summarize
-get_definition("cbsa", 2023) |>
-  select(geoid, is_rural) |>
-  left_join(emp_rate, by = "geoid") |>
+emp_summary <- emp_rate |> 
+  left_join(
+    cbsa_2023 |> select(geoid, is_rural),
+    by = "geoid"
+  ) |> 
+  filter(
+    !is.na(is_rural)
+  ) |> 
   group_by(year, is_rural) |>
-  summarize(avg_emp_rate = weighted.mean(emp_rate, employment, na.rm = TRUE))
+  summarize(
+    avg_emp_rate = weighted.mean(emp_rate, employment, na.rm = TRUE),
+    .groups = "drop")
 ```
 
-For a full walkthrough — including charts and maps — see the **[Getting
+For a full walkthrough — including charts and maps — see the [**Getting
 Started
-vignette](https://ruralinnovation.github.io/cori.data/vignettes/getting-started.Rmd)**.
-
-------------------------------------------------------------------------
-
-## Infrastructure (for developers)
-
-### Connecting to S3 via DuckDB
-
-[`connect_to_s3()`](https://rdrr.io/pkg/cori.data.s3/man/connect_to_s3.html)
-opens a DuckDB connection configured for S3 access, using the same
-local-then-vended credential resolution as the S3 functions.
-[`has_local_aws_credentials()`](https://rdrr.io/pkg/cori.data.s3/man/has_local_aws_credentials.html)
-checks whether local credentials are configured.
-
-``` r
-
-con <- cori.data::connect_to_s3("cori.data.bds")
-on.exit(DBI::dbDisconnect(con, shutdown = TRUE))
-DBI::dbGetQuery(con, "SELECT * FROM read_parquet('s3://cori.data.bds/**/*.parquet')")
-```
-
-### S3 object functions
-
-The AWS S3 functions
-([`get_s3_object()`](https://rdrr.io/pkg/cori.data.s3/man/get_s3_object.html),
-[`list_s3_objects()`](https://rdrr.io/pkg/cori.data.s3/man/list_s3_objects.html),
-[`list_s3_buckets()`](https://rdrr.io/pkg/cori.data.s3/man/list_s3_buckets.html),
-[`put_s3_object()`](https://rdrr.io/pkg/cori.data.s3/man/put_s3_object.html),
-[`put_s3_objects_recursive()`](https://rdrr.io/pkg/cori.data.s3/man/put_s3_objects_recursive.html),
-[`read_s3_object()`](https://rdrr.io/pkg/cori.data.s3/man/read_s3_object.html),
-[`write_s3_object()`](https://rdrr.io/pkg/cori.data.s3/man/write_s3_object.html),
-[`set_aws_credentials()`](https://rdrr.io/pkg/cori.data.s3/man/set_aws_credentials.html))
-provide direct S3 access for package maintainers.
-
-Reads use local AWS credentials when available, and otherwise fall back
-to temporary read-only credentials — no local AWS setup required. Writes
-always require local credentials.
+vignette**](https://ruralinnovation.github.io/cori.data/vignettes/getting-started.Rmd).
 
 ------------------------------------------------------------------------
 

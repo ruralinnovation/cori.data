@@ -87,7 +87,7 @@ title    <- "Rural counties have trailed nonrural on employment rates\nsince the
 subtitle <- "Employment-weighted average covered employment rate, 2010\u20132023"
 caption  <- str_wrap(
   "Source: BLS Quarterly Census of Employment and Wages; U.S. Census Bureau Population Estimates Program. Rural classification: CBSA 2023. Note: covered employment excludes self-employed workers.",
-  width = 110
+  width = 100
 )
 
 fig_line <- trend |>
@@ -146,7 +146,8 @@ fig_map <- ggplot() +
   geom_sf(
     data  = counties_map,
     aes(fill = quintile),
-    color = NA
+    color = "#effffc",
+    linewidth = 0.02
   ) +
   scale_fill_manual(
     values   = colorRampPalette(c("#d4ede6", "#00825B"))(5),
@@ -160,7 +161,7 @@ fig_map <- ggplot() +
     subtitle = "Covered employment as share of population 16+, 2023",
     caption  = str_wrap(
       "Sources: BLS QCEW; Census Bureau Population Estimates Program; U.S. Census Bureau TIGER/Line Shapefiles via the tigris R package. Rural classification: CBSA 2023.",
-      width = 110
+      width = 90
     ),
     fill = "Employment\nrate quintile"
   )
@@ -173,17 +174,17 @@ fig_map
 When you run this across U.S. counties, a persistent gap emerges: rural
 counties have carried lower covered employment rates than nonrural
 counties since the Great Recession, and the gap has not fully closed
-even during the tightest labor markets in recent memory. The pattern
-isn’t uniform — rural counties anchored by large employers or adjacent
-to metro areas can rival nonrural peers — but the central tendency is
-clear and durable.
+even during the tightest labor markets in recent memory. However, this
+pattern isn’t uniform — rural counties anchored by large employers or
+adjacent to metro areas can rival nonrural peers — but the central
+tendency is clear and durable.
 
-The cross-package approach here gives a cleaner picture of labor market
-health than either dataset alone. Raw employment counts can’t tell you
-whether a county is punching above or below its demographic weight; the
-employment rate can. And because both the numerator (QCEW) and
-denominator (PEP) follow consistent geographic and vintage conventions,
-the join is clean across all counties and years.
+The cross-package approach used here gives a cleaner picture of labor
+market health than either dataset alone. Raw employment counts can’t
+tell you whether a county is punching above or below its demographic
+weight; the employment rate can. And because both the numerator (QCEW)
+and denominator (PEP) follow consistent geographic and vintage
+conventions, the join is clean across all counties and years.
 
 ## A note on coverage
 

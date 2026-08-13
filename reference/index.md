@@ -40,9 +40,9 @@ Business applications from Census BFS (2004-present)
 
 New residential construction permits from Census BPS (2000-present)
 
-- [`get_building_permits()`](https://rdrr.io/pkg/cori.data.bps/man/get_building_permits.html)
+- [`get_building_permits()`](https://ruralinnovation.github.io/cori.data.bps/reference/get_building_permits.html)
   : Get Building Permits Survey data (from cori.data.bps)
-- [`get_bps_codebook()`](https://rdrr.io/pkg/cori.data.bps/man/get_bps_codebook.html)
+- [`get_bps_codebook()`](https://ruralinnovation.github.io/cori.data.bps/reference/get_bps_codebook.html)
   : Get the cori.data.bps variable codebook (from cori.data.bps)
 
 ## FCC Broadband Data
@@ -64,9 +64,9 @@ National Broadband Map and Form 477 data
 
 Housing stock estimates from Census PEP (2000-present)
 
-- [`get_housing_units()`](https://rdrr.io/pkg/cori.data.hu/man/get_housing_units.html)
+- [`get_housing_units()`](https://ruralinnovation.github.io/cori.data.hu/reference/get_housing_units.html)
   : Get Census Bureau housing unit estimates (from cori.data.hu)
-- [`get_hu_codebook()`](https://rdrr.io/pkg/cori.data.hu/man/get_hu_codebook.html)
+- [`get_hu_codebook()`](https://ruralinnovation.github.io/cori.data.hu/reference/get_hu_codebook.html)
   : Get the housing unit variable codebook (from cori.data.hu)
 
 ## Population Estimates (PEP)
@@ -84,17 +84,17 @@ Population and components of change from Census PEP (2000-present)
 
 Employment, wages, and concentration from BLS QCEW (1990-present)
 
-- [`get_employment()`](https://rdrr.io/pkg/cori.data.qcew/man/get_employment.html)
+- [`get_employment()`](https://ruralinnovation.github.io/cori.data.qcew/reference/get_employment.html)
   : Get Total Employment Data (from cori.data.qcew)
-- [`get_wage_salary()`](https://rdrr.io/pkg/cori.data.qcew/man/get_wage_salary.html)
+- [`get_wage_salary()`](https://ruralinnovation.github.io/cori.data.qcew/reference/get_wage_salary.html)
   : Get Average Annual Pay Data (from cori.data.qcew)
-- [`get_sector_employment()`](https://rdrr.io/pkg/cori.data.qcew/man/get_sector_employment.html)
+- [`get_sector_employment()`](https://ruralinnovation.github.io/cori.data.qcew/reference/get_sector_employment.html)
   : Get Employment by Sector (from cori.data.qcew)
-- [`get_sector_wages()`](https://rdrr.io/pkg/cori.data.qcew/man/get_sector_wages.html)
+- [`get_sector_wages()`](https://ruralinnovation.github.io/cori.data.qcew/reference/get_sector_wages.html)
   : Get Average Pay by Sector (from cori.data.qcew)
-- [`get_employment_concentration()`](https://rdrr.io/pkg/cori.data.qcew/man/get_employment_concentration.html)
+- [`get_employment_concentration()`](https://ruralinnovation.github.io/cori.data.qcew/reference/get_employment_concentration.html)
   : Get Employment Concentration (HHI) (from cori.data.qcew)
-- [`get_qcew_codebook()`](https://rdrr.io/pkg/cori.data.qcew/man/get_qcew_codebook.html)
+- [`get_qcew_codebook()`](https://ruralinnovation.github.io/cori.data.qcew/reference/get_qcew_codebook.html)
   : Get the cori.data.qcew variable codebook (from cori.data.qcew)
 
 ## Rural Definitions
@@ -108,23 +108,23 @@ County-level rural classification schemes
 
 Low-level S3 operations for reading/writing data
 
-- [`connect_to_s3()`](https://rdrr.io/pkg/cori.data.s3/man/connect_to_s3.html)
+- [`connect_to_s3()`](https://ruralinnovation.github.io/cori.data.s3/reference/connect_to_s3.html)
   : Open a DuckDB connection configured for S3 access (from
   cori.data.s3)
-- [`has_local_aws_credentials()`](https://rdrr.io/pkg/cori.data.s3/man/has_local_aws_credentials.html)
+- [`has_local_aws_credentials()`](https://ruralinnovation.github.io/cori.data.s3/reference/has_local_aws_credentials.html)
   : Detect locally configured AWS credentials (from cori.data.s3)
-- [`set_aws_credentials()`](https://rdrr.io/pkg/cori.data.s3/man/set_aws_credentials.html)
+- [`set_aws_credentials()`](https://ruralinnovation.github.io/cori.data.s3/reference/set_aws_credentials.html)
   : Install aws credentials in your .Renviron file and load credentials
   into the current environment. This actions will overwrite any values
   currently stored in AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY. (from
   cori.data.s3)
-- [`get_s3_object()`](https://rdrr.io/pkg/cori.data.s3/man/get_s3_object.html)
+- [`get_s3_object()`](https://ruralinnovation.github.io/cori.data.s3/reference/get_s3_object.html)
   : Download an object that is hosted on S3 (from cori.data.s3)
-- [`read_s3_object()`](https://rdrr.io/pkg/cori.data.s3/man/read_s3_object.html)
+- [`read_s3_object()`](https://ruralinnovation.github.io/cori.data.s3/reference/read_s3_object.html)
   : read a text file (csv) in a s3 object in memory (from cori.data.s3)
-- [`write_s3_object()`](https://rdrr.io/pkg/cori.data.s3/man/write_s3_object.html)
+- [`write_s3_object()`](https://ruralinnovation.github.io/cori.data.s3/reference/write_s3_object.html)
   : write a data.frame into a csv in a s3 bucket (from cori.data.s3)
-- [`list_s3_objects()`](https://rdrr.io/pkg/cori.data.s3/man/list_s3_objects.html)
+- [`list_s3_objects()`](https://ruralinnovation.github.io/cori.data.s3/reference/list_s3_objects.html)
   : List every "keys" from a bucket (from cori.data.s3)
-- [`sync_s3_to_local()`](https://rdrr.io/pkg/cori.data.s3/man/sync_s3_to_local.html)
+- [`sync_s3_to_local()`](https://ruralinnovation.github.io/cori.data.s3/reference/sync_s3_to_local.html)
   : Sync S3 objects to a local directory (from cori.data.s3)

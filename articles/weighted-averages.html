@@ -81,16 +81,16 @@
 <span><span class="fu"><a href="https://ruralinnovation.github.io/cori.charts/reference/fonts.html" class="external-link">load_fonts</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://ruralinnovation.github.io/cori.charts/reference/update_cori_geom_defaults.html" class="external-link">update_cori_geom_defaults</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>Counties are not equal in size. Loving County, Texas has a few
-hundred residents; Los Angeles County has ten million. When you average
-a rate across counties — wages, employment share, sector composition —
-treating each county as one observation lets the hundreds of tiny
-counties dominate the result, even though they collectively represent a
-small fraction of the actual workforce.</p>
+hundred residents; Los Angeles County, California has ten million. When
+you average a rate across counties — wages, employment share, sector
+composition — treating each county as one observation lets the hundreds
+of tiny counties dominate the result, even though they collectively
+represent a small fraction of the actual workforce.</p>
 <p>This distortion is especially consequential in rural analysis. The
 rural landscape is dominated by small counties, and a handful of them
 with large employers — a mine, a power plant, a major hospital system —
 can pull a naive average far from the typical rural worker’s experience.
-The same problem applies when rolling counties up into regions: summing
+The same problem applies when aggregating counties to regions: summing
 wages is meaningless; you need to weight by how many workers each wage
 represents.</p>
 <p>The CORI data ecosystem addresses this with <code>agg_var</code> — an
@@ -111,38 +111,38 @@ properly aggregate rates and shares across geographies.</p>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td><code><a href="https://rdrr.io/pkg/cori.data.qcew/man/get_wage_salary.html" class="external-link">get_wage_salary()</a></code></td>
+<td><code><a href="https://ruralinnovation.github.io/cori.data.qcew/reference/get_wage_salary.html">get_wage_salary()</a></code></td>
 <td><code>avg_pay</code></td>
 <td>Total employment</td>
 </tr>
 <tr class="even">
-<td><code><a href="https://rdrr.io/pkg/cori.data.qcew/man/get_sector_employment.html" class="external-link">get_sector_employment()</a></code></td>
+<td><code><a href="https://ruralinnovation.github.io/cori.data.qcew/reference/get_sector_employment.html">get_sector_employment()</a></code></td>
 <td><code>emp_share</code></td>
 <td>Total employment</td>
 </tr>
 <tr class="odd">
-<td><code><a href="https://rdrr.io/pkg/cori.data.qcew/man/get_sector_wages.html" class="external-link">get_sector_wages()</a></code></td>
+<td><code><a href="https://ruralinnovation.github.io/cori.data.qcew/reference/get_sector_wages.html">get_sector_wages()</a></code></td>
 <td><code>avg_pay</code></td>
 <td>Sector employment</td>
 </tr>
 </tbody>
 </table>
-<p>Functions that return raw counts (<code><a href="https://rdrr.io/pkg/cori.data.qcew/man/get_employment.html" class="external-link">get_employment()</a></code>,
-<code><a href="https://rdrr.io/pkg/cori.data.qcew/man/get_employment_concentration.html" class="external-link">get_employment_concentration()</a></code>) do not include
+<p>Functions that return raw counts (<code><a href="https://ruralinnovation.github.io/cori.data.qcew/reference/get_employment.html">get_employment()</a></code>,
+<code><a href="https://ruralinnovation.github.io/cori.data.qcew/reference/get_employment_concentration.html">get_employment_concentration()</a></code>) do not include
 <code>agg_var</code> — counts can simply be summed.</p>
 </div>
 <div class="section level2">
 <h2 id="the-problem-with-simple-averages">The problem with simple averages<a class="anchor" aria-label="anchor" href="#the-problem-with-simple-averages"></a>
 </h2>
-<p>Here is the core issue. Suppose we want the average annual wage
-across all rural counties in 2023.</p>
+<p>Suppose we want the average annual wage across all rural counties in
+2023.</p>
 <p>A simple <code><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean()</a></code> treats every county equally — a county
 with 200 workers gets exactly the same weight as one with 200,000. In
 practice, the result is dominated by hundreds of small, low-employment
 rural counties that collectively represent a tiny fraction of the actual
 rural workforce.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">wages</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/cori.data.qcew/man/get_wage_salary.html" class="external-link">get_wage_salary</a></span><span class="op">(</span>geography <span class="op">=</span> <span class="st">"county"</span>, years <span class="op">=</span> <span class="fl">2023</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<code class="sourceCode R"><span><span class="va">wages</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ruralinnovation.github.io/cori.data.qcew/reference/get_wage_salary.html">get_wage_salary</a></span><span class="op">(</span>geography <span class="op">=</span> <span class="st">"county"</span>, years <span class="op">=</span> <span class="fl">2023</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span></span>
 <span>    <span class="va">cbsa_2023</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">geoid</span>, <span class="va">is_rural</span><span class="op">)</span>,</span>
 <span>    by <span class="op">=</span> <span class="st">"geoid"</span></span>
@@ -229,7 +229,7 @@ represents. That’s exactly what <code>agg_var</code> is for:</p>
 <h2 id="aggregating-across-geographies">Aggregating across geographies<a class="anchor" aria-label="anchor" href="#aggregating-across-geographies"></a>
 </h2>
 <p><code>agg_var</code> also enables correct aggregation when you want
-to roll up counties into regions. Summing wages is meaningless — you
+to aggregate counties to regions. Summing wages is meaningless — you
 need to weight by employment:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
@@ -237,7 +237,7 @@ need to weight by employment:</p>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">geoid</span>, <span class="va">is_rural</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Correct: employment-weighted regional average</span></span>
-<span><span class="va">sector_wages</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/cori.data.qcew/man/get_sector_wages.html" class="external-link">get_sector_wages</a></span><span class="op">(</span></span>
+<span><span class="va">sector_wages</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ruralinnovation.github.io/cori.data.qcew/reference/get_sector_wages.html">get_sector_wages</a></span><span class="op">(</span></span>
 <span>  geography   <span class="op">=</span> <span class="st">"county"</span>,</span>
 <span>  years       <span class="op">=</span> <span class="fl">2023</span>,</span>
 <span>  sector_type <span class="op">=</span> <span class="st">"CORI"</span></span>
@@ -261,8 +261,8 @@ need to weight by employment:</p>
 <code>weighted.mean(value, agg_var)</code> instead of
 <code>mean(value)</code> any time you’re aggregating across multiple
 geographies. The difference matters most in rural analysis, where high
-variance in county size means naive averages can mislead
-significantly.</p>
+variance in county size means naive averages can mislead analysis
+results significantly.</p>
 </div>
 <div class="section level2">
 <h2 id="data-sources">Data sources<a class="anchor" aria-label="anchor" href="#data-sources"></a>

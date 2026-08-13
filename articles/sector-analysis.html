@@ -85,8 +85,8 @@ healthcare and local retail faces very different economic dynamics than
 one anchored in manufacturing or professional services. Sector
 composition shapes everything from wage levels to resilience against
 downturns to sensitivity to remote work.</p>
-<p><code>cori.data.qcew</code> offers two ways to cut employment by
-sector:</p>
+<p><code>cori.data.qcew</code> offers two ways to investigate employment
+by sector:</p>
 <ul>
 <li>
 <strong>BLS supersectors</strong> — the 11 standard industry
@@ -98,17 +98,17 @@ into 3 categories based on whether industries primarily face local or
 national/global demand</li>
 </ul>
 <div class="section level2">
-<h2 id="cori-super-sectors">CORI super-sectors<a class="anchor" aria-label="anchor" href="#cori-super-sectors"></a>
+<h2 id="cori-supersectors">CORI supersectors<a class="anchor" aria-label="anchor" href="#cori-supersectors"></a>
 </h2>
 <p>CORI’s classification, loosely derived from Eckert (2018), groups BLS
-supersectors into three super-sectors:</p>
+supersectors into three supersectors:</p>
 <table class="table">
 <colgroup>
 <col width="50%">
 <col width="50%">
 </colgroup>
 <thead><tr class="header">
-<th>CORI Super-sector</th>
+<th>CORI Supersector</th>
 <th>Constituent BLS supersectors</th>
 </tr></thead>
 <tbody>
@@ -140,7 +140,7 @@ primarily reflect local demand.</p>
 </h2>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># CORI super-sector employment shares, county level</span></span>
-<span><span class="va">sector_emp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/cori.data.qcew/man/get_sector_employment.html" class="external-link">get_sector_employment</a></span><span class="op">(</span></span>
+<span><span class="va">sector_emp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ruralinnovation.github.io/cori.data.qcew/reference/get_sector_employment.html">get_sector_employment</a></span><span class="op">(</span></span>
 <span>  geography   <span class="op">=</span> <span class="st">"county"</span>,</span>
 <span>  years       <span class="op">=</span> <span class="fl">2023</span>,</span>
 <span>  sector_type <span class="op">=</span> <span class="st">"CORI"</span>,</span>
@@ -148,16 +148,16 @@ primarily reflect local demand.</p>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Add rural classification</span></span>
-<span><span class="va">rural</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ruralinnovation.github.io/ruraldefinitions/reference/get_definition.html" class="external-link">get_definition</a></span><span class="op">(</span><span class="st">"cbsa"</span>, <span class="fl">2023</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">geoid</span>, <span class="va">is_rural</span><span class="op">)</span></span>
+<span><span class="va">rural</span> <span class="op">&lt;-</span> <span class="va">cbsa_2023</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">geoid</span>, <span class="va">is_rural</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">sector_emp</span> <span class="op">&lt;-</span> <span class="va">sector_emp</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">rural</span>, by <span class="op">=</span> <span class="st">"geoid"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">is_rural</span><span class="op">)</span><span class="op">)</span></span>
+<span>        <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">rural</span>, by <span class="op">=</span> <span class="st">"geoid"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>        <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">is_rural</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Total employment for sizing points</span></span>
-<span><span class="va">total_emp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/cori.data.qcew/man/get_employment.html" class="external-link">get_employment</a></span><span class="op">(</span>geography <span class="op">=</span> <span class="st">"county"</span>, years <span class="op">=</span> <span class="fl">2023</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">variable</span> <span class="op">==</span> <span class="st">"employment"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">geoid</span>, employment <span class="op">=</span> <span class="va">value</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">total_emp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ruralinnovation.github.io/cori.data.qcew/reference/get_employment.html">get_employment</a></span><span class="op">(</span>geography <span class="op">=</span> <span class="st">"county"</span>, years <span class="op">=</span> <span class="fl">2023</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>        <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">variable</span> <span class="op">==</span> <span class="st">"employment"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>        <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">geoid</span>, total_employment <span class="op">=</span> <span class="va">value</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="swarm-plot-tradable-goods-share-by-rural-status">Swarm plot: tradable goods share by rural status<a class="anchor" aria-label="anchor" href="#swarm-plot-tradable-goods-share-by-rural-status"></a>
@@ -166,54 +166,59 @@ primarily reflect local demand.</p>
 the average. Each dot is a county, sized by employment.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">swarm_data</span> <span class="op">&lt;-</span> <span class="va">sector_emp</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">variable</span> <span class="op">==</span> <span class="st">"emp_share"</span>, <span class="va">sector</span> <span class="op">==</span> <span class="st">"tradable_goods"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">total_emp</span>, by <span class="op">=</span> <span class="st">"geoid"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">employment</span><span class="op">)</span>, <span class="va">employment</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span></span>
+<span>        <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">variable</span> <span class="op">==</span> <span class="st">"emp_share"</span>, <span class="va">sector</span> <span class="op">==</span> <span class="st">"tradable_goods"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>        <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">total_emp</span>, by <span class="op">=</span> <span class="st">"geoid"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>        <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">total_employment</span><span class="op">)</span>, <span class="va">total_employment</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">title_swarm</span>    <span class="op">&lt;-</span> <span class="st">"Rural counties rely more heavily on tradable goods sectors"</span></span>
 <span><span class="va">subtitle_swarm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_wrap.html" class="external-link">str_wrap</a></span><span class="op">(</span></span>
-<span>  <span class="st">"Share of employment in tradable goods industries (natural resources, construction, manufacturing, trade &amp; transportation), 2023. Each dot is a county, sized by total employment."</span>,</span>
-<span>  width <span class="op">=</span> <span class="fl">100</span></span>
+<span>        <span class="st">"Share of employment in tradable goods industries (natural resources, construction, manufacturing, trade &amp; transportation), 2023."</span>,</span>
+<span>        width <span class="op">=</span> <span class="fl">95</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">fig_swarm</span> <span class="op">&lt;-</span> <span class="va">swarm_data</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span></span>
-<span>    x     <span class="op">=</span> <span class="va">value</span>,</span>
-<span>    y     <span class="op">=</span> <span class="va">is_rural</span>,</span>
-<span>    size  <span class="op">=</span> <span class="va">employment</span>,</span>
-<span>    color <span class="op">=</span> <span class="va">is_rural</span></span>
-<span>  <span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_beeswarm</span><span class="op">(</span>cex <span class="op">=</span> <span class="fl">0.4</span>, groupOnX <span class="op">=</span> <span class="cn">FALSE</span>, alpha <span class="op">=</span> <span class="fl">0.4</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ruralinnovation.github.io/cori.charts/reference/scales.html" class="external-link">scale_color_cori</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"ctg2ruralnonrural"</span>, guide <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_size.html" class="external-link">scale_size_continuous</a></span><span class="op">(</span></span>
-<span>    range  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">6</span><span class="op">)</span>,</span>
-<span>    labels <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/label_number.html" class="external-link">label_comma</a></span><span class="op">(</span>scale <span class="op">=</span> <span class="fl">1e-3</span>, suffix <span class="op">=</span> <span class="st">"k"</span><span class="op">)</span>,</span>
-<span>    name   <span class="op">=</span> <span class="st">"Employment"</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_continuous</a></span><span class="op">(</span></span>
-<span>    labels <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/label_percent.html" class="external-link">label_percent</a></span><span class="op">(</span>accuracy <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
-<span>    expand <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/expansion.html" class="external-link">expansion</a></span><span class="op">(</span>mult <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.02</span>, <span class="fl">0.02</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_discrete.html" class="external-link">scale_y_discrete</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Rural"</span>, <span class="st">"Nonrural"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian</a></span><span class="op">(</span>clip <span class="op">=</span> <span class="st">"off"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ruralinnovation.github.io/cori.charts/reference/theme_cori.html" class="external-link">theme_cori</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span></span>
-<span>    panel.grid.major   <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>    panel.grid.major.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_line</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"#d0d2ce"</span>, linewidth <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
-<span>    title    <span class="op">=</span> <span class="va">title_swarm</span>,</span>
-<span>    subtitle <span class="op">=</span> <span class="va">subtitle_swarm</span>,</span>
-<span>    caption  <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_wrap.html" class="external-link">str_wrap</a></span><span class="op">(</span></span>
-<span>      <span class="st">"Source: BLS QCEW via cori.data.qcew. Rural classification: CBSA 2023."</span>,</span>
-<span>      width <span class="op">=</span> <span class="fl">110</span></span>
-<span>    <span class="op">)</span>,</span>
-<span>    x <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>    y <span class="op">=</span> <span class="cn">NULL</span></span>
-<span>  <span class="op">)</span></span>
+<span>        <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span></span>
+<span>                x     <span class="op">=</span> <span class="va">value</span>,</span>
+<span>                y     <span class="op">=</span> <span class="va">is_rural</span>,</span>
+<span>                size  <span class="op">=</span> <span class="va">total_employment</span>,</span>
+<span>                color <span class="op">=</span> <span class="va">is_rural</span></span>
+<span>        <span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>        <span class="fu"><a href="https://rdrr.io/pkg/ggbeeswarm/man/geom_beeswarm.html" class="external-link">geom_beeswarm</a></span><span class="op">(</span>cex <span class="op">=</span> <span class="fl">0.4</span>, groupOnX <span class="op">=</span> <span class="cn">FALSE</span>, alpha <span class="op">=</span> <span class="fl">0.4</span><span class="op">)</span> <span class="op">+</span></span>
+<span>        <span class="fu"><a href="https://ruralinnovation.github.io/cori.charts/reference/scales.html" class="external-link">scale_color_cori</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"ctg2ruralnonrural"</span>, guide <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>        <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_size.html" class="external-link">scale_size_continuous</a></span><span class="op">(</span></span>
+<span>                range  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">5</span><span class="op">)</span>,</span>
+<span>                breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5e3</span>, <span class="fl">25e3</span>, <span class="fl">50e3</span>, <span class="fl">100e3</span>, <span class="fl">500e3</span><span class="op">)</span>,</span>
+<span>                labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"5k"</span>, <span class="st">"25k"</span>, <span class="st">"50k"</span>, <span class="st">"100k"</span>, <span class="st">"500k+"</span><span class="op">)</span>,,</span>
+<span>                name   <span class="op">=</span> <span class="st">"Total employment"</span></span>
+<span>        <span class="op">)</span> <span class="op">+</span></span>
+<span>        <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_continuous</a></span><span class="op">(</span></span>
+<span>                labels <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/label_percent.html" class="external-link">label_percent</a></span><span class="op">(</span>accuracy <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
+<span>                expand <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/expansion.html" class="external-link">expansion</a></span><span class="op">(</span>mult <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.02</span>, <span class="fl">0.02</span><span class="op">)</span><span class="op">)</span></span>
+<span>        <span class="op">)</span> <span class="op">+</span></span>
+<span>        <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_discrete.html" class="external-link">scale_y_discrete</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Rural"</span>, <span class="st">"Nonrural"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>        <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian</a></span><span class="op">(</span>clip <span class="op">=</span> <span class="st">"off"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>        <span class="fu"><a href="https://ruralinnovation.github.io/cori.charts/reference/theme_cori.html" class="external-link">theme_cori</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>        <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span></span>
+<span>                panel.grid.major   <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>                panel.grid.major.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_line</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"#d0d2ce"</span>, linewidth <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
+<span>        <span class="op">)</span> <span class="op">+</span></span>
+<span>        <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
+<span>                title    <span class="op">=</span> <span class="va">title_swarm</span>,</span>
+<span>                subtitle <span class="op">=</span> <span class="va">subtitle_swarm</span>,</span>
+<span>                caption  <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_wrap.html" class="external-link">str_wrap</a></span><span class="op">(</span></span>
+<span>                        <span class="st">"Source: BLS QCEW via cori.data.qcew. Rural classification: CBSA 2023.\n Each dot is a county, sized by total employment."</span>,</span>
+<span>                        width <span class="op">=</span> <span class="fl">110</span></span>
+<span>                <span class="op">)</span>,</span>
+<span>                x <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>                y <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>        <span class="op">)</span></span>
 <span></span>
-<span><span class="va">fig_swarm</span></span>
-<span><span class="fu"><a href="https://ruralinnovation.github.io/cori.charts/reference/save_plot.html" class="external-link">save_plot</a></span><span class="op">(</span><span class="va">fig_swarm</span>, <span class="fu">here</span><span class="fu">::</span><span class="fu">here</span><span class="op">(</span><span class="st">"export/sector_swarm.png"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/files2.html" class="external-link">dir.exists</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org/reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"export"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://ruralinnovation.github.io/cori.charts/reference/save_plot.html" class="external-link">save_plot</a></span><span class="op">(</span><span class="va">fig_swarm</span>, <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org/reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"export/sector_swarm.png"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">fig_swarm</span></span></code></pre></div>
+<p><img src="sector-analysis_files/figure-html/swarm-1.png" class="r-plt" alt="Swarm plot showing the distribution of tradable goods employment share across rural and nonrural counties in 2023" width="2666.6667"></p>
 </div>
 <div class="section level2">
 <h2 id="bls-supersector-breakdown">BLS supersector breakdown<a class="anchor" aria-label="anchor" href="#bls-supersector-breakdown"></a>
@@ -222,75 +227,85 @@ the average. Each dot is a county, sized by employment.</p>
 employment is concentrated across the full distribution of industry
 types:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">bls_sector</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/cori.data.qcew/man/get_sector_employment.html" class="external-link">get_sector_employment</a></span><span class="op">(</span></span>
-<span>  geography   <span class="op">=</span> <span class="st">"county"</span>,</span>
-<span>  years       <span class="op">=</span> <span class="fl">2023</span>,</span>
-<span>  sector_type <span class="op">=</span> <span class="st">"BLS"</span>,</span>
-<span>  value_type  <span class="op">=</span> <span class="st">"share"</span></span>
+<code class="sourceCode R"><span><span class="va">bls_sector</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ruralinnovation.github.io/cori.data.qcew/reference/get_sector_employment.html">get_sector_employment</a></span><span class="op">(</span></span>
+<span>        geography   <span class="op">=</span> <span class="st">"county"</span>,</span>
+<span>        years       <span class="op">=</span> <span class="fl">2023</span>,</span>
+<span>        sector_type <span class="op">=</span> <span class="st">"BLS"</span>,</span>
+<span>        value_type  <span class="op">=</span> <span class="st">"share"</span></span>
 <span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">rural</span>, by <span class="op">=</span> <span class="st">"geoid"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">is_rural</span><span class="op">)</span>, <span class="va">variable</span> <span class="op">==</span> <span class="st">"emp_share"</span><span class="op">)</span></span>
+<span>        <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">rural</span>, by <span class="op">=</span> <span class="st">"geoid"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>        <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">is_rural</span><span class="op">)</span>, <span class="va">variable</span> <span class="op">==</span> <span class="st">"emp_share"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>        <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">geoid</span>, <span class="va">sector</span>, <span class="va">is_rural</span>, emp_share <span class="op">=</span> <span class="va">value</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Average share by sector and rural status</span></span>
 <span><span class="va">bls_avg</span> <span class="op">&lt;-</span> <span class="va">bls_sector</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">total_emp</span>, by <span class="op">=</span> <span class="st">"geoid"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">sector</span>, <span class="va">is_rural</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span></span>
-<span>    avg_share <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/weighted.mean.html" class="external-link">weighted.mean</a></span><span class="op">(</span><span class="va">value</span>, <span class="va">employment</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
-<span>    .groups <span class="op">=</span> <span class="st">"drop"</span></span>
-<span>  <span class="op">)</span></span></code></pre></div>
+<span>        <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">total_emp</span>, by <span class="op">=</span> <span class="st">"geoid"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>        <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">sector</span>, <span class="va">is_rural</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>        <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span></span>
+<span>                avg_share <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/weighted.mean.html" class="external-link">weighted.mean</a></span><span class="op">(</span><span class="va">emp_share</span>, <span class="va">total_employment</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>                .groups <span class="op">=</span> <span class="st">"drop"</span></span>
+<span>        <span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fig_bls</span> <span class="op">&lt;-</span> <span class="va">bls_avg</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span></span>
-<span>    x    <span class="op">=</span> <span class="va">avg_share</span>,</span>
-<span>    y    <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/reorder.factor.html" class="external-link">reorder</a></span><span class="op">(</span><span class="va">sector</span>, <span class="va">avg_share</span><span class="op">)</span>,</span>
-<span>    fill <span class="op">=</span> <span class="va">is_rural</span></span>
-<span>  <span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_col</a></span><span class="op">(</span>position <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/position_dodge.html" class="external-link">position_dodge</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">0.6</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ruralinnovation.github.io/cori.charts/reference/scales.html" class="external-link">scale_fill_cori</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"ctg2ruralnonrural"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_continuous</a></span><span class="op">(</span></span>
-<span>    labels <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/label_percent.html" class="external-link">label_percent</a></span><span class="op">(</span>accuracy <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
-<span>    expand <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/expansion.html" class="external-link">expansion</a></span><span class="op">(</span>mult <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.05</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ruralinnovation.github.io/cori.charts/reference/theme_cori_horizontal_bars.html" class="external-link">theme_cori_horizontal_bars</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
-<span>    title    <span class="op">=</span> <span class="st">"Sector composition differs markedly between rural and nonrural counties"</span>,</span>
-<span>    subtitle <span class="op">=</span> <span class="st">"Employment-weighted average sector share, 2023"</span>,</span>
-<span>    caption  <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_wrap.html" class="external-link">str_wrap</a></span><span class="op">(</span></span>
-<span>      <span class="st">"Source: BLS QCEW via cori.data.qcew. Rural classification: CBSA 2023."</span>,</span>
-<span>      width <span class="op">=</span> <span class="fl">110</span></span>
-<span>    <span class="op">)</span>,</span>
-<span>    fill <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>    x    <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>    y    <span class="op">=</span> <span class="cn">NULL</span></span>
-<span>  <span class="op">)</span></span>
+<span>        <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span></span>
+<span>                x    <span class="op">=</span> <span class="va">avg_share</span>,</span>
+<span>                y    <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/reorder.factor.html" class="external-link">reorder</a></span><span class="op">(</span><span class="va">sector</span>, <span class="va">avg_share</span><span class="op">)</span>,</span>
+<span>                fill <span class="op">=</span> <span class="va">is_rural</span></span>
+<span>        <span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>        <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_col</a></span><span class="op">(</span>position <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/position_dodge.html" class="external-link">position_dodge</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">0.6</span><span class="op">)</span> <span class="op">+</span></span>
+<span>        <span class="fu"><a href="https://ruralinnovation.github.io/cori.charts/reference/scales.html" class="external-link">scale_fill_cori</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"ctg2ruralnonrural"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>        <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_continuous</a></span><span class="op">(</span></span>
+<span>                labels <span class="op">=</span> <span class="fu"><a href="https://scales.r-lib.org/reference/label_percent.html" class="external-link">label_percent</a></span><span class="op">(</span>accuracy <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
+<span>                expand <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/expansion.html" class="external-link">expansion</a></span><span class="op">(</span>mult <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.05</span><span class="op">)</span><span class="op">)</span></span>
+<span>        <span class="op">)</span> <span class="op">+</span></span>
+<span>        <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_discrete.html" class="external-link">scale_y_discrete</a></span><span class="op">(</span></span>
+<span>                labels <span class="op">=</span> \<span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/case.html" class="external-link">str_to_title</a></span><span class="op">(</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html" class="external-link">str_replace_all</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"_"</span>, <span class="st">" "</span><span class="op">)</span><span class="op">)</span></span>
+<span>        <span class="op">)</span> <span class="op">+</span></span>
+<span>        <span class="fu"><a href="https://ruralinnovation.github.io/cori.charts/reference/theme_cori_horizontal_bars.html" class="external-link">theme_cori_horizontal_bars</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>        <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
+<span>                title    <span class="op">=</span> <span class="st">"Sector composition differs markedly between rural\nand nonrural counties"</span>,</span>
+<span>                subtitle <span class="op">=</span> <span class="st">"Employment-weighted average sector share, 2023"</span>,</span>
+<span>                caption  <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_wrap.html" class="external-link">str_wrap</a></span><span class="op">(</span></span>
+<span>                        <span class="st">"Source: BLS QCEW via cori.data.qcew. Rural classification: CBSA 2023."</span>,</span>
+<span>                        width <span class="op">=</span> <span class="fl">100</span></span>
+<span>                <span class="op">)</span>,</span>
+<span>                fill <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>                x    <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>                y    <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>        <span class="op">)</span></span>
 <span></span>
-<span><span class="va">fig_bls</span></span>
-<span><span class="fu"><a href="https://ruralinnovation.github.io/cori.charts/reference/save_plot.html" class="external-link">save_plot</a></span><span class="op">(</span><span class="va">fig_bls</span>, <span class="fu">here</span><span class="fu">::</span><span class="fu">here</span><span class="op">(</span><span class="st">"export/bls_sector_bars.png"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span></span>
+<span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/files2.html" class="external-link">dir.exists</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org/reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"export"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://ruralinnovation.github.io/cori.charts/reference/save_plot.html" class="external-link">save_plot</a></span><span class="op">(</span><span class="va">fig_bls</span>, <span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org/reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"export/bls_sector_bars.png"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">fig_bls</span></span></code></pre></div>
+<p><img src="sector-analysis_files/figure-html/bls-bar-1.png" class="r-plt" alt="Grouped bar chart showing employment shares by BLS supersector for rural and nonrural counties" width="2666.6667"></p>
 </div>
 <div class="section level2">
 <h2 id="sector-wages">Sector wages<a class="anchor" aria-label="anchor" href="#sector-wages"></a>
 </h2>
 <p>Pay varies substantially across sectors. Use
-<code><a href="https://rdrr.io/pkg/cori.data.qcew/man/get_sector_wages.html" class="external-link">get_sector_wages()</a></code> to see which sectors drive higher or
+<code><a href="https://ruralinnovation.github.io/cori.data.qcew/reference/get_sector_wages.html">get_sector_wages()</a></code> to see which sectors drive higher or
 lower wage outcomes:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">sector_wages</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/cori.data.qcew/man/get_sector_wages.html" class="external-link">get_sector_wages</a></span><span class="op">(</span></span>
-<span>  geography   <span class="op">=</span> <span class="st">"county"</span>,</span>
-<span>  years       <span class="op">=</span> <span class="fl">2023</span>,</span>
-<span>  sector_type <span class="op">=</span> <span class="st">"CORI"</span></span>
+<code class="sourceCode R"><span><span class="va">sector_wages</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ruralinnovation.github.io/cori.data.qcew/reference/get_sector_wages.html">get_sector_wages</a></span><span class="op">(</span></span>
+<span>        geography   <span class="op">=</span> <span class="st">"county"</span>,</span>
+<span>        years       <span class="op">=</span> <span class="fl">2023</span>,</span>
+<span>        sector_type <span class="op">=</span> <span class="st">"CORI"</span></span>
 <span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">rural</span>, by <span class="op">=</span> <span class="st">"geoid"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">is_rural</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">total_emp</span>, by <span class="op">=</span> <span class="st">"geoid"</span><span class="op">)</span></span>
+<span>        <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">rural</span>, by <span class="op">=</span> <span class="st">"geoid"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>        <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">is_rural</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>        <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">total_emp</span>, by <span class="op">=</span> <span class="st">"geoid"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>        <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">geoid</span>, <span class="va">sector</span>, <span class="va">is_rural</span>, <span class="va">agg_var</span>, avg_pay <span class="op">=</span> <span class="va">value</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Employment-weighted average wage by sector and rural status</span></span>
 <span><span class="va">wage_summary</span> <span class="op">&lt;-</span> <span class="va">sector_wages</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">sector</span>, <span class="va">is_rural</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span></span>
-<span>    avg_wage <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/weighted.mean.html" class="external-link">weighted.mean</a></span><span class="op">(</span><span class="va">value</span>, <span class="va">agg_var</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
-<span>    .groups <span class="op">=</span> <span class="st">"drop"</span></span>
-<span>  <span class="op">)</span></span></code></pre></div>
+<span>        <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">sector</span>, <span class="va">is_rural</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>        <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span></span>
+<span>                avg_wage <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/weighted.mean.html" class="external-link">weighted.mean</a></span><span class="op">(</span><span class="va">avg_pay</span>, <span class="va">agg_var</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>                .groups <span class="op">=</span> <span class="st">"drop"</span></span>
+<span>        <span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="what-sector-analysis-reveals">What sector analysis reveals<a class="anchor" aria-label="anchor" href="#what-sector-analysis-reveals"></a>
@@ -332,7 +347,7 @@ certified by the Census Bureau. BLS.gov cannot vouch for the data or
 analyses derived from these data after the data have been retrieved from
 BLS.gov.</p>
 </blockquote>
-<p>The CORI super-sector classification is loosely derived from Eckert
+<p>The CORI supersector classification is loosely derived from Eckert
 (2018). The BLS supersector definitions follow standard NAICS-based
 industry groupings published by the Bureau of Labor Statistics.</p>
 </div>

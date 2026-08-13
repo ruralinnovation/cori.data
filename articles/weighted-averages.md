@@ -16,18 +16,18 @@ update_cori_geom_defaults()
 ```
 
 Counties are not equal in size. Loving County, Texas has a few hundred
-residents; Los Angeles County has ten million. When you average a rate
-across counties — wages, employment share, sector composition — treating
-each county as one observation lets the hundreds of tiny counties
-dominate the result, even though they collectively represent a small
-fraction of the actual workforce.
+residents; Los Angeles County, California has ten million. When you
+average a rate across counties — wages, employment share, sector
+composition — treating each county as one observation lets the hundreds
+of tiny counties dominate the result, even though they collectively
+represent a small fraction of the actual workforce.
 
 This distortion is especially consequential in rural analysis. The rural
 landscape is dominated by small counties, and a handful of them with
 large employers — a mine, a power plant, a major hospital system — can
 pull a naive average far from the typical rural worker’s experience. The
-same problem applies when rolling counties up into regions: summing
-wages is meaningless; you need to weight by how many workers each wage
+same problem applies when aggregating counties to regions: summing wages
+is meaningless; you need to weight by how many workers each wage
 represents.
 
 The CORI data ecosystem addresses this with `agg_var` — an employment
@@ -43,19 +43,19 @@ across geographies.
 
 | Function | Variable | `agg_var` |
 |----|----|----|
-| [`get_wage_salary()`](https://rdrr.io/pkg/cori.data.qcew/man/get_wage_salary.html) | `avg_pay` | Total employment |
-| [`get_sector_employment()`](https://rdrr.io/pkg/cori.data.qcew/man/get_sector_employment.html) | `emp_share` | Total employment |
-| [`get_sector_wages()`](https://rdrr.io/pkg/cori.data.qcew/man/get_sector_wages.html) | `avg_pay` | Sector employment |
+| [`get_wage_salary()`](https://ruralinnovation.github.io/cori.data.qcew/reference/get_wage_salary.html) | `avg_pay` | Total employment |
+| [`get_sector_employment()`](https://ruralinnovation.github.io/cori.data.qcew/reference/get_sector_employment.html) | `emp_share` | Total employment |
+| [`get_sector_wages()`](https://ruralinnovation.github.io/cori.data.qcew/reference/get_sector_wages.html) | `avg_pay` | Sector employment |
 
 Functions that return raw counts
-([`get_employment()`](https://rdrr.io/pkg/cori.data.qcew/man/get_employment.html),
-[`get_employment_concentration()`](https://rdrr.io/pkg/cori.data.qcew/man/get_employment_concentration.html))
+([`get_employment()`](https://ruralinnovation.github.io/cori.data.qcew/reference/get_employment.html),
+[`get_employment_concentration()`](https://ruralinnovation.github.io/cori.data.qcew/reference/get_employment_concentration.html))
 do not include `agg_var` — counts can simply be summed.
 
 ## The problem with simple averages
 
-Here is the core issue. Suppose we want the average annual wage across
-all rural counties in 2023.
+Suppose we want the average annual wage across all rural counties in
+2023.
 
 A simple [`mean()`](https://rdrr.io/r/base/mean.html) treats every
 county equally — a county with 200 workers gets exactly the same weight
@@ -155,8 +155,8 @@ fig_bar
 
 ## Aggregating across geographies
 
-`agg_var` also enables correct aggregation when you want to roll up
-counties into regions. Summing wages is meaningless — you need to weight
+`agg_var` also enables correct aggregation when you want to aggregate
+counties to regions. Summing wages is meaningless — you need to weight
 by employment:
 
 ``` r
@@ -190,7 +190,7 @@ Whenever a function returns `agg_var`, use
 `weighted.mean(value, agg_var)` instead of `mean(value)` any time you’re
 aggregating across multiple geographies. The difference matters most in
 rural analysis, where high variance in county size means naive averages
-can mislead significantly.
+can mislead analysis results significantly.
 
 ## Data sources
 

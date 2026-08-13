@@ -4,7 +4,7 @@ Rural America contains multitudes. It is a place of deep economic
 resilience and persistent structural challenge — where the loss of a
 single employer can reshape a community for a generation, and where a
 new business opening can signal something much larger than its balance
-sheet.
+sheet would suggest.
 
 The CORI data ecosystem gives researchers, analysts, and practitioners
 direct access to the socioeconomic data that describes these dynamics.
@@ -99,21 +99,21 @@ uic_2024  # USDA Urban Influence Codes
 
 ## Where to go next
 
-- **[Employment
-  Rate](https://ruralinnovation.github.io/cori.data/articles/employment-rate.md)**
+- [**Employment
+  Rate**](https://ruralinnovation.github.io/cori.data/articles/employment-rate.md)
   — combine QCEW + PEP to build a cross-package employment rate with
   line chart and county map
-- **[Working with Tidy
-  Data](https://ruralinnovation.github.io/cori.data/articles/tidy-data.md)**
+- [**Working with Tidy
+  Data**](https://ruralinnovation.github.io/cori.data/articles/tidy-data.md)
   — filtering, pivoting wide, and joining datasets across packages
-- **[Sector
-  Analysis](https://ruralinnovation.github.io/cori.data/articles/sector-analysis.md)**
+- [**Sector
+  Analysis**](https://ruralinnovation.github.io/cori.data/articles/sector-analysis.md)
   — CORI super-sectors and what they reveal about rural economic
   composition
-- **[Weighted
-  Averages](https://ruralinnovation.github.io/cori.data/articles/weighted-averages.md)**
+- [**Weighted
+  Averages**](https://ruralinnovation.github.io/cori.data/articles/weighted-averages.md)
   — why `agg_var` matters and how to use it correctly
-- **[Broadband](https://ruralinnovation.github.io/cori.data/articles/broadband.md)**
+- [**Broadband**](https://ruralinnovation.github.io/cori.data/articles/broadband.md)
   — FCC broadband data and its relationship to economic outcomes
 
 ## Data sources
