@@ -1,0 +1,14 @@
+pandoc: 3.8.3
+pkgdown: 2.2.1
+pkgdown_sha: ~
+articles:
+  broadband: broadband.html
+  employment-rate: employment-rate.html
+  getting-started: getting-started.html
+  sector-analysis: sector-analysis.html
+  tidy-data: tidy-data.html
+  weighted-averages: weighted-averages.html
+last_built: 2026-08-13T01:42Z
+urls:
+  reference: https://ruralinnovation.github.io/cori.data/reference
+  article: https://ruralinnovation.github.io/cori.data/articles

@@ -1,0 +1,3 @@
+# License
+
+    Copyright © 2026 Center on Rural Innovation. All rights reserved.
