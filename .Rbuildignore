@@ -33,3 +33,4 @@
 ^cdk\.json$
 ^cdk\.out$
 ^node_modules$
+^export$

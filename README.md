@@ -1,10 +1,5 @@
----
-editor_options: 
-  markdown: 
-    wrap: 72
----
-
-# cori.data
+cori.data
+=========
 
 > Rural data, made accessible.
 
