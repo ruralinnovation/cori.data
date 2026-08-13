@@ -6,7 +6,19 @@ Authors@R: c(
     person(
       "Drew", "Rosebush",
       email = "drew.rosebush@ruralinnovation.us",
-      role = "aut"
+      role = c("aut")
+    ),
+    person(
+      "Matt", "Rogers",
+      role = c("aut")
+    ),
+    person(
+      "Olivier", "Leroy",
+      role = c("ctb")
+    ),
+    person(
+      "Camden", "Blatchly",
+      role = c("ctb")
     ),
     person(
       "Lindsey", "Elliott",
@@ -20,7 +32,11 @@ Authors@R: c(
     )
   )
 Maintainer: John Hall <john.hall@ruralinnovation.us>
-Description: Commonly used data sets and data functions.
+Description: CORI meta-package that installs and attaches all cori.data.* companion 
+    packages in a single call. Loading cori.data makes functions from 
+    cori.data.qcew, cori.data.bds, cori.data.pep, cori.data.bfs, cori.data.bps, 
+    cori.data.hu, cori.data.fcc, cori.data.s3, and ruraldefinitions immediately 
+    available.
 License: file LICENSE
 URL: https://ruralinnovation.github.io/cori.data
 Encoding: UTF-8
