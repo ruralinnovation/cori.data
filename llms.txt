@@ -53,7 +53,7 @@ cori.data::install_data_packages()
 | [cori.data.bds](https://github.com/ruralinnovation/cori.data.bds) | Business dynamics ([Census BDS](https://www.census.gov/programs-surveys/bds.html)) | county, state, nation | 1978–present |
 | [cori.data.pep](https://github.com/ruralinnovation/cori.data.pep) | Population ([Census PEP](https://www.census.gov/programs-surveys/popest.html)) | county, state, nation | 2000–present |
 | [cori.data.bfs](https://github.com/ruralinnovation/cori.data.bfs) | Business applications ([Census BFS](https://www.census.gov/programs-surveys/bfs.html)) | county, state, nation | 2004–present |
-| [cori.data.bps](https://github.com/ruralinnovation/cori.data.bps) | Building permits ([Census BPS](https://www.census.gov/construction/bps/)) | county, metro | 1980–present |
+| [cori.data.bps](https://github.com/ruralinnovation/cori.data.bps) | Building permits ([Census BPS](https://www.census.gov/construction/bps/)) | county, state, nation | 2000–present |
 | [cori.data.hu](https://github.com/ruralinnovation/cori.data.hu) | Housing units ([Census HU](https://www.census.gov/programs-surveys/popest.html)) | county, state, nation | 2000–present |
 | [cori.data.fcc](https://github.com/ruralinnovation/cori.data.fcc) | Broadband coverage ([FCC NBM](https://broadbandmap.fcc.gov/)) | county | 2023–present |
 | [ruraldefinitions](https://github.com/ruralinnovation/ruraldefinitions) | Rural classifications ([OMB](https://www.census.gov/programs-surveys/metro-micro.html), [USDA ERS](https://www.ers.usda.gov/topics/rural-economy-population/rural-classifications/), [NCHS](https://www.cdc.gov/nchs/data_access/urban_rural.htm)) | county | multiple vintages |
