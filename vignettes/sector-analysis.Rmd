@@ -1,5 +1,5 @@
 ---
-title: "Sector Analysis: How Rural Economies Differ"
+title: "Sector analysis: How rural economies differ"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Sector Analysis: How Rural Economies Differ}
@@ -33,34 +33,24 @@ load_fonts()
 update_cori_geom_defaults()
 ```
 
-Not all employment is equal. A county where most workers are in healthcare
-and local retail faces very different economic dynamics than one anchored in
-manufacturing or professional services. Sector composition shapes everything
-from wage levels to resilience against downturns to sensitivity to remote work.
+Not all employment is equal. A county where most workers are in healthcare and local retail faces very different economic dynamics than one anchored in manufacturing or professional services. Sector composition shapes everything from wage levels to resilience against downturns to sensitivity to remote work.
 
 `cori.data.qcew` offers two ways to investigate employment by sector:
 
-  - **BLS supersectors** — the 11 standard industry groupings published by
-the Bureau of Labor Statistics (natural resources, construction,
-manufacturing, etc.)
-  - **CORI super-sectors** — a CORI-designed aggregation into 3 categories
-  based on whether industries primarily face local or national/global demand
+-   **BLS supersectors** — the 11 standard industry groupings published by the Bureau of Labor Statistics (natural resources, construction, manufacturing, etc.)
+-   **CORI supersectors** — a CORI-designed aggregation into 3 categories based on whether industries primarily face local or national/global demand
 
 ## CORI supersectors
 
-CORI's classification, loosely derived from Eckert (2018), groups BLS
-supersectors into three supersectors:
+CORI's classification, loosely derived from Eckert (2018), groups BLS supersectors into three supersectors:
 
 | CORI Supersector | Constituent BLS supersectors |
-  |---|---|
+|------------------------------------|------------------------------------|
 | **Tradable Goods** | Natural resources & mining, Construction, Manufacturing, Trade/transportation/utilities |
 | **Tradable Services** | Information, Financial activities, Professional & business services |
 | **Local Services** | Education & health services, Leisure & hospitality, Other services, Public administration |
 
-Industries in the tradable categories compete in national or global markets.
-Their presence in a rural county often signals competitive advantage — something
-the local area does well enough that the wider market wants it. Local services,
-by contrast, exist everywhere and primarily reflect local demand.
+Industries in the tradable categories compete in national or global markets. Their presence in a rural county often signals competitive advantage — something the local area does well enough that the wider market wants it. Local services, by contrast, exist everywhere and primarily reflect local demand.
 
 ## Pulling sector data
 
@@ -88,8 +78,7 @@ total_emp <- get_employment(geography = "county", years = 2023) |>
 
 ## Swarm plot: tradable goods share by rural status
 
-A swarm plot shows the full distribution across counties — not just the average.
-Each dot is a county, sized by employment.
+A swarm plot shows the full distribution across counties — not just the average. Each dot is a county, sized by employment.
 
 ```{r swarm, fig.alt = "Swarm plot showing the distribution of tradable goods employment share across rural and nonrural counties in 2023"}
 swarm_data <- sector_emp |>
@@ -149,8 +138,7 @@ fig_swarm
 
 ## BLS supersector breakdown
 
-For a more granular view, the 11 BLS supersectors show where employment
-is concentrated across the full distribution of industry types:
+For a more granular view, the 11 BLS supersectors show where employment is concentrated across the full distribution of industry types:
 
 ```{r bls-sector}
 bls_sector <- get_sector_employment(
@@ -212,8 +200,7 @@ fig_bls
 
 ## Sector wages
 
-Pay varies substantially across sectors. Use `get_sector_wages()` to see
-which sectors drive higher or lower wage outcomes:
+Pay varies substantially across sectors. Use `get_sector_wages()` to see which sectors drive higher or lower wage outcomes:
 
 ```{r sector-wages}
 sector_wages <- get_sector_wages(
@@ -237,41 +224,18 @@ wage_summary <- sector_wages |>
 
 ## What sector analysis reveals
 
-Rural economies are disproportionately concentrated in tradable goods sectors —
-natural resources, manufacturing, construction, and trade — relative to nonrural
-counties. These industries bring outside dollars into local economies and have
-long anchored middle-income employment in places without large metro labor
-markets. Their presence signals genuine competitive advantage: something the
-local area does well enough that the wider market wants it.
+Rural economies are disproportionately concentrated in tradable goods sectors — natural resources, manufacturing, construction, and trade — relative to nonrural counties. These industries bring outside dollars into local economies and have long anchored middle-income employment in places without large metro labor markets. Their presence signals genuine competitive advantage: something the local area does well enough that the wider market wants it.
 
-The share of rural employment in tradable services — professional services,
-finance, information — has historically been lower than in nonrural counties,
-but this gap has been narrowing. Remote work and the geographic dispersal of
-knowledge-economy jobs that accelerated after 2020 show up in this data:
-counties that had little professional services employment a decade ago have seen
-measurable gains. Which rural counties are capturing that growth, and in which
-industries, is one of the more tractable questions this data can help answer.
+The share of rural employment in tradable services — professional services, finance, information — has historically been lower than in nonrural counties, but this gap has been narrowing. Remote work and the geographic dispersal of knowledge-economy jobs that accelerated after 2020 show up in this data: counties that had little professional services employment a decade ago have seen measurable gains. Which rural counties are capturing that growth, and in which industries, is one of the more tractable questions this data can help answer.
 
-Wages tell a complementary story. The rural wage penalty is real but uneven
-across sectors — some rural tradable goods employers pay competitively with
-their nonrural peers, while the gap in tradable services remains wider. Sector
-composition is one of the most informative single lenses for understanding why
-rural economic outcomes vary so much from county to county, and where the
-opportunities for growth are emerging.
+Wages tell a complementary story. The rural wage penalty is real but uneven across sectors — some rural tradable goods employers pay competitively with their nonrural peers, while the gap in tradable services remains wider. Sector composition is one of the most informative single lenses for understanding why rural economic outcomes vary so much from county to county, and where the opportunities for growth are emerging.
 
 ## Data sources
 
-> The Center on Rural Innovation's curation of U.S. Bureau of Labor Statistics,
-> *Quarterly Census of Employment and Wages*. <https://www.bls.gov/cew/>
+> The Center on Rural Innovation's curation of U.S. Bureau of Labor Statistics, *Quarterly Census of Employment and Wages*. <https://www.bls.gov/cew/>
 >
-> The Center on Rural Innovation's curation of U.S. Census Bureau,
-> *Metropolitan and Micropolitan Statistical Areas (OMB delineations)*.
-> <https://www.census.gov/programs-surveys/metro-micro.html>
+> The Center on Rural Innovation's curation of U.S. Census Bureau, *Metropolitan and Micropolitan Statistical Areas (OMB delineations)*. <https://www.census.gov/programs-surveys/metro-micro.html>
 >
-> This product uses the Census Bureau Data API but is not endorsed or certified
-> by the Census Bureau. BLS.gov cannot vouch for the data or analyses derived
-> from these data after the data have been retrieved from BLS.gov.
+> This product uses the Census Bureau Data API but is not endorsed or certified by the Census Bureau. BLS.gov cannot vouch for the data or analyses derived from these data after the data have been retrieved from BLS.gov.
 
-The CORI supersector classification is loosely derived from Eckert (2018).
-The BLS supersector definitions follow standard NAICS-based industry groupings
-published by the Bureau of Labor Statistics.
+The CORI supersector classification is loosely derived from Eckert (2018). The BLS supersector definitions follow standard NAICS-based industry groupings published by the Bureau of Labor Statistics.
