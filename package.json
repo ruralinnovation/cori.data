@@ -26,6 +26,7 @@
     "synth": "cdk synth",
     "diff": "cdk diff",
     "deploy": "cdk deploy --require-approval broadening && npm run test",
+    "postinstall": "Rscript -e \"devtools::install(); install_data_packages()\"",
     "outputs": "aws cloudformation describe-stacks --stack-name CoriDataVendCredentials --region us-east-1 --query \"Stacks[0].Outputs[].{Output:OutputKey,Value:OutputValue}\" --output table",
     "destroy": "cdk destroy",
     "test": "Rscript -e \"devtools::test()\"",

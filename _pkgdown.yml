@@ -62,7 +62,7 @@ reference:
   - cori.data.qcew::get_qcew_codebook
 
 - title: Rural Definitions
-  desc: County-level rural classification schemes
+  desc: County-level rural classification scheme available via rda files in the [ruraldefinitions](https://ruralinnovation.github.io/ruraldefinitions/). Definitions include CBSA (Core-Based Statistical Areas), NCHS (National Center for Health Statistics), RUCC (Rural-Urban Continuum Codes), UIC (Urban Influence Codes)
   contents:
   - ruraldefinitions::get_definition
 

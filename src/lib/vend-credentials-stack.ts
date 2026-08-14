@@ -30,6 +30,7 @@ const ALLOWED_BUCKETS = [
   "cori.data.vacancy",
   "cori.data.verse",
   "cori.data.zip",
+  "ruraldefinitions"
 ];
 
 const DOMAIN_NAME = "data.ruralinnovation.us";

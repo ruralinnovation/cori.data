@@ -71,3 +71,4 @@ npm-debug.log*
 .idea
 docs/
 export/
+announcement-email-template.md

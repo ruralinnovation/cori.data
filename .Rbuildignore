@@ -34,3 +34,4 @@
 ^cdk\.out$
 ^node_modules$
 ^export$
+^announcement-email-template\.md$
