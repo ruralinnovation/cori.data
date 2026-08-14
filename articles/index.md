@@ -8,8 +8,8 @@
   Story](https://ruralinnovation.github.io/cori.data/articles/employment-rate.md):
 - [Getting Started with CORI Rural
   Data](https://ruralinnovation.github.io/cori.data/articles/getting-started.md):
-- [Sector Analysis: How Rural Economies
-  Differ](https://ruralinnovation.github.io/cori.data/articles/sector-analysis.md):
+- [Sector analysis: How rural economies
+  differ](https://ruralinnovation.github.io/cori.data/articles/sector-analysis.md):
 - [Working with Tidy
   Data](https://ruralinnovation.github.io/cori.data/articles/tidy-data.md):
 - [Weighted Averages and

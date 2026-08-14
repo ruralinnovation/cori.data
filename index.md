@@ -358,8 +358,9 @@ vignette**](https://ruralinnovation.github.io/cori.data/vignettes/getting-starte
 
 We’re a small team building tools for rural researchers, and we welcome
 collaborators. If you find a bug, want a feature, or have data we should
-add to the ecosystem, open an issue or start a discussion on any of the
-package repositories above.
+add to the ecosystem, open an issue in the [`cori.data` GitHub
+repo](https://github.com/ruralinnovation/cori.data) or on any of the
+companion package repositories above.
 
 All packages follow the same design principles: tidy output, consistent
 parameters, plain-English variable names, and no infrastructure

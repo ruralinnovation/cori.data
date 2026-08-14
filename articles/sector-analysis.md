@@ -1,4 +1,4 @@
-# Sector Analysis: How Rural Economies Differ
+# Sector analysis: How rural economies differ
 
 ``` r
 
@@ -26,7 +26,7 @@ downturns to sensitivity to remote work.
 - **BLS supersectors** — the 11 standard industry groupings published by
   the Bureau of Labor Statistics (natural resources, construction,
   manufacturing, etc.)
-- **CORI super-sectors** — a CORI-designed aggregation into 3 categories
+- **CORI supersectors** — a CORI-designed aggregation into 3 categories
   based on whether industries primarily face local or national/global
   demand
 

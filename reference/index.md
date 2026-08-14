@@ -99,7 +99,11 @@ Employment, wages, and concentration from BLS QCEW (1990-present)
 
 ## Rural Definitions
 
-County-level rural classification schemes
+County-level rural classification scheme available via rda files in the
+[ruraldefinitions](https://ruralinnovation.github.io/ruraldefinitions/).
+Definitions include CBSA (Core-Based Statistical Areas), NCHS (National
+Center for Health Statistics), RUCC (Rural-Urban Continuum Codes), UIC
+(Urban Influence Codes)
 
 - [`get_definition()`](https://ruralinnovation.github.io/ruraldefinitions/reference/get_definition.html)
   : Get definition from S3 (from ruraldefinitions)
