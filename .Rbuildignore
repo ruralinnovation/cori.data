@@ -35,3 +35,4 @@
 ^node_modules$
 ^export$
 ^announcement-email-template\.md$
+^CLOSE_THE_GAP\.md$
