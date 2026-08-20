@@ -68,7 +68,7 @@ SELECT
     day,
     COALESCE(
         NULLIF(regexp_extract(session_name, '^coridata-(.*)-[0-9]+$', 1), ''),
-        'anon'
+        'anonymous'
     )                                   AS caller_tag,
     COUNT(*)                           AS requests,
     SUM(TRY_CAST(bytessent AS BIGINT))  AS bytes_sent

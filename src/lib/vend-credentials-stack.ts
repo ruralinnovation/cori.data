@@ -20,9 +20,11 @@ import * as path from "path";
 // STS is ever called.
 const ALLOWED_BUCKETS = [
   "cori.data.bds",
+  "cori.data.bfs",
   "cori.data.bps",
   "cori.data.census",
   "cori.data.fcc",
+  "cori.data.hu",
   "cori.data.ipeds",
   "cori.data.patents",
   "cori.data.pep",

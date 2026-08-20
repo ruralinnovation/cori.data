@@ -48,7 +48,7 @@ function buildSessionPolicy(bucket: string): string {
 // caller tag so individual calls are distinguishable in CloudTrail.
 function buildSessionName(callerTag?: string): string {
   const ts = Date.now();
-  const safeTag = (callerTag ?? "anon").replace(/[^\w.@-]/g, "").slice(0, 20);
+  const safeTag = (callerTag ?? "anonymous").replace(/[^\w.@-]/g, "").slice(0, 20);
   return `coridata-${safeTag}-${ts}`.slice(0, 64);
 }
 
