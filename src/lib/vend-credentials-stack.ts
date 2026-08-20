@@ -29,7 +29,6 @@ const ALLOWED_BUCKETS = [
   "cori.data.qcew",
   "cori.data.vacancy",
   "cori.data.verse",
-  "cori.data.zip",
   "ruraldefinitions"
 ];
 
