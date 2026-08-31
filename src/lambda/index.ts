@@ -16,7 +16,7 @@ const ALLOWED_BUCKETS = (process.env.ALLOWED_BUCKETS ?? "")
 
 const TARGET_ROLE_ARN = requireEnv("TARGET_ROLE_ARN");
 const REGION = process.env.AWS_REGION ?? "us-east-1";
-const SESSION_DURATION_SECONDS = 900; // 15 min -- STS minimum
+const SESSION_DURATION_SECONDS = 3600; // 60 minute timeout on credential
 
 function requireEnv(name: string): string {
   const value = process.env[name];
