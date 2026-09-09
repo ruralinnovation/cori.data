@@ -52,14 +52,6 @@ Depends:
   cori.data.qcew,
   cori.data.s3,
   ruraldefinitions
-Imports:
-  cli,
-  crayon,
-  DBI,
-  duckdb,
-  httr,
-  paws.storage,
-  utils
 Remotes:
   ruralinnovation/cori.charts,
   ruralinnovation/cori.data.bds,

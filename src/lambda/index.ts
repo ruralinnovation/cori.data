@@ -1,10 +1,14 @@
+import { createHash } from "node:crypto";
 import { STSClient, AssumeRoleCommand } from "@aws-sdk/client-sts";
+import { Logger } from "@aws-lambda-powertools/logger";
 import type {
   APIGatewayProxyEventV2,
   APIGatewayProxyStructuredResultV2,
+  Context,
 } from "aws-lambda";
 
 const sts = new STSClient({});
+const logger = new Logger({ serviceName: "cori-data-vend" });
 
 // Buckets this endpoint will vend access to. Anything else is rejected
 // before STS is ever called -- this is the real access-control boundary,
@@ -44,17 +48,43 @@ function buildSessionPolicy(bucket: string): string {
   });
 }
 
-// RoleSessionName: 2-64 chars, [\w+=,.@-]. Embeds a timestamp + optional
-// caller tag so individual calls are distinguishable in CloudTrail.
-function buildSessionName(callerTag?: string): string {
-  const ts = Date.now();
-  const safeTag = (callerTag ?? "anonymous").replace(/[^\w.@-]/g, "").slice(0, 20);
-  return `coridata-${safeTag}-${ts}`.slice(0, 64);
+// Derive caller type and a stable identifier from the request.
+// Tagged callers pass an explicit tag; anonymous callers get an IP-based
+// fingerprint that allows grouping repeat callers without identification.
+function deriveCallerType(callerTag?: string, sourceIp?: string): {
+  callerType: "tagged" | "anonymous";
+  callerId: string;
+} {
+  if (callerTag) {
+    const safeTag = callerTag.replace(/[^\w.@-]/g, "").slice(0, 20);
+    return { callerType: "tagged", callerId: safeTag };
+  }
+  const ipHash = createHash("sha256")
+    .update(sourceIp ?? "unknown")
+    .digest("hex")
+    .slice(0, 8);
+  return { callerType: "anonymous", callerId: ipHash };
+}
+
+// RoleSessionName: 2-64 chars, [\w+=,.@-]. Encodes caller type and ID so
+// downstream log queries can parse them:
+//   coridata-anon-{ipHash}-{ts}   — anonymous caller, IP fingerprint
+//   coridata-tag-{callerId}-{ts}  — tagged caller, explicit identifier
+function buildSessionName(
+  callerType: "tagged" | "anonymous",
+  callerId: string
+): string {
+  const ts = Math.floor(Date.now() / 1000);
+  const prefix = callerType === "anonymous" ? "anon" : "tag";
+  return `coridata-${prefix}-${callerId}-${ts}`.slice(0, 64);
 }
 
 export const handler = async (
-  event: APIGatewayProxyEventV2
+  event: APIGatewayProxyEventV2,
+  context: Context
 ): Promise<APIGatewayProxyStructuredResultV2> => {
+  logger.addContext(context);
+
   const bucket = event.queryStringParameters?.bucket;
   const callerTag = event.queryStringParameters?.caller;
   const sourceIp = event.requestContext?.http?.sourceIp ?? "unknown";
@@ -64,19 +94,17 @@ export const handler = async (
   }
 
   if (!ALLOWED_BUCKETS.includes(bucket)) {
-    console.warn(
-      JSON.stringify({
-        event: "vend_credentials_rejected",
-        reason: "bucket_not_allowed",
-        bucket,
-        sourceIp,
-        callerTag,
-      })
-    );
+    logger.warn("vend_credentials_rejected", {
+      reason: "bucket_not_allowed",
+      bucket,
+      sourceIp,
+      callerTag,
+    });
     return json(403, { error: `Bucket not permitted: ${bucket}` });
   }
 
-  const sessionName = buildSessionName(callerTag);
+  const { callerType, callerId } = deriveCallerType(callerTag, sourceIp);
+  const sessionName = buildSessionName(callerType, callerId);
 
   try {
     const result = await sts.send(
@@ -93,16 +121,15 @@ export const handler = async (
       throw new Error("AssumeRole returned incomplete credentials");
     }
 
-    console.log(
-      JSON.stringify({
-        event: "vend_credentials_issued",
-        bucket,
-        sessionName,
-        sourceIp,
-        callerTag,
-        expiration: creds.Expiration,
-      })
-    );
+    logger.info("vend_credentials_issued", {
+      bucket,
+      sessionName,
+      sourceIp,
+      callerType,
+      callerId,
+      callerTag,
+      expiration: creds.Expiration,
+    });
 
     // Field names here are the contract with cori.data::connect_to_s3().
     // Changing them breaks every R caller.
@@ -114,14 +141,11 @@ export const handler = async (
       expiration: creds.Expiration,
     });
   } catch (err) {
-    console.error(
-      JSON.stringify({
-        event: "vend_credentials_error",
-        bucket,
-        sourceIp,
-        error: err instanceof Error ? err.message : String(err),
-      })
-    );
+    logger.error("vend_credentials_error", {
+      bucket,
+      sourceIp,
+      error: err instanceof Error ? err.message : String(err),
+    });
     return json(500, { error: "Failed to issue credentials" });
   }
 };

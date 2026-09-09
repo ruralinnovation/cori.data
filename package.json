@@ -7,6 +7,7 @@
     "app": "bin/app.js"
   },
   "dependencies": {
+    "@aws-lambda-powertools/logger": "^2.35.0",
     "@aws-sdk/client-sts": "^3.717.0",
     "aws-cdk-lib": "^2.173.0",
     "constructs": "^10.4.2"
@@ -26,7 +27,7 @@
     "synth": "cdk synth",
     "diff": "cdk diff",
     "deploy": "cdk deploy --require-approval broadening && npm run test",
-    "postinstall": "Rscript -e \"devtools::install(); install_data_packages()\"",
+    "postinstall": "Rscript -e \"devtools::install(); devtools::load_all(); install_data_packages()\"",
     "outputs": "aws cloudformation describe-stacks --stack-name CoriDataVendCredentials --region us-east-1 --query \"Stacks[0].Outputs[].{Output:OutputKey,Value:OutputValue}\" --output table",
     "destroy": "cdk destroy",
     "test": "Rscript -e \"devtools::test()\"",
