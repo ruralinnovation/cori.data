@@ -6,7 +6,7 @@
 \usage{
 install_data_packages(
   packages = c("cori.data.bds", "cori.data.bfs", "cori.data.bps", "cori.data.fcc",
-    "cori.data.hu", "cori.data.pep", "cori.data.qcew"),
+    "cori.data.hu", "cori.data.pep", "cori.data.qcew", "ruraldefinitions"),
   ...
 )
 }

@@ -4,6 +4,11 @@ template:
   bootstrap: 5
 
 reference:
+- title: Package Installation
+  desc: Install the cori.data.* companion packages
+  contents:
+  - install_data_packages
+
 - title: Business Dynamics Statistics (BDS)
   desc: Establishment births, deaths, and employment from Census BDS (1978-present)
   contents:

@@ -7,6 +7,10 @@
 # * https://testthat.r-lib.org/articles/special-files.html
 
 library(testthat)
+library(cori.data)
+
+install_data_packages()
+
 library(cori.data.s3)
 
 test_check("cori.data")

@@ -35,7 +35,8 @@ install_data_packages <- function(packages = c(
                                     "cori.data.fcc",
                                     "cori.data.hu",
                                     "cori.data.pep",
-                                    "cori.data.qcew"
+                                    "cori.data.qcew",
+                                    "ruraldefinitions"
                                   ), ...) {
   if (!requireNamespace("remotes", quietly = TRUE)) {
     stop("The 'remotes' package is required to install these packages. ",
