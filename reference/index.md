@@ -1,5 +1,12 @@
 # Package index
 
+## Package Installation
+
+Install the cori.data.\* companion packages
+
+- [`install_data_packages()`](https://ruralinnovation.github.io/cori.data/reference/install_data_packages.md)
+  : Install the cori.data.\* companion packages
+
 ## Business Dynamics Statistics (BDS)
 
 Establishment births, deaths, and employment from Census BDS
