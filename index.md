@@ -396,3 +396,86 @@ Full terms of service for each provider:
   Service](https://www.bls.gov/developers/termsOfService.htm)
 - [FCC National Broadband Map — License and
   Attribution](https://broadbandmap.fcc.gov/about)
+
+------------------------------------------------------------------------
+
+## Usage monitoring and credential tagging
+
+The `cori.data` ecosystem includes infrastructure for monitoring S3
+access and attributing requests to specific callers. This section
+documents the current implementation status and known gaps.
+
+### Credential vending architecture
+
+The credential vending endpoint
+(`https://data.ruralinnovation.us/credentials`) issues short-lived,
+read-only S3 credentials scoped to a single bucket. The system supports
+three caller categories:
+
+| Category | How identified | Session name format |
+|----|----|----|
+| **Anonymous** | No credentials, or vended credential without `caller` tag | `coridata-anon-{ipHash}-{timestamp}` |
+| **Tagged** | Vended credential with explicit `caller` parameter | `coridata-tag-{callerId}-{timestamp}` |
+| **Local IAM** | Caller’s own AWS credentials (bypasses vending) | Caller’s IAM identity |
+
+### Current implementation status
+
+| Capability | Status |
+|----|----|
+| Credential vending endpoint | Deployed, working |
+| Read-only, bucket-scoped session credentials | Implemented |
+| `caller` parameter in R functions | Implemented (`connect_to_s3(..., caller = "my-app")`) |
+| Session name with caller tag in Lambda | Implemented |
+| Ambient AWS identity fallback | Implemented |
+| S3 server access logging | Enabled on allowlisted buckets |
+
+### Known gaps (as of 2026-09-22, measured)
+
+The four gaps previously listed here were written before any log data
+was measured. A full 30-day collection across all logging buckets
+(2026-09-22) resolved or invalidated all of them.
+
+1.  Anonymous fingerprinting is coarse — still true, and now known not
+    to matter. The `coridata-anon-{ipHash}` fingerprint is a SHA-256 of
+    the source IP, and the plaintext `remoteip` sits on the same
+    access-log line. Verified: `sha256("71.166.37.202")[0:8]` is exactly
+    the observed `56fbb548`. The hash is a lossy copy of a field already
+    in the record, so improving it adds nothing that querying `remoteip`
+    does not already give.
+
+2.  Internal callers aren’t tagged — still true, and likewise moot.
+    Buckets map 1:1 to packages, so the `sourcebucket` partition key
+    already answers “which package.” Vended traffic is 209 of 2,073,509
+    requests over 30 days (one in 9,921); 91.98% of requests arrive with
+    no credential at all and no tagging scheme can ever reach them.
+
+3.  No pre-aggregated log data — the “~30 minutes for 7 days” figure was
+    a substantial understatement. A 30-day parse of raw objects took 93
+    minutes, 85 of them on `cori.data.fcc` alone. The cost is log OBJECT
+    COUNT (~1M/month at ~4 KB each), not data volume. Resolved by
+    querying the partition-projected Athena table instead of raw
+    objects.
+
+4.  ~~No Athena table~~ — false when written.
+    `src/athena/create_table.sql` and `reports.sql` already existed. The
+    real defects were that the deployed table’s
+    `projection.sourcebucket.values` had drifted from the on-disk file
+    (deployed still listed the deleted `cori.data.zip` and omitted
+    `cori.data.bfs`/`cori.data.hu`), and that `cori.data.bfs` and
+    `cori.data.hu` had server access logging switched off entirely. Both
+    fixed 2026-09-22.
+
+### A measurement caveat that supersedes earlier request counts
+
+`COUNT(*)` over these logs counts S3 API calls, not downloads. 99.31% of
+`cori.data.fcc`’s anonymous GETs are HTTP 206 range reads, because
+DuckDB/httpfs reads parquet in ranges — 1,931,764 API calls against
+13,563 distinct objects, a 142x inflation. Other buckets are unaffected.
+Use `COUNT(DISTINCT key)` and `SUM(bytessent)` as usage measures. The
+concentration conclusion survives the correction: fcc leads on all three
+metrics.
+
+### Next steps
+
+See `CLOSE_THE_GAP.md` in this repository for the full gap analysis and
+implementation plan.

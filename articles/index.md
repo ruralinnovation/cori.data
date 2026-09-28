@@ -12,5 +12,7 @@
   differ](https://ruralinnovation.github.io/cori.data/articles/sector-analysis.md):
 - [Working with Tidy
   Data](https://ruralinnovation.github.io/cori.data/articles/tidy-data.md):
+- [S3 Usage
+  Reports](https://ruralinnovation.github.io/cori.data/articles/usage-reports.md):
 - [Weighted Averages and
   agg_var](https://ruralinnovation.github.io/cori.data/articles/weighted-averages.md):

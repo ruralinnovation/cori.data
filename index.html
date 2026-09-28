@@ -40,6 +40,7 @@
     <li><a class="dropdown-item" href="articles/getting-started.html">Getting Started with CORI Rural Data</a></li>
     <li><a class="dropdown-item" href="articles/sector-analysis.html">Sector analysis: How rural economies differ</a></li>
     <li><a class="dropdown-item" href="articles/tidy-data.html">Working with Tidy Data</a></li>
+    <li><a class="dropdown-item" href="articles/usage-reports.html">S3 Usage Reports</a></li>
     <li><a class="dropdown-item" href="articles/weighted-averages.html">Weighted Averages and agg_var</a></li>
   </ul>
 </li>
@@ -341,6 +342,108 @@
 <li><a href="https://www.bls.gov/developers/termsOfService.htm" class="external-link">BLS Terms of Service</a></li>
 <li><a href="https://broadbandmap.fcc.gov/about" class="external-link">FCC National Broadband Map — License and Attribution</a></li>
 </ul>
+<hr>
+</div>
+<div class="section level2">
+<h2 id="usage-monitoring-and-credential-tagging">Usage monitoring and credential tagging<a class="anchor" aria-label="anchor" href="#usage-monitoring-and-credential-tagging"></a>
+</h2>
+<p>The <code>cori.data</code> ecosystem includes infrastructure for monitoring S3 access and attributing requests to specific callers. This section documents the current implementation status and known gaps.</p>
+<div class="section level3">
+<h3 id="credential-vending-architecture">Credential vending architecture<a class="anchor" aria-label="anchor" href="#credential-vending-architecture"></a>
+</h3>
+<p>The credential vending endpoint (<code>https://data.ruralinnovation.us/credentials</code>) issues short-lived, read-only S3 credentials scoped to a single bucket. The system supports three caller categories:</p>
+<table class="table">
+<colgroup>
+<col width="21%">
+<col width="34%">
+<col width="44%">
+</colgroup>
+<thead><tr>
+<th>Category</th>
+<th>How identified</th>
+<th>Session name format</th>
+</tr></thead>
+<tbody>
+<tr>
+<td><strong>Anonymous</strong></td>
+<td>No credentials, or vended credential without <code>caller</code> tag</td>
+<td><code>coridata-anon-{ipHash}-{timestamp}</code></td>
+</tr>
+<tr>
+<td><strong>Tagged</strong></td>
+<td>Vended credential with explicit <code>caller</code> parameter</td>
+<td><code>coridata-tag-{callerId}-{timestamp}</code></td>
+</tr>
+<tr>
+<td><strong>Local IAM</strong></td>
+<td>Caller’s own AWS credentials (bypasses vending)</td>
+<td>Caller’s IAM identity</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level3">
+<h3 id="current-implementation-status">Current implementation status<a class="anchor" aria-label="anchor" href="#current-implementation-status"></a>
+</h3>
+<table class="table">
+<colgroup>
+<col width="60%">
+<col width="40%">
+</colgroup>
+<thead><tr>
+<th>Capability</th>
+<th>Status</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>Credential vending endpoint</td>
+<td>Deployed, working</td>
+</tr>
+<tr>
+<td>Read-only, bucket-scoped session credentials</td>
+<td>Implemented</td>
+</tr>
+<tr>
+<td>
+<code>caller</code> parameter in R functions</td>
+<td>Implemented (<code>connect_to_s3(..., caller = "my-app")</code>)</td>
+</tr>
+<tr>
+<td>Session name with caller tag in Lambda</td>
+<td>Implemented</td>
+</tr>
+<tr>
+<td>Ambient AWS identity fallback</td>
+<td>Implemented</td>
+</tr>
+<tr>
+<td>S3 server access logging</td>
+<td>Enabled on allowlisted buckets</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level3">
+<h3 id="known-gaps-as-of-2026-09-22-measured">Known gaps (as of 2026-09-22, measured)<a class="anchor" aria-label="anchor" href="#known-gaps-as-of-2026-09-22-measured"></a>
+</h3>
+<p>The four gaps previously listed here were written before any log data was measured. A full 30-day collection across all logging buckets (2026-09-22) resolved or invalidated all of them.</p>
+<ol style="list-style-type: decimal">
+<li><p>Anonymous fingerprinting is coarse — still true, and now known not to matter. The <code>coridata-anon-{ipHash}</code> fingerprint is a SHA-256 of the source IP, and the plaintext <code>remoteip</code> sits on the same access-log line. Verified: <code>sha256("71.166.37.202")[0:8]</code> is exactly the observed <code>56fbb548</code>. The hash is a lossy copy of a field already in the record, so improving it adds nothing that querying <code>remoteip</code> does not already give.</p></li>
+<li><p>Internal callers aren’t tagged — still true, and likewise moot. Buckets map 1:1 to packages, so the <code>sourcebucket</code> partition key already answers “which package.” Vended traffic is 209 of 2,073,509 requests over 30 days (one in 9,921); 91.98% of requests arrive with no credential at all and no tagging scheme can ever reach them.</p></li>
+<li><p>No pre-aggregated log data — the “~30 minutes for 7 days” figure was a substantial understatement. A 30-day parse of raw objects took 93 minutes, 85 of them on <code>cori.data.fcc</code> alone. The cost is log OBJECT COUNT (~1M/month at ~4 KB each), not data volume. Resolved by querying the partition-projected Athena table instead of raw objects.</p></li>
+<li><p><del>No Athena table</del> — false when written. <code>src/athena/create_table.sql</code> and <code>reports.sql</code> already existed. The real defects were that the deployed table’s <code>projection.sourcebucket.values</code> had drifted from the on-disk file (deployed still listed the deleted <code>cori.data.zip</code> and omitted <code>cori.data.bfs</code>/<code>cori.data.hu</code>), and that <code>cori.data.bfs</code> and <code>cori.data.hu</code> had server access logging switched off entirely. Both fixed 2026-09-22.</p></li>
+</ol>
+</div>
+<div class="section level3">
+<h3 id="a-measurement-caveat-that-supersedes-earlier-request-counts">A measurement caveat that supersedes earlier request counts<a class="anchor" aria-label="anchor" href="#a-measurement-caveat-that-supersedes-earlier-request-counts"></a>
+</h3>
+<p><code>COUNT(*)</code> over these logs counts S3 API calls, not downloads. 99.31% of <code>cori.data.fcc</code>’s anonymous GETs are HTTP 206 range reads, because DuckDB/httpfs reads parquet in ranges — 1,931,764 API calls against 13,563 distinct objects, a 142x inflation. Other buckets are unaffected. Use <code>COUNT(DISTINCT key)</code> and <code>SUM(bytessent)</code> as usage measures. The concentration conclusion survives the correction: fcc leads on all three metrics.</p>
+</div>
+<div class="section level3">
+<h3 id="next-steps">Next steps<a class="anchor" aria-label="anchor" href="#next-steps"></a>
+</h3>
+<p>See <code>CLOSE_THE_GAP.md</code> in this repository for the full gap analysis and implementation plan.</p>
+</div>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="license">
