@@ -53,7 +53,7 @@ Depends:
   cori.data.s3,
   ruraldefinitions
 Remotes:
-  DyfanJones/noctua,
+  DyfanJones/noctua@v2.6.3,
   ruralinnovation/cori.charts,
   ruralinnovation/cori.data.bds,
   ruralinnovation/cori.data.bfs,
@@ -74,6 +74,7 @@ Suggests:
   knitr,
   magick,
   noctua,
+  quarto,
   ragg,
   remotes,
   rmarkdown,
