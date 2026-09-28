@@ -65,12 +65,14 @@ Remotes:
   ruralinnovation/ruraldefinitions
 Suggests:
   cori.charts,
+  DBI,
   dplyr,
   ggbeeswarm,
   ggplot2,
   here,
   knitr,
   magick,
+  noctua,
   ragg,
   remotes,
   rmarkdown,

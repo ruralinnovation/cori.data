@@ -31,7 +31,7 @@
     "outputs": "aws cloudformation describe-stacks --stack-name CoriDataVendCredentials --region us-east-1 --query \"Stacks[0].Outputs[].{Output:OutputKey,Value:OutputValue}\" --output table",
     "destroy": "cdk destroy",
     "test": "Rscript -e \"devtools::test()\"",
-    "test:env": "env -u AWS_ACCESS_KEY_ID -u AWS_SECRET_ACCESS_KEY -u AWS_SESSION_TOKEN     AWS_SHARED_CREDENTIALS_FILE=/dev/null AWS_CONFIG_FILE=/dev/null && HOME=/tmp/fake_home  R",
+    "test:env": "mkdir /tmp/fake_home && env -u AWS_ACCESS_KEY_ID -u AWS_SECRET_ACCESS_KEY -u AWS_SESSION_TOKEN     AWS_SHARED_CREDENTIALS_FILE=/dev/null AWS_CONFIG_FILE=/dev/null && HOME=/tmp/fake_home  R",
     "typecheck": "tsc --noEmit"
   }
 }

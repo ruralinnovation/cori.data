@@ -17,7 +17,20 @@
 -- time in reports.sql via TRY_CAST, which also absorbs the literal "-"
 -- S3 writes for "not applicable."
 
-CREATE EXTERNAL TABLE IF NOT EXISTS s3_access_logs (
+-- INVARIANT: 'projection.sourcebucket.values' below is ALLOWED_BUCKETS from
+-- src/lib/vend-credentials-stack.ts MINUS 'cori.data.verse' (which is the log
+-- DESTINATION, not a logged source). This is the same rule
+-- src/scripts/enable-bucket-logging.sh:40-43 implements when it decides which
+-- buckets to turn logging on for. The enum has drifted from that list twice --
+-- cori.data.bfs and cori.data.hu were added to ALLOWED_BUCKETS and never here,
+-- so their logs landed in a prefix the table could not project. When you add a
+-- bucket there, add it here, and re-run alter_table_projection.sql.
+--
+-- NOTE: CREATE EXTERNAL TABLE IF NOT EXISTS silently no-ops against an existing
+-- table, so editing the enum in this file changes NOTHING on a deployed table.
+-- alter_table_projection.sql is what actually applies a changed enum.
+
+CREATE EXTERNAL TABLE IF NOT EXISTS cori_data_monitoring.s3_access_logs (
   bucketowner       STRING,
   bucket_name       STRING,
   requestdatetime   STRING,
@@ -61,7 +74,7 @@ LOCATION 's3://cori.data.verse/logs/312512371189/us-east-1/'
 TBLPROPERTIES (
   'projection.enabled'             = 'true',
   'projection.sourcebucket.type'   = 'enum',
-  'projection.sourcebucket.values' = 'cori.data.bds,cori.data.bps,cori.data.census,cori.data.fcc,cori.data.ipeds,cori.data.patents,cori.data.pep,cori.data.qcew,cori.data.vacancy,ruraldefinitions',
+  'projection.sourcebucket.values' = 'cori.data.bds,cori.data.bfs,cori.data.bps,cori.data.census,cori.data.fcc,cori.data.hu,cori.data.ipeds,cori.data.patents,cori.data.pep,cori.data.qcew,cori.data.vacancy,ruraldefinitions',
   'projection.year.type'           = 'integer',
   'projection.year.range'          = '2026,2032',
   'projection.month.type'          = 'integer',

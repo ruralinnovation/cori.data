@@ -51,6 +51,24 @@ function buildSessionPolicy(bucket: string): string {
 // Derive caller type and a stable identifier from the request.
 // Tagged callers pass an explicit tag; anonymous callers get an IP-based
 // fingerprint that allows grouping repeat callers without identification.
+// DO NOT add time-bucketing to the anonymous hash below.
+//
+// The ipHash is deliberately a stable, un-bucketed sha256(sourceIp). Folding a
+// time bucket into it (e.g. `${sourceIp}|${Math.floor(now / FOUR_HOURS)}`) was
+// proposed and rejected on evidence: measured over 30 days, the single hash
+// 56fbb548 groups one consumer across 3 buckets and 11 days. A 4-hour bucket
+// would shatter that into up to 66 distinct callerIds, destroying the only
+// grouping the session name provides, and the distortion is linear in window
+// width so no post-hoc correction recovers it.
+//
+// Note also that the fingerprint is largely redundant: the plaintext remoteip
+// appears on the same S3 access-log line as this session name, so any analysis
+// should prefer remoteip directly. Salting this hash would protect nothing for
+// the same reason. Nothing here should be presented as identity -- callerTag is
+// a client-supplied, unvalidated query parameter on a public endpoint, so it is
+// a usage label at best.
+//
+// See ~/.claude/plans/want-me-to-tender-swan.md for the measurements.
 function deriveCallerType(callerTag?: string, sourceIp?: string): {
   callerType: "tagged" | "anonymous";
   callerId: string;
