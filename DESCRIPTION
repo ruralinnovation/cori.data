@@ -53,6 +53,7 @@ Depends:
   cori.data.s3,
   ruraldefinitions
 Remotes:
+  DyfanJones/noctua,
   ruralinnovation/cori.charts,
   ruralinnovation/cori.data.bds,
   ruralinnovation/cori.data.bfs,
