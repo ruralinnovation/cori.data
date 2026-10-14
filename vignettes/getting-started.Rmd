@@ -40,6 +40,7 @@ runs across every package.
 | `cori.data.bps` | Building permits (Census BPS) | county, metro | 1980–present |
 | `cori.data.hu` | Housing units (Census HU) | county, state, nation | 2000–present |
 | `cori.data.fcc` | Broadband coverage (FCC NBM) | county | 2023–present |
+| `cori.data.ipeds` | Higher education (NCES IPEDS) | county, institution | 2010–present |
 | `ruraldefinitions` | Rural classifications | county | multiple vintages |
 
 ## A consistent interface

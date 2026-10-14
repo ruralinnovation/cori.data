@@ -43,6 +43,7 @@ cori.data::install_data_packages()
 | [cori.data.bps](https://github.com/ruralinnovation/cori.data.bps) | Building permits ([Census BPS](https://www.census.gov/construction/bps/)) | county, state, nation | 2000–present |
 | [cori.data.hu](https://github.com/ruralinnovation/cori.data.hu) | Housing units ([Census HU](https://www.census.gov/programs-surveys/popest.html)) | county, state, nation | 2000–present |
 | [cori.data.fcc](https://github.com/ruralinnovation/cori.data.fcc) | Broadband coverage ([FCC NBM](https://broadbandmap.fcc.gov/)) | county | 2023–present |
+| [cori.data.ipeds](https://github.com/ruralinnovation/cori.data.ipeds) | Higher education ([NCES IPEDS](https://nces.ed.gov/ipeds/)) | county, institution | 2010–present |
 | [ruraldefinitions](https://github.com/ruralinnovation/ruraldefinitions) | Rural classifications ([OMB](https://www.census.gov/programs-surveys/metro-micro.html), [USDA ERS](https://www.ers.usda.gov/topics/rural-economy-population/rural-classifications/), [NCHS](https://www.cdc.gov/nchs/data_access/urban_rural.htm)) | county | multiple vintages |
 
 ------------------------------------------------------------------------
@@ -202,6 +203,36 @@ toward national broadband deployment goals.
 >
 > Broadband availability data from the FCC BDC are in the public domain
 > (17 U.S.C. § 105).
+
+------------------------------------------------------------------------
+
+### NCES Integrated Postsecondary Education Data System (IPEDS)
+
+The Integrated Postsecondary Education Data System (IPEDS),
+administered by the National Center for Education Statistics, is the
+annual census of postsecondary institutions participating in federal
+student aid programs — roughly 6,000 colleges, universities and
+technical schools. Reporting is mandatory for participants, so IPEDS
+covers the universe of Title IV institutions rather than a sample. Data
+are collected through a set of component surveys covering institutional
+characteristics, completions, graduation rates, enrollment, finance and
+staffing, each released provisionally and then as a revised file the
+following year. Institution records carry address, sector, level and
+control, which allows awards and outcomes to be aggregated to counties.
+IPEDS is the standard source for degree production, institutional
+capacity and completion outcomes, and is used widely in workforce,
+economic development and education research.
+
+> The Center on Rural Innovation's curation of U.S. Department of
+> Education, National Center for Education Statistics, *Integrated
+> Postsecondary Education Data System*.
+> <https://nces.ed.gov/ipeds/>
+>
+> IPEDS data are in the public domain as a work of the United States
+> government (17 U.S.C. § 105).
+>
+> This product uses IPEDS data retrieved from NCES but is not endorsed or
+> certified by NCES or the U.S. Department of Education.
 
 ------------------------------------------------------------------------
 

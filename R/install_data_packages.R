@@ -3,8 +3,9 @@
 #' Installs the `cori.data.*` packages that provide read/write access to
 #' specific public data sources on top of `cori.data`: Business Dynamics
 #' Statistics, Business Formation Statistics, Building Permits Survey, FCC
-#' broadband deployment data, Housing Unit estimates, Population Estimates,
-#' and Quarterly Census of Employment and Wages.
+#' broadband deployment data, Housing Unit estimates, the Integrated
+#' Postsecondary Education Data System, Population Estimates, and Quarterly
+#' Census of Employment and Wages.
 #'
 #' These are declared in `Suggests`, not `Imports`/`Depends`, because most of
 #' them already depend on `cori.data` (for [connect_to_s3()]) -- listing them
@@ -14,7 +15,7 @@
 #' to pull in the rest of the suite.
 #'
 #' @param packages Character vector of package names to install. Default:
-#'   all seven `cori.data.*` companion packages.
+#'   all eight `cori.data.*` companion packages, plus `ruraldefinitions`.
 #' @param ... Additional arguments passed to `remotes::install_github()`.
 #'
 #' @return Invisibly, the character vector of packages installed.
@@ -34,6 +35,7 @@ install_data_packages <- function(packages = c(
                                     "cori.data.bps",
                                     "cori.data.fcc",
                                     "cori.data.hu",
+                                    "cori.data.ipeds",
                                     "cori.data.pep",
                                     "cori.data.qcew",
                                     "ruraldefinitions"

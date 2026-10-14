@@ -49,6 +49,17 @@ reference:
   - cori.data.hu::get_housing_units
   - cori.data.hu::get_hu_codebook
 
+- title: Higher Education (IPEDS)
+  desc: Institutions, degrees, completers, and graduation rates from NCES IPEDS (2010-present)
+  contents:
+  - cori.data.ipeds::get_institutions
+  - cori.data.ipeds::get_degrees
+  - cori.data.ipeds::get_completers
+  - cori.data.ipeds::get_graduation_rates
+  - cori.data.ipeds::get_ipeds
+  - cori.data.ipeds::get_ipeds_codebook
+  - cori.data.ipeds::get_cip_soc_crosswalk
+
 - title: Population Estimates (PEP)
   desc: Population and components of change from Census PEP (2000-present)
   contents:
