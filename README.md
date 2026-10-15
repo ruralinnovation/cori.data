@@ -209,23 +209,25 @@ toward national broadband deployment goals.
 ### NCES Integrated Postsecondary Education Data System (IPEDS)
 
 The Integrated Postsecondary Education Data System (IPEDS),
-administered by the National Center for Education Statistics, is the
-annual census of postsecondary institutions participating in federal
-student aid programs — roughly 6,000 colleges, universities and
-technical schools. Reporting is mandatory for participants, so IPEDS
-covers the universe of Title IV institutions rather than a sample. Data
-are collected through a set of component surveys covering institutional
-characteristics, completions, graduation rates, enrollment, finance and
-staffing, each released provisionally and then as a revised file the
-following year. Institution records carry address, sector, level and
-control, which allows awards and outcomes to be aggregated to counties.
-IPEDS is the standard source for degree production, institutional
-capacity and completion outcomes, and is used widely in workforce,
+administered by the National Center for Education Statistics (NCES), is
+the annual census of postsecondary institutions participating in
+federal student aid programs (Title IV) — roughly 6,000 colleges,
+universities and technical schools. Reporting is mandatory for
+participants, so IPEDS covers the universe of Title IV institutions
+rather than a sample. Data are collected through a set of component
+surveys, including institutional characteristics, completions,
+graduation rates, enrollment, finance and staffing, each released
+provisionally and then as a revised file the following year.
+Institution records include each institution's address and county,
+along with its sector, level and control, which allows awards and
+outcomes to be aggregated to counties and broken out by institution
+type. IPEDS is the standard source for degree production, institutional
+capacity and completion outcomes, and is widely used in workforce,
 economic development and education research.
 
 > The Center on Rural Innovation's curation of U.S. Department of
 > Education, National Center for Education Statistics, *Integrated
-> Postsecondary Education Data System*.
+> Postsecondary Education Data System (IPEDS)*.
 > <https://nces.ed.gov/ipeds/>
 >
 > IPEDS data are in the public domain as a work of the United States
