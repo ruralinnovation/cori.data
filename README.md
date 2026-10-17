@@ -22,9 +22,11 @@ Pull requests, issue reports, and feature requests are all welcome.
 
 Install `cori.data` and all companion data packages in one call:
 
+> Note: We recommend `force = TRUE` because it forces the `cori.data` install process to download the latest version of each of the child/companion packages, which avoids a stale or half-updated install when the companion packages have coordinated changes.
+
 ``` r
 # install.packages("devtools")
-remotes::install_github("ruralinnovation/cori.data")
+remotes::install_github("ruralinnovation/cori.data", force = TRUE)
 
 # Install (or update) all cori.data.* companion packages
 cori.data::install_data_packages()
@@ -42,6 +44,7 @@ cori.data::install_data_packages()
 | [cori.data.bfs](https://github.com/ruralinnovation/cori.data.bfs) | Business applications ([Census BFS](https://www.census.gov/programs-surveys/bfs.html)) | county, state, nation | 2004–present |
 | [cori.data.bps](https://github.com/ruralinnovation/cori.data.bps) | Building permits ([Census BPS](https://www.census.gov/construction/bps/)) | county, state, nation | 2000–present |
 | [cori.data.hu](https://github.com/ruralinnovation/cori.data.hu) | Housing units ([Census HU](https://www.census.gov/programs-surveys/popest.html)) | county, state, nation | 2000–present |
+| [cori.data.ipeds](https://github.com/ruralinnovation/cori.data.ipeds) | Postsecondary education ([NCES IPEDS](https://nces.ed.gov/ipeds/)) | institution, county | 2010–present |
 | [cori.data.fcc](https://github.com/ruralinnovation/cori.data.fcc) | Broadband coverage ([FCC NBM](https://broadbandmap.fcc.gov/)) | county | 2023–present |
 | [ruraldefinitions](https://github.com/ruralinnovation/ruraldefinitions) | Rural classifications ([OMB](https://www.census.gov/programs-surveys/metro-micro.html), [USDA ERS](https://www.ers.usda.gov/topics/rural-economy-population/rural-classifications/), [NCHS](https://www.cdc.gov/nchs/data_access/urban_rural.htm)) | county | multiple vintages |
 
@@ -379,6 +382,10 @@ Full terms of service for each provider:
     Service](https://www.bls.gov/developers/termsOfService.htm)
 -   [FCC National Broadband Map — License and
     Attribution](https://broadbandmap.fcc.gov/about)
+
+## Artifcial Intelligence (AI) disclosure
+
+The `cori.data` package ecosystem was developed with assistance from generative AI tools, including Anthropic's Claude (via Claude Code), which was used to help write and refactor R code, documentation, and tests. All AI-assisted output was reviewed, tested, and edited by CORI staff, who remain responsible for the accuracy of the code, documentation, and the data these packages return.
 
 ------------------------------------------------------------------------
 

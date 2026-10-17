@@ -6,13 +6,14 @@
 \usage{
 install_data_packages(
   packages = c("cori.data.bds", "cori.data.bfs", "cori.data.bps", "cori.data.fcc",
-    "cori.data.hu", "cori.data.pep", "cori.data.qcew", "ruraldefinitions"),
+    "cori.data.hu", "cori.data.ipeds", "cori.data.pep", "cori.data.qcew",
+    "ruraldefinitions"),
   ...
 )
 }
 \arguments{
 \item{packages}{Character vector of package names to install. Default:
-all seven \verb{cori.data.*} companion packages.}
+all of the \verb{cori.data.*} companion packages (plus \code{ruraldefinitions}).}
 
 \item{...}{Additional arguments passed to \code{remotes::install_github()}.}
 }
@@ -23,8 +24,9 @@ Invisibly, the character vector of packages installed.
 Installs the \verb{cori.data.*} packages that provide read/write access to
 specific public data sources on top of \code{cori.data}: Business Dynamics
 Statistics, Business Formation Statistics, Building Permits Survey, FCC
-broadband deployment data, Housing Unit estimates, Population Estimates,
-and Quarterly Census of Employment and Wages.
+broadband deployment data, Housing Unit estimates, IPEDS postsecondary
+education data, Population Estimates, and Quarterly Census of Employment
+and Wages.
 }
 \details{
 These are declared in \code{Suggests}, not \code{Imports}/\code{Depends}, because most of
