@@ -34,10 +34,15 @@ Pull requests, issue reports, and feature requests are all welcome.
 
 Install `cori.data` and all companion data packages in one call:
 
+> Note: We recommend `force = TRUE` because it forces the `cori.data`
+> install process to download the latest version of each of the
+> child/companion packages, which avoids a stale or half-updated install
+> when the companion packages have coordinated changes.
+
 ``` r
 
 # install.packages("devtools")
-remotes::install_github("ruralinnovation/cori.data")
+remotes::install_github("ruralinnovation/cori.data", force = TRUE)
 
 # Install (or update) all cori.data.* companion packages
 cori.data::install_data_packages()
@@ -55,7 +60,9 @@ cori.data::install_data_packages()
 | [cori.data.bfs](https://github.com/ruralinnovation/cori.data.bfs) | Business applications ([Census BFS](https://www.census.gov/programs-surveys/bfs.html)) | county, state, nation | 2004–present |
 | [cori.data.bps](https://github.com/ruralinnovation/cori.data.bps) | Building permits ([Census BPS](https://www.census.gov/construction/bps/)) | county, state, nation | 2000–present |
 | [cori.data.hu](https://github.com/ruralinnovation/cori.data.hu) | Housing units ([Census HU](https://www.census.gov/programs-surveys/popest.html)) | county, state, nation | 2000–present |
+| [cori.data.ipeds](https://github.com/ruralinnovation/cori.data.ipeds) | Postsecondary education ([NCES IPEDS](https://nces.ed.gov/ipeds/)) | institution, county | 2010–present |
 | [cori.data.fcc](https://github.com/ruralinnovation/cori.data.fcc) | Broadband coverage ([FCC NBM](https://broadbandmap.fcc.gov/)) | county | 2023–present |
+| [cori.data.ipeds](https://github.com/ruralinnovation/cori.data.ipeds) | Higher education ([NCES IPEDS](https://nces.ed.gov/ipeds/)) | county, institution | 2010–present |
 | [ruraldefinitions](https://github.com/ruralinnovation/ruraldefinitions) | Rural classifications ([OMB](https://www.census.gov/programs-surveys/metro-micro.html), [USDA ERS](https://www.ers.usda.gov/topics/rural-economy-population/rural-classifications/), [NCHS](https://www.cdc.gov/nchs/data_access/urban_rural.htm)) | county | multiple vintages |
 
 ------------------------------------------------------------------------
@@ -215,6 +222,38 @@ toward national broadband deployment goals.
 >
 > Broadband availability data from the FCC BDC are in the public domain
 > (17 U.S.C. § 105).
+
+------------------------------------------------------------------------
+
+### NCES Integrated Postsecondary Education Data System (IPEDS)
+
+The Integrated Postsecondary Education Data System (IPEDS), administered
+by the National Center for Education Statistics (NCES), is the annual
+census of postsecondary institutions participating in federal student
+aid programs (Title IV) — roughly 6,000 colleges, universities and
+technical schools. Reporting is mandatory for participants, so IPEDS
+covers the universe of Title IV institutions rather than a sample. Data
+are collected through a set of component surveys, including
+institutional characteristics, completions, graduation rates,
+enrollment, finance and staffing, each released provisionally and then
+as a revised file the following year. Institution records include each
+institution’s address and county, along with its sector, level and
+control, which allows awards and outcomes to be aggregated to counties
+and broken out by institution type. IPEDS is the standard source for
+degree production, institutional capacity and completion outcomes, and
+is widely used in workforce, economic development and education
+research.
+
+> The Center on Rural Innovation’s curation of U.S. Department of
+> Education, National Center for Education Statistics, *Integrated
+> Postsecondary Education Data System (IPEDS)*.
+> <https://nces.ed.gov/ipeds/>
+>
+> IPEDS data are in the public domain as a work of the United States
+> government (17 U.S.C. § 105).
+>
+> This product uses IPEDS data retrieved from NCES but is not endorsed
+> or certified by NCES or the U.S. Department of Education.
 
 ------------------------------------------------------------------------
 
@@ -397,6 +436,15 @@ Full terms of service for each provider:
 - [FCC National Broadband Map — License and
   Attribution](https://broadbandmap.fcc.gov/about)
 
+## Artifcial Intelligence (AI) disclosure
+
+The `cori.data` package ecosystem was developed with assistance from
+generative AI tools, including Anthropic’s Claude (via Claude Code),
+which was used to help write and refactor R code, documentation, and
+tests. All AI-assisted output was reviewed, tested, and edited by CORI
+staff, who remain responsible for the accuracy of the code,
+documentation, and the data these packages return.
+
 ------------------------------------------------------------------------
 
 ## Usage monitoring and credential tagging
@@ -557,6 +605,26 @@ Housing stock estimates from Census PEP (2000-present)
   : Get Census Bureau housing unit estimates (from cori.data.hu)
 - [`get_hu_codebook()`](https://ruralinnovation.github.io/cori.data.hu/reference/get_hu_codebook.html)
   : Get the housing unit variable codebook (from cori.data.hu)
+
+## Higher Education (IPEDS)
+
+Institutions, degrees, completers, and graduation rates from NCES IPEDS
+(2010-present)
+
+- [`get_institutions()`](https://ruralinnovation.github.io/cori.data.ipeds/reference/get_institutions.html)
+  : Get higher education institutions (from cori.data.ipeds)
+- [`get_degrees()`](https://ruralinnovation.github.io/cori.data.ipeds/reference/get_degrees.html)
+  : Get degrees conferred (from cori.data.ipeds)
+- [`get_completers()`](https://ruralinnovation.github.io/cori.data.ipeds/reference/get_completers.html)
+  : Get students completing degrees (from cori.data.ipeds)
+- [`get_graduation_rates()`](https://ruralinnovation.github.io/cori.data.ipeds/reference/get_graduation_rates.html)
+  : Get graduation and transfer-out rates (from cori.data.ipeds)
+- [`get_ipeds()`](https://ruralinnovation.github.io/cori.data.ipeds/reference/get_ipeds.html)
+  : Get IPEDS data across surveys (from cori.data.ipeds)
+- [`get_ipeds_codebook()`](https://ruralinnovation.github.io/cori.data.ipeds/reference/get_ipeds_codebook.html)
+  : Get the cori.data.ipeds variable codebook (from cori.data.ipeds)
+- [`get_cip_soc_crosswalk()`](https://ruralinnovation.github.io/cori.data.ipeds/reference/get_cip_soc_crosswalk.html)
+  : Get the NCES CIP-to-SOC crosswalk (from cori.data.ipeds)
 
 ## Population Estimates (PEP)
 

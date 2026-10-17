@@ -44,6 +44,23 @@ con <- dbConnect(
     "s3://aws-athena-query-results-312512371189-us-east-1/cori-data-monitoring/"
   )
 )
+
+report_Z <- dbGetQuery(con, "
+  SELECT
+      sourcebucket,
+      from_iso8601_date(year || '-' || month || '-' || day) AS day,
+      caller_class,
+      COUNT(*)                           AS api_calls,
+      COUNT_IF(httpstatus = '206')       AS range_calls,
+      COUNT(DISTINCT key)                AS distinct_objects,
+      COUNT(DISTINCT remoteip)           AS distinct_ips,
+      SUM(TRY_CAST(bytessent AS BIGINT)) AS bytes_sent
+  FROM cori_data_monitoring.s3_access_identified
+  WHERE sourcebucket LIKE 'cori.data.%'
+    AND (year || month || day) BETWEEN '20260923' AND '20260924'
+  GROUP BY 1, 2, 3
+  ORDER BY day, sourcebucket, bytes_sent DESC
+")
 ```
 
 The `s3_staging_dir` must not be a public bucket — result sets contain

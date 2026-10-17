@@ -11,8 +11,8 @@
 <script src="deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="CORI functions for exploring rural data">
-<meta name="description" content="CORI meta-package that installs and attaches all cori.data.* companion packages in a single call. Loading cori.data makes functions from cori.data.qcew, cori.data.bds, cori.data.pep, cori.data.bfs, cori.data.bps, cori.data.hu, cori.data.fcc, cori.data.s3, and ruraldefinitions immediately available.">
-<meta property="og:description" content="CORI meta-package that installs and attaches all cori.data.* companion packages in a single call. Loading cori.data makes functions from cori.data.qcew, cori.data.bds, cori.data.pep, cori.data.bfs, cori.data.bps, cori.data.hu, cori.data.fcc, cori.data.s3, and ruraldefinitions immediately available.">
+<meta name="description" content="CORI meta-package that installs and attaches all cori.data.* companion packages in a single call. Loading cori.data makes functions from cori.data.qcew, cori.data.bds, cori.data.pep, cori.data.bfs, cori.data.bps, cori.data.hu, cori.data.fcc, cori.data.ipeds, cori.data.s3, and ruraldefinitions immediately available.">
+<meta property="og:description" content="CORI meta-package that installs and attaches all cori.data.* companion packages in a single call. Loading cori.data makes functions from cori.data.qcew, cori.data.bds, cori.data.pep, cori.data.bfs, cori.data.bps, cori.data.hu, cori.data.fcc, cori.data.ipeds, cori.data.s3, and ruraldefinitions immediately available.">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -71,9 +71,12 @@
 <h2 id="getting-started">Getting started<a class="anchor" aria-label="anchor" href="#getting-started"></a>
 </h2>
 <p>Install <code>cori.data</code> and all companion data packages in one call:</p>
+<blockquote>
+<p>Note: We recommend <code>force = TRUE</code> because it forces the <code>cori.data</code> install process to download the latest version of each of the child/companion packages, which avoids a stale or half-updated install when the companion packages have coordinated changes.</p>
+</blockquote>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"ruralinnovation/cori.data"</span><span class="op">)</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"ruralinnovation/cori.data"</span>, force <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Install (or update) all cori.data.* companion packages</span></span>
 <span><span class="fu">cori.data</span><span class="fu">::</span><span class="fu"><a href="reference/install_data_packages.html">install_data_packages</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
@@ -133,10 +136,22 @@
 <td>2000–present</td>
 </tr>
 <tr>
+<td><a href="https://github.com/ruralinnovation/cori.data.ipeds" class="external-link">cori.data.ipeds</a></td>
+<td>Postsecondary education (<a href="https://nces.ed.gov/ipeds/" class="external-link">NCES IPEDS</a>)</td>
+<td>institution, county</td>
+<td>2010–present</td>
+</tr>
+<tr>
 <td><a href="https://github.com/ruralinnovation/cori.data.fcc" class="external-link">cori.data.fcc</a></td>
 <td>Broadband coverage (<a href="https://broadbandmap.fcc.gov/" class="external-link">FCC NBM</a>)</td>
 <td>county</td>
 <td>2023–present</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ruralinnovation/cori.data.ipeds" class="external-link">cori.data.ipeds</a></td>
+<td>Higher education (<a href="https://nces.ed.gov/ipeds/" class="external-link">NCES IPEDS</a>)</td>
+<td>county, institution</td>
+<td>2010–present</td>
 </tr>
 <tr>
 <td><a href="https://github.com/ruralinnovation/ruraldefinitions" class="external-link">ruraldefinitions</a></td>
@@ -218,6 +233,17 @@
 <blockquote>
 <p>The Center on Rural Innovation’s curation of Federal Communications Commission, <em>National Broadband Map — Broadband Data Collection</em>. <a href="https://broadbandmap.fcc.gov/" class="external-link uri">https://broadbandmap.fcc.gov/</a></p>
 <p>Broadband availability data from the FCC BDC are in the public domain (17 U.S.C. § 105).</p>
+</blockquote>
+<hr>
+</div>
+<div class="section level3">
+<h3 id="nces-integrated-postsecondary-education-data-system-ipeds">NCES Integrated Postsecondary Education Data System (IPEDS)<a class="anchor" aria-label="anchor" href="#nces-integrated-postsecondary-education-data-system-ipeds"></a>
+</h3>
+<p>The Integrated Postsecondary Education Data System (IPEDS), administered by the National Center for Education Statistics (NCES), is the annual census of postsecondary institutions participating in federal student aid programs (Title IV) — roughly 6,000 colleges, universities and technical schools. Reporting is mandatory for participants, so IPEDS covers the universe of Title IV institutions rather than a sample. Data are collected through a set of component surveys, including institutional characteristics, completions, graduation rates, enrollment, finance and staffing, each released provisionally and then as a revised file the following year. Institution records include each institution’s address and county, along with its sector, level and control, which allows awards and outcomes to be aggregated to counties and broken out by institution type. IPEDS is the standard source for degree production, institutional capacity and completion outcomes, and is widely used in workforce, economic development and education research.</p>
+<blockquote>
+<p>The Center on Rural Innovation’s curation of U.S. Department of Education, National Center for Education Statistics, <em>Integrated Postsecondary Education Data System (IPEDS)</em>. <a href="https://nces.ed.gov/ipeds/" class="external-link uri">https://nces.ed.gov/ipeds/</a></p>
+<p>IPEDS data are in the public domain as a work of the United States government (17 U.S.C. § 105).</p>
+<p>This product uses IPEDS data retrieved from NCES but is not endorsed or certified by NCES or the U.S. Department of Education.</p>
 </blockquote>
 <hr>
 </div>
@@ -342,6 +368,11 @@
 <li><a href="https://www.bls.gov/developers/termsOfService.htm" class="external-link">BLS Terms of Service</a></li>
 <li><a href="https://broadbandmap.fcc.gov/about" class="external-link">FCC National Broadband Map — License and Attribution</a></li>
 </ul>
+</div>
+<div class="section level2">
+<h2 id="artifcial-intelligence-ai-disclosure">Artifcial Intelligence (AI) disclosure<a class="anchor" aria-label="anchor" href="#artifcial-intelligence-ai-disclosure"></a>
+</h2>
+<p>The <code>cori.data</code> package ecosystem was developed with assistance from generative AI tools, including Anthropic’s Claude (via Claude Code), which was used to help write and refactor R code, documentation, and tests. All AI-assisted output was reviewed, tested, and edited by CORI staff, who remain responsible for the accuracy of the code, documentation, and the data these packages return.</p>
 <hr>
 </div>
 <div class="section level2">

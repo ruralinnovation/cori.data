@@ -94,7 +94,24 @@
 <span>    <span class="st">"CORI_ATHENA_STAGING"</span>,</span>
 <span>    <span class="st">"s3://aws-athena-query-results-312512371189-us-east-1/cori-data-monitoring/"</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">report_Z</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dbi.r-dbi.org/reference/dbGetQuery.html" class="external-link">dbGetQuery</a></span><span class="op">(</span><span class="va">con</span>, <span class="st">"</span></span>
+<span><span class="st">  SELECT</span></span>
+<span><span class="st">      sourcebucket,</span></span>
+<span><span class="st">      from_iso8601_date(year || '-' || month || '-' || day) AS day,</span></span>
+<span><span class="st">      caller_class,</span></span>
+<span><span class="st">      COUNT(*)                           AS api_calls,</span></span>
+<span><span class="st">      COUNT_IF(httpstatus = '206')       AS range_calls,</span></span>
+<span><span class="st">      COUNT(DISTINCT key)                AS distinct_objects,</span></span>
+<span><span class="st">      COUNT(DISTINCT remoteip)           AS distinct_ips,</span></span>
+<span><span class="st">      SUM(TRY_CAST(bytessent AS BIGINT)) AS bytes_sent</span></span>
+<span><span class="st">  FROM cori_data_monitoring.s3_access_identified</span></span>
+<span><span class="st">  WHERE sourcebucket LIKE 'cori.data.%'</span></span>
+<span><span class="st">    AND (year || month || day) BETWEEN '20260923' AND '20260924'</span></span>
+<span><span class="st">  GROUP BY 1, 2, 3</span></span>
+<span><span class="st">  ORDER BY day, sourcebucket, bytes_sent DESC</span></span>
+<span><span class="st">"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <p>The <code>s3_staging_dir</code> must not be a public bucket — result sets contain source IPs and full staff IAM ARNs. The default above is the account’s private Athena results bucket.</p>
 </section><section class="level3"><h3 id="report-1-requests-and-bytes-by-bucket-and-day">Report 1 — Requests and bytes, by bucket and day<a class="anchor" aria-label="anchor" href="#report-1-requests-and-bytes-by-bucket-and-day"></a>

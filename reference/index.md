@@ -76,6 +76,26 @@ Housing stock estimates from Census PEP (2000-present)
 - [`get_hu_codebook()`](https://ruralinnovation.github.io/cori.data.hu/reference/get_hu_codebook.html)
   : Get the housing unit variable codebook (from cori.data.hu)
 
+## Higher Education (IPEDS)
+
+Institutions, degrees, completers, and graduation rates from NCES IPEDS
+(2010-present)
+
+- [`get_institutions()`](https://ruralinnovation.github.io/cori.data.ipeds/reference/get_institutions.html)
+  : Get higher education institutions (from cori.data.ipeds)
+- [`get_degrees()`](https://ruralinnovation.github.io/cori.data.ipeds/reference/get_degrees.html)
+  : Get degrees conferred (from cori.data.ipeds)
+- [`get_completers()`](https://ruralinnovation.github.io/cori.data.ipeds/reference/get_completers.html)
+  : Get students completing degrees (from cori.data.ipeds)
+- [`get_graduation_rates()`](https://ruralinnovation.github.io/cori.data.ipeds/reference/get_graduation_rates.html)
+  : Get graduation and transfer-out rates (from cori.data.ipeds)
+- [`get_ipeds()`](https://ruralinnovation.github.io/cori.data.ipeds/reference/get_ipeds.html)
+  : Get IPEDS data across surveys (from cori.data.ipeds)
+- [`get_ipeds_codebook()`](https://ruralinnovation.github.io/cori.data.ipeds/reference/get_ipeds_codebook.html)
+  : Get the cori.data.ipeds variable codebook (from cori.data.ipeds)
+- [`get_cip_soc_crosswalk()`](https://ruralinnovation.github.io/cori.data.ipeds/reference/get_cip_soc_crosswalk.html)
+  : Get the NCES CIP-to-SOC crosswalk (from cori.data.ipeds)
+
 ## Population Estimates (PEP)
 
 Population and components of change from Census PEP (2000-present)

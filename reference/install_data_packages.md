@@ -3,15 +3,17 @@
 Installs the `cori.data.*` packages that provide read/write access to
 specific public data sources on top of `cori.data`: Business Dynamics
 Statistics, Business Formation Statistics, Building Permits Survey, FCC
-broadband deployment data, Housing Unit estimates, Population Estimates,
-and Quarterly Census of Employment and Wages.
+broadband deployment data, Housing Unit estimates, the Integrated
+Postsecondary Education Data System, Population Estimates, and Quarterly
+Census of Employment and Wages.
 
 ## Usage
 
 ``` r
 install_data_packages(
   packages = c("cori.data.bds", "cori.data.bfs", "cori.data.bps", "cori.data.fcc",
-    "cori.data.hu", "cori.data.pep", "cori.data.qcew", "ruraldefinitions"),
+    "cori.data.hu", "cori.data.ipeds", "cori.data.pep", "cori.data.qcew",
+    "ruraldefinitions"),
   ...
 )
 ```
@@ -20,8 +22,8 @@ install_data_packages(
 
 - packages:
 
-  Character vector of package names to install. Default: all seven
-  `cori.data.*` companion packages.
+  Character vector of package names to install. Default: all eight
+  `cori.data.*` companion packages, plus `ruraldefinitions`.
 
 - ...:
 
