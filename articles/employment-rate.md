@@ -115,16 +115,20 @@ fig_line <- trend |>
 fig_line
 ```
 
+![Line chart showing employment-weighted average employment rates for
+rural and nonrural counties from 2010 to
+2023](employment-rate_files/figure-html/line-chart-1.png)
+
 ## County map: where are employment rates lowest?
 
 ``` r
 
-counties_sf <- counties(year = 2024) |>
+counties_sf <- counties(year = 2024, progress_bar = FALSE) |>
   shift_geometry() |>
   select(geoid = GEOID) |> 
   filter( as.numeric(substr(geoid, 1, 2)) < 60 ) ## filter for US states
 
-states_sf <- states(year = 2024) |>
+states_sf <- states(year = 2024, progress_bar = FALSE) |>
   shift_geometry() |> 
   filter( as.numeric(GEOID) < 60 )
 
@@ -168,6 +172,9 @@ fig_map <- ggplot() +
 
 fig_map
 ```
+
+![Choropleth map of county-level employment rates across the United
+States, 2023](employment-rate_files/figure-html/map-1.png)
 
 ## What this analysis reveals
 

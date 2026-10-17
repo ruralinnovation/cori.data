@@ -38,7 +38,6 @@
     <li><a class="dropdown-item" href="../articles/getting-started.html">Getting Started with CORI Rural Data</a></li>
     <li><a class="dropdown-item" href="../articles/sector-analysis.html">Sector analysis: How rural economies differ</a></li>
     <li><a class="dropdown-item" href="../articles/tidy-data.html">Working with Tidy Data</a></li>
-    <li><a class="dropdown-item" href="../articles/usage-reports.html">S3 Usage Reports</a></li>
     <li><a class="dropdown-item" href="../articles/weighted-averages.html">Weighted Averages and agg_var</a></li>
   </ul>
 </li>
@@ -172,17 +171,18 @@ why this matters.</p>
 <span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="va">fig_line</span></span></code></pre></div>
+<p><img src="employment-rate_files/figure-html/line-chart-1.png" class="r-plt" alt="Line chart showing employment-weighted average employment rates for rural and nonrural counties from 2010 to 2023" width="3600"></p>
 </div>
 <div class="section level2">
 <h2 id="county-map-where-are-employment-rates-lowest">County map: where are employment rates lowest?<a class="anchor" aria-label="anchor" href="#county-map-where-are-employment-rates-lowest"></a>
 </h2>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">counties_sf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/tigris/man/counties.html" class="external-link">counties</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2024</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<code class="sourceCode R"><span><span class="va">counties_sf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/tigris/man/counties.html" class="external-link">counties</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2024</span>, progress_bar <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tigris/man/shift_geometry.html" class="external-link">shift_geometry</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span>geoid <span class="op">=</span> <span class="va">GEOID</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/substr.html" class="external-link">substr</a></span><span class="op">(</span><span class="va">geoid</span>, <span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">&lt;</span> <span class="fl">60</span> <span class="op">)</span> <span class="co">## filter for US states</span></span>
 <span></span>
-<span><span class="va">states_sf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/tigris/man/states.html" class="external-link">states</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2024</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span><span class="va">states_sf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/tigris/man/states.html" class="external-link">states</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fl">2024</span>, progress_bar <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/tigris/man/shift_geometry.html" class="external-link">shift_geometry</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">GEOID</span><span class="op">)</span> <span class="op">&lt;</span> <span class="fl">60</span> <span class="op">)</span></span>
 <span></span>
@@ -225,6 +225,7 @@ why this matters.</p>
 <span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="va">fig_map</span></span></code></pre></div>
+<p><img src="employment-rate_files/figure-html/map-1.png" class="r-plt" alt="Choropleth map of county-level employment rates across the United States, 2023" width="3600"></p>
 </div>
 <div class="section level2">
 <h2 id="what-this-analysis-reveals">What this analysis reveals<a class="anchor" aria-label="anchor" href="#what-this-analysis-reveals"></a>

@@ -55,7 +55,7 @@ across county FIPS codes using
 ``` r
 
 # Get all West Virginia county FIPS codes
-wv_counties <- counties(year = 2024) |>
+wv_counties <- counties(year = 2024, progress_bar = FALSE) |>
   filter(substr(GEOID, 1, 2) == "54") |>
   pull(GEOID)
 
@@ -69,17 +69,18 @@ broadband_wv  <- purrr::map_dfr(
     pct_100_20 = cnt_100_20 / cnt_total_locations,
     pct_fiber  = cnt_fiber_locations / cnt_total_locations
   )
+#> [1] "Downloading NBM data for WV to specified dir (or temp_dir)..."
 ```
 
 ## Map: broadband coverage in West Virginia
 
 ``` r
 
-wv_counties_sf <- counties( year = 2024) |>
+wv_counties_sf <- counties(year = 2024, progress_bar = FALSE) |>
   filter(substr(GEOID, 1, 2) == "54") |>
   left_join(broadband_wv, by = c("GEOID" = "geoid"))
 
-wv_state_sf <- states(year = 2024) |>
+wv_state_sf <- states(year = 2024, progress_bar = FALSE) |>
   filter(GEOID == "54")
 
 fig_map <- ggplot() +
@@ -115,6 +116,9 @@ fig_map <- ggplot() +
 
 fig_map
 ```
+
+![Choropleth map of 100/20 Mbps broadband coverage across West Virginia
+counties](broadband_files/figure-html/broadband-map-1.png)
 
 ## Connecting broadband to employment
 
@@ -186,7 +190,21 @@ wv_combined <- broadband_wv |>
     )
 
 fig_scatter
+#> Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+#> ℹ Please use `linewidth` instead.
+#> This warning is displayed once per session.
+#> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+#> generated.
+#> Warning: The following aesthetics were dropped during statistical transformation: size.
+#> ℹ This can happen when ggplot fails to infer the correct grouping structure in
+#>   the data.
+#> ℹ Did you forget to specify a `group` aesthetic or to convert a numerical
+#>   variable into a factor?
 ```
+
+![Scatter plot of broadband coverage vs employment rate for West
+Virginia counties, sized by total locations and colored by rural
+status](broadband_files/figure-html/broadband-scatter-1.png)
 
 ## A note on interpretation
 

@@ -68,6 +68,17 @@ bd_wide <- get_business_dynamics(geography = "county", years = 2022:2023) |>
 
 # Now: geoid | year | establishments | estab_entries | estab_entry_rate | ...
 glimpse(bd_wide)
+#> Rows: 6,288
+#> Columns: 9
+#> $ geoid            <chr> "01001", "01001", "01003", "01003", "01005", "01005",…
+#> $ year             <dbl> 2022, 2023, 2022, 2023, 2022, 2023, 2022, 2023, 2022,…
+#> $ estab_entries    <dbl> 82, 67, 711, 626, 37, 26, 35, 26, 84, 84, 9, 10, 28, …
+#> $ estab_entry_rate <dbl> 10.904, 8.679, 12.830, 10.904, 9.320, 6.607, 12.346, …
+#> $ estab_exit_rate  <dbl> 8.777, 5.829, 8.662, 7.908, 8.312, 9.403, 8.466, 6.14…
+#> $ estab_exits      <dbl> 66, 45, 480, 454, 33, 37, 24, 18, 51, 68, 10, 7, 21, …
+#> $ establishments   <dbl> 760, 783, 5657, 5827, 399, 388, 289, 297, 708, 724, 1…
+#> $ firm_deaths      <dbl> 46, 33, 327, 364, 20, 29, 16, 12, 40, 60, 7, 6, 12, 2…
+#> $ firms            <dbl> 704, 727, 4875, 5000, 360, 351, 262, 269, 654, 660, 9…
 ```
 
 The reverse — going from wide back to tidy — uses
@@ -104,6 +115,7 @@ combined <- inner_join(apps, permits, by = c("geoid", "year"))
 
 # Correlation between applications and permits
 cor(combined$applications, combined$permits, use = "complete.obs")
+#> [1] 0.7594486
 ```
 
 You can join any number of packages the same way. Here’s a three-way
@@ -201,6 +213,8 @@ get_business_dynamics(geography = "nation", years = 2000:2023) |>
     caption = "Source: CORI analysis of Census Bureau Business Dynamics Statistics"
   )
 ```
+
+![](tidy-data_files/figure-html/ggplot-1.png)
 
 ## Data sources
 

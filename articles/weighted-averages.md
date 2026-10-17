@@ -76,6 +76,11 @@ wages <- get_wage_salary(geography = "county", years = 2023) |>
 wages |>
   group_by(is_rural) |>
   summarize(avg_wage = mean(value, na.rm = TRUE))
+#> # A tibble: 2 × 2
+#>   is_rural avg_wage
+#>   <chr>       <dbl>
+#> 1 Nonrural   57135.
+#> 2 Rural      48629.
 ```
 
 This overstates wages in counties with large, high-paying employers (a
@@ -96,6 +101,11 @@ wages |>
     naive_avg    = mean(value, na.rm = TRUE),
     weighted_avg = weighted.mean(value, agg_var, na.rm = TRUE)
   )
+#> # A tibble: 2 × 3
+#>   is_rural naive_avg weighted_avg
+#>   <chr>        <dbl>        <dbl>
+#> 1 Nonrural    57135.       73467.
+#> 2 Rural       48629.       51020.
 ```
 
 ## Visualizing the difference
@@ -150,6 +160,14 @@ fig_bar <- wage_comparison |>
   )
 
 fig_bar
+```
+
+![Grouped bar chart comparing simple and employment-weighted average
+wages for rural and nonrural counties in
+2023](weighted-averages_files/figure-html/comparison-chart-1.png)
+
+``` r
+
 # save_plot(fig_bar, here::here("export/wage_weighted_comparison.png"))
 ```
 
