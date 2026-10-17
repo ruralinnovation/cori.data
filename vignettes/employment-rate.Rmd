@@ -1,6 +1,16 @@
 ---
 title: "Employment Rate: A Cross-Package Story"
 output: rmarkdown::html_vignette
+editor_options: 
+  markdown: 
+    wrap: 72
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: "#>"
+    dpi: 300
+    fig.width: 12
+    fig.height: 6
 vignette: >
   %\VignetteIndexEntry{Employment Rate: A Cross-Package Story}
   %\VignetteEngine{knitr::rmarkdown}
@@ -11,10 +21,11 @@ vignette: >
 knitr::opts_chunk$set(
   collapse   = TRUE,
   comment    = "#>",
-  eval       = FALSE,
-  fig.width  = 8.888889,
-  fig.height = 6.25,
-  dpi        = 300
+  eval       = TRUE,
+  message    = FALSE,
+  dpi        = 300,
+  fig.width  = 12,
+  fig.height = 6
 )
 ```
 
@@ -128,13 +139,13 @@ fig_line
 
 ## County map: where are employment rates lowest?
 
-```{r map, fig.alt = "Choropleth map of county-level employment rates across the United States, 2023"}
-counties_sf <- counties(year = 2024) |>
+```{r map, fig.height = 10, fig.alt = "Choropleth map of county-level employment rates across the United States, 2023"}
+counties_sf <- counties(year = 2024, progress_bar = FALSE) |>
   shift_geometry() |>
   select(geoid = GEOID) |> 
   filter( as.numeric(substr(geoid, 1, 2)) < 60 ) ## filter for US states
 
-states_sf <- states(year = 2024) |>
+states_sf <- states(year = 2024, progress_bar = FALSE) |>
   shift_geometry() |> 
   filter( as.numeric(GEOID) < 60 )
 

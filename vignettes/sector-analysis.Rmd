@@ -1,6 +1,16 @@
 ---
 title: "Sector analysis: How rural economies differ"
 output: rmarkdown::html_vignette
+editor_options: 
+  markdown: 
+    wrap: 72
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: "#>"
+    dpi: 300
+    fig.width: 12
+    fig.height: 6
 vignette: >
   %\VignetteIndexEntry{Sector analysis: How rural economies differ}
   %\VignetteEngine{knitr::rmarkdown}
@@ -11,10 +21,11 @@ vignette: >
 knitr::opts_chunk$set(
   collapse   = TRUE,
   comment    = "#>",
+  eval       = TRUE,
+  message    = FALSE,
   dpi        = 300,
-  fig.width = 12,
+  fig.width  = 12,
   fig.height = 6,
-  message = FALSE,
   warning = FALSE
 )
 ```

@@ -1,20 +1,28 @@
 ---
 title: "Getting Started with CORI Rural Data"
 output: rmarkdown::html_vignette
+editor_options: 
+  markdown: 
+    wrap: 72
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: "#>"
+    dpi: 300
+    fig.width: 12
+    fig.height: 6
 vignette: >
   %\VignetteIndexEntry{Getting Started with CORI Rural Data}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
-editor_options: 
-  markdown: 
-    wrap: 72
 ---
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment  = "#>",
-  eval     = FALSE
+  collapse   = TRUE,
+  comment    = "#>",
+  eval       = TRUE,
+  message    = FALSE
 )
 ```
 
@@ -65,6 +73,8 @@ get_business_dynamics(geography = "county", years = 2019:2023)
 
 # Filter to specific places with FIPS codes
 get_employment(geoids = c("33009", "54011", "30001"), years = 2019:2023)
+
+NULL
 ```
 
 All functions return **tidy (long) format** data: one row per
