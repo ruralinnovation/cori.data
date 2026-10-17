@@ -2,7 +2,7 @@
 title: "Sector analysis: How rural economies differ"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Sector Analysis: How Rural Economies Differ}
+  %\VignetteIndexEntry{Sector analysis: How rural economies differ}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
