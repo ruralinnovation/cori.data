@@ -114,6 +114,15 @@ export class VendCredentialsStack extends Stack {
       })
     );
 
+    // Everything that is not an S3 read is denied outright.
+    targetRole.addToPolicy(
+      new iam.PolicyStatement({
+        effect: iam.Effect.DENY,
+        notActions: ["s3:GetObject", "s3:ListBucket"],
+        resources: ["*"],
+      })
+    );
+
     lambdaRole.addToPolicy(
       new iam.PolicyStatement({
         actions: ["sts:AssumeRole"],
@@ -196,8 +205,8 @@ export class VendCredentialsStack extends Stack {
     const defaultStage = api.defaultStage!.node
       .defaultChild as apigwv2.CfnStage;
     defaultStage.defaultRouteSettings = {
-      throttlingRateLimit: 20, // steady-state requests/sec
-      throttlingBurstLimit: 40,
+      throttlingRateLimit: 10, // steady-state requests/sec
+      throttlingBurstLimit: 20,
     };
 
     // ---------------------------------------------------------------------
